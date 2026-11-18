@@ -1,0 +1,2413 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="color-scheme" content="light dark">
+  <script>
+    try {
+      document.querySelector('meta[name="color-scheme"]').content = localStorage.getItem("color-scheme") ?? "light dark";
+    } catch (_) {}
+  </script>
+  <title>Kyodo — Local Grammarly for Scientific Truth | Native macOS Epistemic Verification</title>
+  <meta name="description" content="Live epistemic claim and citation verification across Word, Google Docs, Pages, Notes, LaTeX, and PDFs for macOS. Zero AI ghostwriting. Zero screen recording. Built by Medical Doctors.">
+  <meta name="theme-color" content="#060911">
+  <link rel="icon" href="assets/kyodo-app-icon.jpg">
+  <link rel="stylesheet" href="styles.css">
+  <script type="module">
+    if (!('commandForElement' in HTMLButtonElement.prototype)) {
+      import('https://esm.run/invokers-polyfill').catch(() => {});
+    }
+    if (!Object.hasOwn(HTMLElement.prototype, 'popover')) {
+      import('https://unpkg.com/@oddbird/popover-polyfill@latest/dist/popover.min.js').catch(() => {});
+    }
+  </script>
+</head>
+<body>
+  <!-- Ambient Background Caustic Mesh -->
+  <div class="ambient-backdrop" aria-hidden="true">
+    <div class="caustic-field caustic-emerald"></div>
+    <div class="caustic-field caustic-sapphire"></div>
+    <div class="caustic-field caustic-violet"></div>
+  </div>
+
+  <!-- STICKY FROSTED GLASS NAVBAR -->
+  <header class="site-header" id="top">
+    <div class="container nav-inner">
+      <a href="#top" class="brand-lockup" aria-label="Kyodo Home">
+        <img src="assets/kyodo-app-icon.jpg" alt="Kyodo" class="brand-app-icon" width="32" height="32">
+        <span class="brand-wordmark">Kyodo</span>
+        <span class="nav-orb-badge">
+          <span class="nav-version-tag">macOS Native</span>
+        </span>
+      </a>
+
+      <nav class="primary-nav" aria-label="Primary Navigation">
+        <a href="#features" class="nav-link">Features</a>
+        <a href="#spatial-vault" class="nav-link">Vault</a>
+        <a href="#compare" class="nav-link">Compare</a>
+        <a href="#pricing" class="nav-link">Pricing <span class="nav-currency-hint">(₹/$)</span></a>
+        <a href="#security-founders" class="nav-link">Security &amp; Founders</a>
+      </nav>
+
+      <div class="nav-actions">
+        <!-- Modern Web Guidance: Two-state dark-mode-toggle -->
+        <button type="button" id="theme-toggle" class="icon-glass-btn theme-toggle-btn" aria-label="Toggle color scheme" title="Switch between Smoked Obsidian (Dark) and Frosted Alabaster (Light)">
+          <span class="theme-option theme-option-light">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
+              <circle cx="12" cy="12" r="4"></circle>
+              <path d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M6.34 17.66l-1.41 1.41M19.07 4.93l-1.41 1.41"></path>
+            </svg>
+            <span class="sr-only">Switch to Frosted Alabaster light theme</span>
+          </span>
+          <span class="theme-option theme-option-dark">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
+              <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path>
+            </svg>
+            <span class="sr-only">Switch to Smoked Obsidian dark theme</span>
+          </span>
+        </button>
+
+        <button type="button" class="btn-glass-secondary nav-dmg-btn" commandfor="download-modal" command="show-modal">
+          <span aria-hidden="true"></span> Download .dmg
+        </button>
+
+        <button type="button" class="btn-emerald-primary nav-beta-btn" commandfor="beta-modal" command="show-modal">
+          <span class="pulse-dot-emerald" aria-hidden="true"></span>
+          Claim 1 of 30 Free Seats
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <main>
+    <!-- ABOVE THE FOLD: PITCH DECK SLIDE 1 INTERACTIVE STAGE -->
+    <section class="hero-section">
+      <div class="container hero-grid">
+        <!-- Left Column: Copy, CTAs & Medical Doctor Trust Signals -->
+        <div class="hero-copy-col">
+          <div class="beta-cohort-pill">
+            <span class="pulse-dot-emerald" aria-hidden="true"></span>
+            <span>30-Seat Closed Beta Live • 100% Free Full Pro-Elite Access</span>
+          </div>
+
+          <h1 class="hero-headline">
+            Local Grammarly for <span class="gradient-text-epistemic">Scientific Truth.</span>
+          </h1>
+
+          <p class="hero-subheadline">
+            Live epistemic claim and citation verification across <strong>Microsoft Word</strong>, <strong>Google Docs</strong>, <strong>Apple Pages</strong>, <strong>Notes</strong>, <strong>LaTeX</strong>, and <strong>PDFs</strong>.
+            <span class="subheadline-highlight">Zero AI ghostwriting. Zero screen recording. &lt;2ms local lookup.</span>
+          </p>
+
+          <div class="hero-cta-stack">
+            <button type="button" class="btn-hero-dmg" commandfor="download-modal" command="show-modal">
+              <span class="btn-hero-main">
+                <span class="apple-glyph" aria-hidden="true"></span>
+                Download for macOS (Apple Silicon)
+              </span>
+              <span class="btn-hero-sub">Notarized Universal .dmg • &lt;20 MB RAM • macOS 14+</span>
+            </button>
+
+            <button type="button" class="btn-hero-beta" commandfor="beta-modal" command="show-modal">
+              <span class="btn-hero-main">
+                <span aria-hidden="true">✦</span> Claim 1 of 30 Free Pro-Elite Seats <span aria-hidden="true">→</span>
+              </span>
+              <span class="btn-hero-sub">Foundational Researcher Cohort • ₹0 / $0 Full Access</span>
+            </button>
+
+            <a href="#kyodo-web-extension-placeholder" class="btn-hero-extension" data-extension-download-link>
+              <span class="btn-hero-main">
+                <svg class="ext-puzzle-icon" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                  <path d="M19.439 7.85c-.049.322.059.648.289.878l1.568 1.568c.47.47.706 1.087.706 1.704s-.235 1.233-.706 1.704l-1.611 1.611a.98.98 0 0 1-.837.276c-.47-.07-.802-.48-.968-.925a2.501 2.501 0 1 0-3.214 3.214c.446.166.855.497.925.968a.979.979 0 0 1-.276.837l-1.61 1.61a2.404 2.404 0 0 1-1.705.707 2.402 2.402 0 0 1-1.704-.706l-1.568-1.568a1.026 1.026 0 0 0-.877-.29c-.493.074-.84.504-1.02.968a2.5 2.5 0 1 1-3.237-3.237c.464-.18.894-.527.967-1.02a1.026 1.026 0 0 0-.289-.877l-1.568-1.568A2.402 2.402 0 0 1 1.998 12c0-.617.236-1.234.706-1.704L4.315 8.685a.98.98 0 0 1 .837-.276c.47.07.802.48.968.925a2.501 2.501 0 1 0 3.214-3.214c-.446-.166-.855-.497-.925-.968a.979.979 0 0 1 .276-.837l1.61-1.61a2.404 2.404 0 0 1 1.705-.707c.617 0 1.234.236 1.704.706l1.568 1.568c.23.23.556.338.877.29.493-.074.84-.504 1.02-.968a2.5 2.5 0 1 1 3.237 3.237c-.464.18-.894.527-.967 1.02Z"></path>
+                </svg>
+                Download Web Browser Extension
+              </span>
+              <span class="btn-hero-sub">Chrome, Brave &amp; Edge Companion • Google Docs &amp; Web Journals</span>
+            </a>
+          </div>
+
+          <ul class="hero-trust-list" aria-label="Core Guarantees">
+            <li>
+              <span class="trust-check" aria-hidden="true">✓</span>
+              <span><strong>Built by Medical Doctors</strong></span>
+            </li>
+            <li>
+              <span class="trust-check" aria-hidden="true">✓</span>
+              <span><strong>100% backward compatible - Zotero, Mendeley, EndNote</strong></span>
+            </li>
+          </ul>
+        </div>
+
+        <!-- Right Column: Verbatim Pitch Deck Slide 1 Interactive Stage (Overlay Juts Out Bottom-Right) -->
+        <div class="hero-stage-col" aria-label="Interactive Pitch Deck Slide 1 Live Demo">
+          <div class="macos-editor-window word-window-stage" id="hero-word-window">
+            <!-- Window Titlebar -->
+            <div class="macos-titlebar">
+              <div class="traffic-lights" aria-hidden="true">
+                <span class="tl tl-close"></span>
+                <span class="tl tl-min"></span>
+                <span class="tl tl-max"></span>
+              </div>
+              <div class="window-title">
+                <span class="word-badge" aria-hidden="true">W</span>
+                <span>Microsoft Word — Heart_Failure_Review_Draft.docx</span>
+              </div>
+              <div class="window-status-pill">
+                <span class="status-dot-live" aria-hidden="true"></span>
+                <span>LiveCite Active</span>
+              </div>
+            </div>
+
+            <!-- Word Ribbon Bar Mock -->
+            <div class="word-toolbar" aria-hidden="true">
+              <span class="tb-item">Times New Roman</span>
+              <span class="tb-item">12 pt</span>
+              <span class="tb-sep"></span>
+              <span class="tb-item tb-bold">B</span>
+              <span class="tb-item tb-italic">I</span>
+              <span class="tb-item tb-underline">U</span>
+              <span class="tb-sep"></span>
+              <span class="tb-item tb-active">Section 2.4 • Clinical Outcomes</span>
+            </div>
+
+            <!-- Manuscript Canvas -->
+            <div class="manuscript-canvas">
+              <div class="manuscript-heading">Sodium-glucose cotransporter-2 inhibitors:</div>
+              <p class="manuscript-paragraph" id="slide1-manuscript-p">
+                Beyond glycemic control, SGLT2 inhibition has demonstrated
+                <span class="claim-underline" id="slide1-claim-span">marked reductions in major adverse cardiovascular events and heart failure hospitalization risk<span id="slide1-inserted-cite" class="inserted-citation-token" hidden> (Lytvyn et al., 2017)</span></span>.<span class="editor-caret" aria-hidden="true" title="Active Editor Caret (Zero Caret Theft)"></span>
+              </p>
+
+              <!-- Live Synchronized Bibliography Preview (Appears on Insert/Confirm) -->
+              <div class="manuscript-bib-preview" id="slide1-bib-block" hidden>
+                <div class="bib-header">
+                  <span>References (Auto-Synchronized • APA 7th)</span>
+                  <span class="bib-grounded-tag" id="slide1-bib-badge">✓ Cryptographically Anchored</span>
+                </div>
+                <p class="bib-entry">
+                  Lytvyn, Y., Bjornstad, P., Udell, J. A., Lovshin, J. A., &amp; Cherney, D. Z. I. (2017). Sodium Glucose Cotransporter-2 Inhibition in Heart Failure: Potential Mechanisms, Clinical Applications, and Summary of Clinical Trials. <em>Circulation</em>, 136(17), 1643–1658. <span class="mono-doi">https://doi.org/10.1161/CIRCULATIONAHA.117.030012</span>
+                </p>
+              </div>
+            </div>
+
+            <!-- STATE 1: Verbatim Pitch Deck Slide 1 Floating Smoked Obsidian Discovery Card (Jutting Out Bottom-Right) -->
+            <div class="floating-obsidian-card literature-discovery-card" id="slide1-discovery-card" role="region" aria-label="Kyodo Literature Discovery Card">
+              <div class="obsidian-card-header">
+                <div class="discovery-signal-label">
+                  <span class="signal-dot-emerald" aria-hidden="true"></span>
+                  <span class="signal-text">• Literature Discovery (78%)</span>
+                </div>
+                <div class="obsidian-header-right discovery-card-header-right">
+                  <span class="esc-hint">Esc to close</span>
+                </div>
+              </div>
+
+              <h2 class="discovery-paper-title">
+                Sodium Glucose Cotransporter-2 Inhibition in Heart Failure
+              </h2>
+              <div class="discovery-paper-authors">
+                Yuliya Lytvyn, Petter Bjornstad (2017)
+              </div>
+
+              <blockquote class="verbatim-quote-well">
+                "The CANVAS trial (Canagliflozin Cardiovascular Assessment Study) subsequently reported a reduction in 3-point major adverse cardiovascular events and HF hospitalization risk."
+              </blockquote>
+
+              <div class="obsidian-card-actions">
+                <button type="button" class="btn-card-ignore" id="slide1-ignore-btn">
+                  Ignore
+                </button>
+                <button type="button" class="btn-card-insert" id="slide1-insert-btn">
+                  <span aria-hidden="true">↖</span> Insert (Lytvyn et al., 2017)
+                </button>
+              </div>
+            </div>
+
+            <!-- STATE 2: Post-Insertion Confirmation Pill (Jutting Out Bottom-Right) -->
+            <div class="post-insert-pill" id="slide1-confirm-pill" hidden role="region" aria-label="Post-Insertion Citation Confirmation">
+              <div class="confirm-pill-row">
+                <span class="draggable-cite-chip" title="Draggable Citation Chip">⋮⋮ (Lytvyn et al., 2017)</span>
+                <span class="confirm-status-badge" id="slide1-pill-status">Auto-Inserted</span>
+                <span class="pill-divider" aria-hidden="true">|</span>
+                <button type="button" class="pill-action-link" id="slide1-review3-btn" title="Jump to Candidate Switcher">
+                  Review (3)
+                </button>
+                <span class="pill-divider" aria-hidden="true">|</span>
+                <button type="button" class="btn-pill-confirm" id="slide1-confirm-btn">
+                  Confirm
+                </button>
+                <button type="button" class="btn-pill-replay" id="slide1-replay-btn" title="Replay Slide 1 Demo">
+                  ↺ Replay Demo
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- HORIZONTAL SCROLLABLE FEATURE VIDEO CAROUSEL (Center Loops, Neighbors Pause) -->
+      <div class="carousel-showcase-wrap scroll-reveal" id="workflow-film">
+        <div class="container">
+          <div class="carousel-top-bar">
+            <div class="carousel-feature-pills" role="tablist" aria-label="Kyodo Workflow Feature Demos">
+              <button type="button" role="tab" aria-selected="true" class="carousel-pill active" data-carousel-target="0">
+                <span class="cp-dot" aria-hidden="true"></span>
+                <span>Live Claim Grounding</span>
+              </button>
+              <button type="button" role="tab" aria-selected="false" class="carousel-pill" data-carousel-target="1">
+                <span class="cp-dot" aria-hidden="true"></span>
+                <span>In-Paper Citation Audit</span>
+              </button>
+              <button type="button" role="tab" aria-selected="false" class="carousel-pill" data-carousel-target="2">
+                <span class="cp-dot" aria-hidden="true"></span>
+                <span>1-Click Style Transmutation</span>
+              </button>
+              <button type="button" role="tab" aria-selected="false" class="carousel-pill" data-carousel-target="3">
+                <span class="cp-dot" aria-hidden="true"></span>
+                <span>Multi-Paper Vault &amp; RAG</span>
+              </button>
+              <button type="button" role="tab" aria-selected="false" class="carousel-pill" data-carousel-target="4">
+                <span class="cp-dot" aria-hidden="true"></span>
+                <span>Zotero Import &amp; iPad Cast</span>
+              </button>
+            </div>
+
+            <div class="carousel-nav-arrows">
+              <button type="button" class="carousel-arrow-btn" id="carousel-prev-btn" aria-label="Previous feature video">
+                ←
+              </button>
+              <button type="button" class="carousel-arrow-btn" id="carousel-next-btn" aria-label="Next feature video">
+                →
+              </button>
+            </div>
+          </div>
+        </div>
+
+        <!-- Horizontal Scroll-Snap Track -->
+        <div class="video-carousel-track" id="video-carousel-track" aria-label="Interactive Feature Video Carousel">
+          <!-- CARD 0: Live Claim Grounding in Word & Google Docs -->
+          <article class="video-carousel-card is-playing" data-carousel-index="0" data-video-key="claimGrounding">
+            <div class="macos-titlebar theater-titlebar">
+              <div class="traffic-lights" aria-hidden="true">
+                <span class="tl tl-close"></span>
+                <span class="tl tl-min"></span>
+                <span class="tl tl-max"></span>
+              </div>
+              <div class="theater-title">
+                <span class="theater-rec-dot" aria-hidden="true"></span>
+                <span>Live Claim Grounding in Word &amp; Google Docs</span>
+              </div>
+              <div class="carousel-state-badge">
+                <span class="playing-label">● Looping Preview</span>
+                <span class="paused-label">Paused • Click to center &amp; play</span>
+              </div>
+            </div>
+
+            <div class="carousel-card-stage">
+              <video class="carousel-video-el" loop muted playsinline preload="metadata" hidden></video>
+              <img
+                class="theater-poster-bg"
+                fetchpriority="high"
+                width="760"
+                height="400"
+                alt="Live Claim Grounding in Microsoft Word and Google Docs"
+                src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 760 400'%3E%3Cdefs%3E%3CradialGradient id='cg1' cx='25%25' cy='30%25' r='65%25'%3E%3Cstop offset='0%25' stop-color='%2310B981' stop-opacity='0.18'/%3E%3Cstop offset='100%25' stop-color='%23060911' stop-opacity='0'/%3E%3C/radialGradient%3E%3C/defs%3E%3Crect width='760' height='400' fill='%23070B14'/%3E%3Crect width='760' height='400' fill='url(%23cg1)'/%3E%3C/svg%3E"
+              />
+              <div class="carousel-live-canvas">
+                <div class="clc-header">
+                  <span class="scene-metric-pill emerald-pill">Word • Google Docs • Pages • Notes • LaTeX</span>
+                  <span class="clc-telemetry">&lt;2ms Local Recall • 0.00% Caret Theft</span>
+                </div>
+                <div class="clc-split">
+                  <div class="clc-copy">
+                    <h3>Ambient Sentence-Level Discovery While You Type</h3>
+                    <p>Finish typing a scientific claim and Kyodo surfaces the highest-entailment paper and verbatim quote—ready to inject in 1 click without stealing your cursor.</p>
+                    <div class="clc-anim-progress">
+                      <span class="clc-progress-bar"></span>
+                    </div>
+                  </div>
+                  <div class="scene-visual-card clc-animated-hud">
+                    <div class="mini-hud-header">
+                      <span class="signal-dot-emerald"></span>
+                      <span>• Literature Discovery (78%)</span>
+                    </div>
+                    <div class="mini-hud-title">Sodium Glucose Cotransporter-2 Inhibition in Heart Failure</div>
+                    <div class="mini-hud-sub">Yuliya Lytvyn, Petter Bjornstad (2017) • Circulation</div>
+                    <div class="mini-hud-quote">"The CANVAS trial subsequently reported a reduction in 3-point major adverse cardiovascular events and HF hospitalization risk."</div>
+                    <div class="mini-hud-cta clc-pulse-cta">↖ Insert (Lytvyn et al., 2017)</div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </article>
+
+          <!-- CARD 1: In-Paper & Browser Citation Audit -->
+          <article class="video-carousel-card is-paused" data-carousel-index="1" data-video-key="citationAudit">
+            <div class="macos-titlebar theater-titlebar">
+              <div class="traffic-lights" aria-hidden="true">
+                <span class="tl tl-close"></span>
+                <span class="tl tl-min"></span>
+                <span class="tl tl-max"></span>
+              </div>
+              <div class="theater-title">
+                <span class="theater-rec-dot" aria-hidden="true"></span>
+                <span>In-Paper &amp; Browser Citation Audit</span>
+              </div>
+              <div class="carousel-state-badge">
+                <span class="playing-label">● Looping Preview</span>
+                <span class="paused-label">Paused • Click to center &amp; play</span>
+              </div>
+            </div>
+
+            <div class="carousel-card-stage">
+              <video class="carousel-video-el" loop muted playsinline preload="metadata" hidden></video>
+              <div class="carousel-live-canvas">
+                <div class="clc-header">
+                  <span class="scene-metric-pill sapphire-pill">42 Citations Indexed on Open (&lt;2ms)</span>
+                  <span class="clc-telemetry">0 Pixels Screen Recorded</span>
+                </div>
+                <div class="clc-split">
+                  <div class="clc-copy">
+                    <h3>Catch Overstated &amp; Contradictory Citations Instantly</h3>
+                    <p>Click any inline reference marker in macOS Preview or your browser to inspect whether the cited paper supports, overstates, or contradicts the sentence.</p>
+                    <div class="clc-anim-progress">
+                      <span class="clc-progress-bar"></span>
+                    </div>
+                  </div>
+                  <div class="scene-visual-card clc-animated-hud">
+                    <div class="mini-hud-header">
+                      <span class="signal-dot-rose"></span>
+                      <span class="rose-text">✕ [27] Misquoted / Contradictory Alert</span>
+                    </div>
+                    <div class="mini-hud-title">Long-Term Loop Diuretic Monotherapy in Chronic HFrEF</div>
+                    <div class="mini-hud-sub">K.F. Adams et al. • American Heart Journal</div>
+                    <div class="mini-hud-quote">"No statistically significant reduction in 5-year all-cause cardiovascular mortality was observed (HR 1.08; p = 0.42)."</div>
+                    <div class="mini-hud-cta mini-hud-cta-rose clc-pulse-cta">⚠️ Contradicts Citing Sentence</div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </article>
+
+          <!-- CARD 2: 1-Click Style Transmutation -->
+          <article class="video-carousel-card is-paused" data-carousel-index="2" data-video-key="styleTransmuter">
+            <div class="macos-titlebar theater-titlebar">
+              <div class="traffic-lights" aria-hidden="true">
+                <span class="tl tl-close"></span>
+                <span class="tl tl-min"></span>
+                <span class="tl tl-max"></span>
+              </div>
+              <div class="theater-title">
+                <span class="theater-rec-dot" aria-hidden="true"></span>
+                <span>1-Click Style Transmutation</span>
+              </div>
+              <div class="carousel-state-badge">
+                <span class="playing-label">● Looping Preview</span>
+                <span class="paused-label">Paused • Click to center &amp; play</span>
+              </div>
+            </div>
+
+            <div class="carousel-card-stage">
+              <video class="carousel-video-el" loop muted playsinline preload="metadata" hidden></video>
+              <div class="carousel-live-canvas">
+                <div class="clc-header">
+                  <span class="scene-metric-pill violet-pill">APA 7th ↔ Vancouver ↔ Nature ↔ AMA ↔ Harvard</span>
+                  <span class="clc-telemetry">0 Broken Field Codes</span>
+                </div>
+                <div class="clc-split">
+                  <div class="clc-copy">
+                    <h3>Reformat Inline Citations &amp; Bibliography in 14ms</h3>
+                    <p>Switch journal schemas in one click or via natural-language commands. Every inline callout and bibliography entry updates in place without fragile plugins.</p>
+                    <div class="clc-anim-progress">
+                      <span class="clc-progress-bar"></span>
+                    </div>
+                  </div>
+                  <div class="scene-visual-card clc-animated-hud">
+                    <div class="mini-hud-header">
+                      <span class="signal-dot-emerald"></span>
+                      <span>✦ Live Schema Transmutation</span>
+                    </div>
+                    <div class="mini-hud-title">APA 7th → Vancouver → Nature Superscripts</div>
+                    <div class="mini-hud-sub">38 Citations + Synchronized Bibliography Re-ordered</div>
+                    <div class="mini-hud-quote">"...marked reductions in major adverse cardiovascular events and heart failure hospitalization risk¹,²."</div>
+                    <div class="mini-hud-cta clc-pulse-cta">✓ Bibliography Sorted by Appearance</div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </article>
+
+          <!-- CARD 3: Multi-Paper Vault & LiveChat RAG -->
+          <article class="video-carousel-card is-paused" data-carousel-index="3" data-video-key="spatialVault">
+            <div class="macos-titlebar theater-titlebar">
+              <div class="traffic-lights" aria-hidden="true">
+                <span class="tl tl-close"></span>
+                <span class="tl tl-min"></span>
+                <span class="tl tl-max"></span>
+              </div>
+              <div class="theater-title">
+                <span class="theater-rec-dot" aria-hidden="true"></span>
+                <span>Multi-Paper Vault &amp; LiveChat RAG</span>
+              </div>
+              <div class="carousel-state-badge">
+                <span class="playing-label">● Looping Preview</span>
+                <span class="paused-label">Paused • Click to center &amp; play</span>
+              </div>
+            </div>
+
+            <div class="carousel-card-stage">
+              <video class="carousel-video-el" loop muted playsinline preload="metadata" hidden></video>
+              <div class="carousel-live-canvas">
+                <div class="clc-header">
+                  <span class="scene-metric-pill emerald-pill">⇧ + Click Tabs • Multi-Paper Chat (3)</span>
+                  <span class="clc-telemetry">Page-Anchored RAG Chips</span>
+                </div>
+                <div class="clc-split">
+                  <div class="clc-copy">
+                    <h3>Synthesize Endpoints Across Multiple Trials</h3>
+                    <p>Compare hazard ratios, sample sizes, and exclusion criteria across checked PDFs in your Central Spatial Vault, with 1-click jumps to the exact source paragraph.</p>
+                    <div class="clc-anim-progress">
+                      <span class="clc-progress-bar"></span>
+                    </div>
+                  </div>
+                  <div class="scene-visual-card clc-animated-hud">
+                    <div class="mini-hud-header">
+                      <span class="signal-dot-emerald"></span>
+                      <span>✦ Synthesizing 3 Checked Papers</span>
+                    </div>
+                    <div class="mini-hud-title">CANVAS (2017) vs. DAPA-HF (2019) vs. EMPEROR (2020)</div>
+                    <div class="mini-hud-sub">Grounded Multi-Paper RAG Synthesis</div>
+                    <div class="mini-hud-quote">"CANVAS (HR 0.67), DAPA-HF (HR 0.70), and EMPEROR-Reduced (HR 0.75) show concordant HF hospitalization reductions."</div>
+                    <div class="mini-hud-cta clc-pulse-cta">📄 View in PDF (Page 4) ↗</div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </article>
+
+          <!-- CARD 4: 1-Click Zotero Import & Cast to iPad -->
+          <article class="video-carousel-card is-paused" data-carousel-index="4" data-video-key="zoteroAndIpad">
+            <div class="macos-titlebar theater-titlebar">
+              <div class="traffic-lights" aria-hidden="true">
+                <span class="tl tl-close"></span>
+                <span class="tl tl-min"></span>
+                <span class="tl tl-max"></span>
+              </div>
+              <div class="theater-title">
+                <span class="theater-rec-dot" aria-hidden="true"></span>
+                <span>1-Click Zotero Import &amp; Cast to iPad</span>
+              </div>
+              <div class="carousel-state-badge">
+                <span class="playing-label">● Looping Preview</span>
+                <span class="paused-label">Paused • Click to center &amp; play</span>
+              </div>
+            </div>
+
+            <div class="carousel-card-stage">
+              <video class="carousel-video-el" loop muted playsinline preload="metadata" hidden></video>
+              <div class="carousel-live-canvas">
+                <div class="clc-header">
+                  <span class="scene-metric-pill sapphire-pill">Zotero / Mendeley / EndNote Sync + Local Wi-Fi iPad QR</span>
+                  <span class="clc-telemetry">Bi-Directional Apple Pencil Markup</span>
+                </div>
+                <div class="clc-split">
+                  <div class="clc-copy">
+                    <h3>Import Your Library &amp; Annotate with Apple Pencil</h3>
+                    <p>Migrate your entire Zotero or Mendeley collection in one click, auto-sort new PDFs into topic folders, and cast any paper to your iPad over local Wi-Fi.</p>
+                    <div class="clc-anim-progress">
+                      <span class="clc-progress-bar"></span>
+                    </div>
+                  </div>
+                  <div class="scene-visual-card clc-animated-hud">
+                    <div class="mini-hud-header">
+                      <span class="signal-dot-emerald"></span>
+                      <span>📱 Local Bonjour / Wi-Fi Pairing Active</span>
+                    </div>
+                    <div class="mini-hud-title">148 Zotero PDFs Indexed • iPad Canvas Connected</div>
+                    <div class="mini-hud-sub">Zero-Config QR &amp; AirDrop Apple Pencil Sync</div>
+                    <div class="mini-hud-quote">"Live Apple Pencil highlights on iPad stream directly back into your macOS Central Spatial Vault."</div>
+                    <div class="mini-hud-cta clc-pulse-cta">✓ Synced with macOS Vault</div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <!-- SECTION 1: THE COGNITIVE BOTTLENECK OF SCHOLARLY WRITING -->
+    <section class="problem-section scroll-reveal" id="bottleneck">
+      <div class="container">
+        <div class="section-header">
+          <span class="section-eyebrow">Why Academic Writing Feels Broken</span>
+          <h2 class="section-title">The Cognitive Bottleneck of Scholarly Writing</h2>
+          <p class="section-subtitle">
+            Researchers lose 30–40% of their drafting velocity to context switching, citation hunting, and verification anxiety.
+          </p>
+        </div>
+
+        <div class="problem-cards-grid">
+          <!-- Card 1: Epistemic Amnesia -->
+          <article class="spatial-bento-card accent-card-amber">
+            <div class="card-top-meta bottleneck-card-top">
+              <span class="card-index-badge bottleneck-pill badge-amber">Epistemic Amnesia</span>
+              <span class="card-metric-tag">20+ min lost/claim</span>
+            </div>
+            <h3 class="card-heading">You Remember the Finding, Not the PDF Page</h3>
+            <div class="problem-vs-solution">
+              <div class="what-breaks-block">
+                <span class="block-label label-muted">What Breaks Today</span>
+                <p>You remember a key clinical finding weeks after reading 150+ PDFs, then waste <strong>20 minutes hunting</strong> for which paper stated it.</p>
+              </div>
+              <div class="how-kyodo-solves-block">
+                <span class="block-label label-amber">How Kyodo Solves It</span>
+                <p><strong>Ambient Recall:</strong> Kyodo matches your active sentence against your local vault and peer-reviewed literature in <code>&lt;2ms</code>, surfacing the exact quote.</p>
+              </div>
+            </div>
+          </article>
+
+          <!-- Card 2: Blind Reference Managers -->
+          <article class="spatial-bento-card accent-card-sapphire">
+            <div class="card-top-meta bottleneck-card-top">
+              <span class="card-index-badge bottleneck-pill badge-sapphire">Blind Reference Managers</span>
+              <span class="card-metric-tag">0% semantic check</span>
+            </div>
+            <h3 class="card-heading">Passive Metadata Cabinets Cannot Read Prose</h3>
+            <div class="problem-vs-solution">
+              <div class="what-breaks-block">
+                <span class="block-label label-muted">What Breaks Today</span>
+                <p>Zotero, Mendeley, and EndNote insert passive <code>(Author, Year)</code> tags without reading your sentence or warning you of contradictions.</p>
+              </div>
+              <div class="how-kyodo-solves-block">
+                <span class="block-label label-sapphire">How Kyodo Solves It</span>
+                <p><strong>Live Entailment Audit:</strong> Kyodo verifies whether the cited passage <em>Supports</em>, <em>Qualifies</em>, or <em>Contradicts</em> your claim before peer reviewers do.</p>
+              </div>
+            </div>
+          </article>
+
+          <!-- Card 3: AI Ghostwriting & Cloud Leaks -->
+          <article class="spatial-bento-card accent-card-rose">
+            <div class="card-top-meta bottleneck-card-top">
+              <span class="card-index-badge bottleneck-pill badge-rose">AI Ghostwriting &amp; Cloud Leaks</span>
+              <span class="card-metric-tag">0 pixels captured</span>
+            </div>
+            <h3 class="card-heading">Generative Wrappers Hallucinate &amp; Record Screens</h3>
+            <div class="problem-vs-solution">
+              <div class="what-breaks-block">
+                <span class="block-label label-muted">What Breaks Today</span>
+                <p>Generative AI tools ghostwrite synthetic paragraphs, hallucinate citations, and demand intrusive screen-recording permissions over unpublished data.</p>
+              </div>
+              <div class="how-kyodo-solves-block">
+                <span class="block-label label-rose">How Kyodo Solves It</span>
+                <p><strong>100% Anti-Ghostwriting:</strong> Kyodo never writes a word of your prose and verifies claims locally with <strong>zero screen recording</strong>.</p>
+              </div>
+            </div>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <!-- SECTION 2A: INTERACTIVE 3-TAB SPATIAL ORB STAGE -->
+    <section class="orb-showcase-section scroll-reveal" id="features">
+      <div class="container">
+        <div class="section-header">
+          <span class="section-eyebrow">Ambient Workspace Intelligence</span>
+          <h2 class="section-title">One Weightless Companion Across Every Editor &amp; PDF</h2>
+          <p class="section-subtitle">
+            Explore Kyodo's three real-time epistemic workflows inside a unified native macOS stage.
+          </p>
+        </div>
+
+        <!-- 3-Tab Segmented Switcher -->
+        <div class="orb-tabs-nav" role="tablist" aria-label="Spatial Orb Interactive Workflows">
+          <button type="button" role="tab" aria-selected="true" aria-controls="orb-tab-panel-1" id="orb-tab-btn-1" class="orb-tab-btn active" data-orb-tab="1">
+            <span class="tab-num">01</span>
+            <span class="tab-title">Live Claim Grounding &amp; Top-3 Switcher</span>
+          </button>
+          <button type="button" role="tab" aria-selected="false" aria-controls="orb-tab-panel-2" id="orb-tab-btn-2" class="orb-tab-btn" data-orb-tab="2">
+            <span class="tab-num">02</span>
+            <span class="tab-title">&lt;2ms In-Paper &amp; Browser Citation Audit</span>
+          </button>
+          <button type="button" role="tab" aria-selected="false" aria-controls="orb-tab-panel-3" id="orb-tab-btn-3" class="orb-tab-btn" data-orb-tab="3">
+            <span class="tab-num">03</span>
+            <span class="tab-title">1-Click Style Transmuter &amp; Natural Language</span>
+          </button>
+        </div>
+
+        <!-- TAB PANEL 1: Live Claim Grounding + Review (3) Candidate Switcher -->
+        <div id="orb-tab-panel-1" role="tabpanel" aria-labelledby="orb-tab-btn-1" class="orb-tab-panel">
+          <div class="stage-2a-grid">
+            <div class="stage-2a-editor-pane">
+              <div class="pane-header-bar">
+                <span class="pane-app-pill">Active Manuscript • Universal OS Overlay</span>
+                <span class="pane-status-tag emerald-text">✓ Active Claim Linked to Top 3 Candidates</span>
+              </div>
+              <div class="live-manuscript-box">
+                <p class="manuscript-context-line">
+                  In large-scale randomized cardiovascular outcome trials, sodium-glucose cotransporter-2 inhibition significantly reduced the composite endpoint of worsening heart failure or cardiovascular death across both diabetic and non-diabetic cohorts
+                  <span class="active-inline-cite" id="tab1-active-inline-cite">(Lytvyn &amp; Bjornstad, 2017)</span>.
+                </p>
+                <div class="tab1-active-ref-box">
+                  <div class="ref-box-label">Active Grounded Reference in Manuscript:</div>
+                  <p class="ref-box-text" id="tab1-active-ref-text">
+                    Lytvyn, Y., &amp; Bjornstad, P. (2017). Sodium Glucose Cotransporter-2 Inhibition in Heart Failure. <em>Circulation</em>, 136(17), 1643–1658.
+                  </p>
+                </div>
+              </div>
+
+              <!-- Universal Editor Compatibility Strip -->
+              <div class="editor-compat-strip" aria-label="Supported Writing Environments">
+                <span class="compat-label">Works natively with zero plugins in:</span>
+                <div class="compat-badges">
+                  <span class="compat-chip">Microsoft Word</span>
+                  <span class="compat-chip">Google Docs</span>
+                  <span class="compat-chip">Apple Pages</span>
+                  <span class="compat-chip">Apple Notes</span>
+                  <span class="compat-chip">Overleaf / LaTeX</span>
+                  <span class="compat-chip">Scrivener</span>
+                </div>
+              </div>
+            </div>
+
+            <!-- Review (3) Candidate Switcher Drawer -->
+            <div class="stage-2a-drawer-pane">
+              <div class="candidate-drawer-header">
+                <div>
+                  <span class="drawer-eyebrow">Kyodo Signal Pill • Review (3)</span>
+                  <h3 class="drawer-title">Top 3 Peer-Reviewed Candidates</h3>
+                </div>
+                <span class="drawer-sub-badge">Click to hot-swap citation</span>
+              </div>
+
+              <div class="candidate-list" id="tab1-candidate-list">
+                <!-- Candidate 1 -->
+                <div class="candidate-card active" data-candidate-id="0">
+                  <div class="candidate-top">
+                    <span class="candidate-cite-name">Lytvyn &amp; Bjornstad (2017)</span>
+                    <div class="candidate-badges">
+                      <span class="journal-badge">Circulation</span>
+                      <span class="oa-badge">OpenAccess • 94% Match</span>
+                    </div>
+                  </div>
+                  <blockquote class="candidate-excerpt">
+                    "The CANVAS trial subsequently reported a reduction in 3-point major adverse cardiovascular events and HF hospitalization risk."
+                  </blockquote>
+                  <div class="candidate-bottom">
+                    <span class="mono-doi">doi:10.1161/CIRCULATIONAHA.117.030012</span>
+                    <button type="button" class="btn-candidate-switch active" data-candidate-btn="0">
+                      ✓ Currently Cited
+                    </button>
+                  </div>
+                </div>
+
+                <!-- Candidate 2 -->
+                <div class="candidate-card" data-candidate-id="1">
+                  <div class="candidate-top">
+                    <span class="candidate-cite-name">McMurray et al. (2019)</span>
+                    <div class="candidate-badges">
+                      <span class="journal-badge">NEJM • DAPA-HF</span>
+                      <span class="oa-badge">OpenAccess • 97% Match</span>
+                    </div>
+                  </div>
+                  <blockquote class="candidate-excerpt">
+                    "Among patients with heart failure and a reduced ejection fraction, the risk of worsening heart failure or death from cardiovascular causes was lower among those who received dapagliflozin (HR 0.74; 95% CI, 0.65–0.85; P&lt;0.001)."
+                  </blockquote>
+                  <div class="candidate-bottom">
+                    <span class="mono-doi">doi:10.1056/NEJMoa1911303</span>
+                    <button type="button" class="btn-candidate-switch" data-candidate-btn="1">
+                      ⇄ Switch to this
+                    </button>
+                  </div>
+                </div>
+
+                <!-- Candidate 3 -->
+                <div class="candidate-card" data-candidate-id="2">
+                  <div class="candidate-top">
+                    <span class="candidate-cite-name">Packer et al. (2020)</span>
+                    <div class="candidate-badges">
+                      <span class="journal-badge">NEJM • EMPEROR-Reduced</span>
+                      <span class="oa-badge">OpenAccess • 95% Match</span>
+                    </div>
+                  </div>
+                  <blockquote class="candidate-excerpt">
+                    "Empagliflozin reduced the combined risk of cardiovascular death or hospitalization for heart failure regardless of the presence or absence of diabetes (HR 0.75; 95% CI, 0.65–0.86; P&lt;0.001)."
+                  </blockquote>
+                  <div class="candidate-bottom">
+                    <span class="mono-doi">doi:10.1056/NEJMoa2022190</span>
+                    <button type="button" class="btn-candidate-switch" data-candidate-btn="2">
+                      ⇄ Switch to this
+                    </button>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- TAB PANEL 2: In-Paper & Browser Citation Auditing ([12], [19], [27]) -->
+        <div id="orb-tab-panel-2" role="tabpanel" aria-labelledby="orb-tab-btn-2" class="orb-tab-panel" hidden>
+          <div class="stage-2a-grid">
+            <div class="stage-2a-editor-pane">
+              <div class="pane-header-bar">
+                <span class="pane-app-pill">macOS Preview / Browser PDF Reader</span>
+                <span class="pane-status-tag sapphire-text">⚡ 42 citations indexed &amp; verified in &lt;2ms</span>
+              </div>
+
+              <div class="audit-pdf-excerpt-box">
+                <div class="pdf-section-label">Section 4 • Therapeutic Translation &amp; Clinical Efficacy</div>
+                <p class="pdf-audit-paragraph">
+                  Cardioprotective SGLT2 inhibition consistently attenuates hospitalizations for heart failure in human cohorts with reduced ejection fraction
+                  <button type="button" class="inline-audit-marker marker-emerald active" data-audit-id="12" aria-label="Inspect reference 12 (94% Supported)">[12]</button>.
+                  Furthermore, direct myocardial Na+/H+ exchanger-1 (NHE1) blockade has been conclusively proven in large Phase-III human randomized trials to reverse ventricular remodeling
+                  <button type="button" class="inline-audit-marker marker-amber" data-audit-id="19" aria-label="Inspect reference 19 (Overstated Claim)">[19]</button>.
+                  Finally, high-dose loop diuretic monotherapy significantly reduces 5-year all-cause cardiovascular mortality in chronic HFrEF
+                  <button type="button" class="inline-audit-marker marker-rose" data-audit-id="27" aria-label="Inspect reference 27 (Misquoted / Contradictory)">[27]</button>.
+                </p>
+                <div class="audit-click-prompt">
+                  <span>👆 Click inline citation markers</span>
+                  <button type="button" class="prompt-chip chip-emerald" data-audit-id="12">[12] 94% Supported</button>
+                  <button type="button" class="prompt-chip chip-amber" data-audit-id="19">[19] Overstated Claim</button>
+                  <button type="button" class="prompt-chip chip-rose" data-audit-id="27">[27] Misquoted / Contradictory</button>
+                </div>
+              </div>
+
+              <!-- Domain Adaptation Callout -->
+              <div class="domain-adaptation-bar">
+                <span class="compat-label">Dynamic Epistemic Lenses in Reading Mode:</span>
+                <div class="compat-badges">
+                  <span class="compat-chip">Clinical Medicine</span>
+                  <span class="compat-chip">Wet-Lab Biology</span>
+                  <span class="compat-chip">Computer Science</span>
+                  <span class="compat-chip">Economics</span>
+                  <span class="compat-chip">Legal &amp; Humanities</span>
+                </div>
+              </div>
+            </div>
+
+            <!-- Floating Epistemic Verification Card -->
+            <div class="stage-2a-drawer-pane">
+              <div class="audit-verification-card" id="tab2-audit-card" aria-live="polite">
+                <div class="audit-card-top">
+                  <span class="audit-verdict-pill verdict-emerald" id="tab2-verdict-pill">● [12] 94% Supported • Emerald Verified</span>
+                  <span class="audit-latency-tag">&lt;2ms Local Audit</span>
+                </div>
+                <h3 class="audit-ref-title" id="tab2-ref-title">
+                  Dapagliflozin in Patients with Heart Failure and Reduced Ejection Fraction
+                </h3>
+                <div class="audit-ref-authors" id="tab2-ref-authors">
+                  J.J.V. McMurray et al. (2019) • New England Journal of Medicine
+                </div>
+                <div class="audit-comparison-grid">
+                  <div class="audit-claim-box">
+                    <span class="box-micro-label">Citing Sentence Claim:</span>
+                    <p id="tab2-citing-claim">"Cardioprotective SGLT2 inhibition consistently attenuates hospitalizations for heart failure in human cohorts with reduced ejection fraction [12]."</p>
+                  </div>
+                  <blockquote class="verbatim-quote-well" id="tab2-source-quote">
+                    "Hospitalization for heart failure occurred in 237 patients (10.0%) in the dapagliflozin group and in 326 patients (13.7%) in the placebo group (hazard ratio, 0.70; 95% CI, 0.59 to 0.83)."
+                  </blockquote>
+                </div>
+                <div class="audit-epistemic-note" id="tab2-epistemic-note">
+                  <strong>Epistemic Entailment Verdict:</strong> Direct Phase-III human RCT evidence (`N = 4,744`) directly entails the author's clinical claim.
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- TAB PANEL 3: 1-Click Style Transmuter & Natural Language Control -->
+        <div id="orb-tab-panel-3" role="tabpanel" aria-labelledby="orb-tab-btn-3" class="orb-tab-panel" hidden>
+          <div class="stage-2a-grid">
+            <div class="stage-2a-editor-pane">
+              <div class="pane-header-bar">
+                <span class="pane-app-pill">1-Click In-Place Schema Transmuter</span>
+                <div class="style-pills-bar" role="group" aria-label="Citation Formatting Styles">
+                  <button type="button" class="style-pill active" data-style="apa">APA 7th</button>
+                  <button type="button" class="style-pill" data-style="vancouver">Vancouver</button>
+                  <button type="button" class="style-pill" data-style="nature">Nature</button>
+                  <button type="button" class="style-pill" data-style="ama">AMA / NEJM</button>
+                  <button type="button" class="style-pill" data-style="harvard">Harvard</button>
+                </div>
+              </div>
+
+              <div class="transmuter-manuscript-box" aria-live="polite">
+                <p class="transmuter-prose" id="tab3-prose">
+                  Across landmark randomized trials, SGLT2 inhibition demonstrated early reductions in heart failure hospitalization risk <span class="transmuted-token" id="tab3-cite-1">(Lytvyn &amp; Bjornstad, 2017; McMurray et al., 2019)</span>, while extending composite renal and cardiovascular protection to broader chronic cohorts <span class="transmuted-token" id="tab3-cite-2">(Packer et al., 2020)</span>.
+                </p>
+
+                <div class="transmuter-bib-box">
+                  <div class="bib-header">
+                    <span id="tab3-bib-heading">Synchronized Bibliography • APA 7th Edition</span>
+                    <span class="emerald-text">0 Broken Field Codes</span>
+                  </div>
+                  <ol class="transmuter-bib-list" id="tab3-bib-list">
+                    <li>Lytvyn, Y., &amp; Bjornstad, P. (2017). Sodium Glucose Cotransporter-2 Inhibition in Heart Failure. <em>Circulation</em>, 136(17), 1643–1658.</li>
+                    <li>McMurray, J. J. V., Solomon, S. D., Inzucchi, S. E., et al. (2019). Dapagliflozin in Patients with Heart Failure and Reduced Ejection Fraction. <em>New England Journal of Medicine</em>, 381(21), 1995–2008.</li>
+                    <li>Packer, M., Anker, S. D., Butler, J., et al. (2020). Cardiovascular and Renal Outcomes with Empagliflozin in Heart Failure. <em>New England Journal of Medicine</em>, 383(15), 1413–1424.</li>
+                  </ol>
+                </div>
+              </div>
+            </div>
+
+            <!-- Natural Language Command Bar Preview (Removed "Editor focus untouched" pill per #10) -->
+            <div class="stage-2a-drawer-pane">
+              <div class="nl-command-drawer">
+                <div class="candidate-drawer-header">
+                  <div>
+                    <span class="drawer-eyebrow">Zero-Caret-Theft Command Bar</span>
+                    <h3 class="drawer-title">Natural Language Manuscript Control</h3>
+                  </div>
+                </div>
+
+                <p class="nl-drawer-desc">
+                  Ask Kyodo to reformat citation schemas, prune uncited bibliography rows, or compare endpoints across folders without ever leaving your keyboard or losing your cursor in Word.
+                </p>
+
+                <div class="nl-command-input-preview">
+                  <span class="nl-spark" aria-hidden="true">✦</span>
+                  <input type="text" id="tab3-nl-input" class="nl-input-field" readonly value="Convert manuscript to Vancouver and sort bibliography by appearance" aria-label="Natural language command preview">
+                  <span class="nl-enter-key">↵</span>
+                </div>
+
+                <div class="nl-preset-chips">
+                  <span class="compat-label">Try a preset command:</span>
+                  <button type="button" class="nl-preset-btn" data-nl-style="vancouver" data-nl-cmd="Convert manuscript to Vancouver and sort bibliography by appearance">
+                    "Convert manuscript to Vancouver..."
+                  </button>
+                  <button type="button" class="nl-preset-btn" data-nl-style="nature" data-nl-cmd="Format inline citations as Nature superscripts">
+                    "Format inline citations as Nature superscripts"
+                  </button>
+                  <button type="button" class="nl-preset-btn" data-nl-style="ama" data-nl-cmd="Apply AMA / NEJM numbered medical journal schema">
+                    "Apply AMA / NEJM medical journal schema"
+                  </button>
+                  <button type="button" class="nl-preset-btn" data-nl-style="apa" data-nl-cmd="Restore APA 7th author-date citations alphabetically">
+                    "Restore APA 7th author-date citations"
+                  </button>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- SECTION 2B: FULL-BLEED INTERACTIVE 3-PANE CENTRAL SPATIAL VAULT -->
+    <section class="vault-showcase-section scroll-reveal" id="spatial-vault">
+      <div class="container">
+        <div class="section-header">
+          <span class="section-eyebrow">Central Spatial Vault</span>
+          <h2 class="section-title">Your Local Research Library, Engineered Like a Native Instrument</h2>
+          <p class="section-subtitle">
+            Multi-paper grounded synthesis, 1-click Zotero migration, and zero-config iPad Apple Pencil casting in a single native macOS workspace.
+          </p>
+        </div>
+
+        <!-- Full-Bleed macOS Vault Window -->
+        <div class="vault-window" role="region" aria-label="Kyodo Central Spatial Vault Interactive Preview">
+          <!-- Vault Title Bar -->
+          <div class="vault-titlebar">
+            <div class="vault-titlebar-left">
+              <div class="traffic-lights" aria-hidden="true">
+                <span class="tl tl-close"></span>
+                <span class="tl tl-min"></span>
+                <span class="tl tl-max"></span>
+              </div>
+              <span class="vault-home-pill">
+                <span aria-hidden="true">🏠</span> Kyodo Vault
+              </span>
+            </div>
+
+            <!-- Clickable Paper Tabs with RAG Badges & Multi-Paper Chat Capsule -->
+            <div class="vault-paper-tabs" role="tablist" aria-label="Open Vault Papers">
+              <button type="button" role="tab" aria-selected="true" class="vault-tab active" data-vault-paper="lytvyn">
+                <span class="tab-doc-icon" aria-hidden="true">📄</span>
+                <span class="tab-doc-name">Lytvyn 2017</span>
+                <span class="rag-badge">RAG</span>
+              </button>
+              <button type="button" role="tab" aria-selected="false" class="vault-tab" data-vault-paper="mcmurray">
+                <span class="tab-doc-icon" aria-hidden="true">📄</span>
+                <span class="tab-doc-name">McMurray 2019</span>
+                <span class="rag-badge">RAG</span>
+              </button>
+              <button type="button" role="tab" aria-selected="false" class="vault-tab" data-vault-paper="packer">
+                <span class="tab-doc-icon" aria-hidden="true">📄</span>
+                <span class="tab-doc-name">Packer 2020</span>
+                <span class="rag-badge">RAG</span>
+              </button>
+              <span class="multi-paper-capsule" title="Hold Shift + Click tabs to synthesize multiple papers simultaneously">
+                <span class="capsule-plus">+</span> Multi-Paper Chat (3) <kbd>⇧ + Click tab</kbd>
+              </span>
+            </div>
+
+            <div class="vault-titlebar-right">
+              <span class="trial-pro-badge">14-Day Pro-Elite Trial</span>
+            </div>
+          </div>
+
+          <!-- 3-Pane Body -->
+          <div class="vault-3pane-body">
+            <!-- LEFT PANE: Folders Rail -->
+            <aside class="vault-folders-rail" aria-label="Vault Folders Rail">
+              <div class="rail-section-label">COLLECTIONS</div>
+              <ul class="folder-list" id="vault-folder-list">
+                <li>
+                  <button type="button" class="folder-item active" data-folder="all">
+                    <span>📁 All Papers</span>
+                    <span class="folder-count">148</span>
+                  </button>
+                </li>
+                <li>
+                  <button type="button" class="folder-item" data-folder="sglt2">
+                    <span><span class="dot-emerald">●</span> SGLT2 Trials</span>
+                    <span class="folder-count">34</span>
+                  </button>
+                </li>
+                <li>
+                  <button type="button" class="folder-item" data-folder="hfpef">
+                    <span><span class="dot-sapphire">●</span> HFpEF Cohorts</span>
+                    <span class="folder-count">28</span>
+                  </button>
+                </li>
+                <li>
+                  <button type="button" class="folder-item" data-folder="renal">
+                    <span><span class="dot-violet">●</span> Renal Endpoints</span>
+                    <span class="folder-count">19</span>
+                  </button>
+                </li>
+                <li>
+                  <button type="button" class="folder-item" data-folder="grants">
+                    <span><span class="dot-amber">●</span> Grants &amp; Protocols</span>
+                    <span class="folder-count">12</span>
+                  </button>
+                </li>
+              </ul>
+
+              <div class="rail-bottom-actions">
+                <button type="button" class="rail-action-btn" id="vault-autosort-btn">
+                  <span aria-hidden="true">⚡</span> Auto-Sort
+                </button>
+                <button type="button" class="rail-action-btn" id="vault-zotero-btn">
+                  <span aria-hidden="true">📥</span> 1-Click Zotero Import
+                </button>
+                <div class="rail-status-toast" id="vault-rail-toast" aria-live="polite">
+                  ✓ 148 PDFs indexed locally
+                </div>
+              </div>
+            </aside>
+
+            <!-- CENTER PANE: Immersive Scholarly PDF Reader & Floating Glass Tools Bar -->
+            <div class="vault-center-reader">
+              <!-- Floating Glass Tools Bar -->
+              <div class="floating-reader-toolbar" role="toolbar" aria-label="PDF Annotation and Casting Tools">
+                <button type="button" class="tool-btn active" data-reader-tool="highlight" title="Highlight Passage">
+                  <span aria-hidden="true">🖍️</span> Highlight
+                </button>
+                <button type="button" class="tool-btn" data-reader-tool="underline" title="Underline Passage">
+                  <span aria-hidden="true">U̲</span> Underline
+                </button>
+
+                <!-- 5 Color Swatches -->
+                <div class="swatch-group" role="group" aria-label="Annotation Color Swatches">
+                  <button type="button" class="color-swatch swatch-emerald active" data-swatch="emerald" aria-label="Emerald Highlight"></button>
+                  <button type="button" class="color-swatch swatch-amber" data-swatch="amber" aria-label="Amber Highlight"></button>
+                  <button type="button" class="color-swatch swatch-sapphire" data-swatch="sapphire" aria-label="Sapphire Highlight"></button>
+                  <button type="button" class="color-swatch swatch-violet" data-swatch="violet" aria-label="Violet Highlight"></button>
+                  <button type="button" class="color-swatch swatch-rose" data-swatch="rose" aria-label="Rose Highlight"></button>
+                </div>
+
+                <button type="button" class="tool-btn" data-reader-tool="eraser" title="Clear Highlight">
+                  <span aria-hidden="true">⌫</span> Eraser
+                </button>
+
+                <span class="toolbar-sep" aria-hidden="true"></span>
+
+                <button type="button" class="tool-btn" id="vault-cite-btn" title="Copy Formatted Citation">
+                  <span aria-hidden="true">❝</span> Cite
+                </button>
+
+                <!-- Declarative Popover Trigger for Cast to iPad Canvas -->
+                <button type="button" class="tool-btn tool-btn-ipad" commandfor="ipad-cast-popover" command="toggle-popover">
+                  <span aria-hidden="true">📱</span> Cast to iPad
+                </button>
+              </div>
+
+              <!-- Declarative Popover: Cast to iPad Canvas Wi-Fi QR & AirDrop -->
+              <div id="ipad-cast-popover" popover class="ipad-qr-popover" role="dialog" aria-label="Cast to iPad Canvas">
+                <div class="popover-header">
+                  <span class="popover-title">📱 Cast to iPad Canvas</span>
+                  <button type="button" class="popover-close-btn" commandfor="ipad-cast-popover" command="hide-popover" aria-label="Close iPad Cast popover">✕</button>
+                </div>
+                <p class="popover-desc">Zero-config local Wi-Fi pairing for live Apple Pencil markup &amp; bi-directional PDF sync.</p>
+                <div class="qr-box-wrap">
+                  <!-- Crisp SVG QR Matrix -->
+                  <svg class="qr-svg" viewBox="0 0 120 120" width="112" height="112" role="img" aria-label="Local Wi-Fi iPad Pairing QR Code">
+                    <rect width="120" height="120" rx="10" fill="#FFFFFF"/>
+                    <path d="M14 14h28v28H14zM20 20v16h16V20zM24 24h8v8h-8zM78 14h28v28H78zM84 20v16h16V20zM88 24h8v8h-8zM14 78h28v28H14zM20 84v16h16V84zM24 88h8v8h-8zM50 14h8v8h-8zM62 22h8v12h-8zM50 38h16v8H50zM14 50h12v8H14zM34 50h12v12H34zM54 54h16v16H54zM78 50h12v8H78zM98 54h8v16h-8zM50 78h12v8H50zM70 78h16v12H70zM54 94h12v12H54zM78 94h28v12H78zM94 74h12v12H94z" fill="#060911"/>
+                  </svg>
+                  <div class="qr-meta">
+                    <span class="qr-subnet-tag">● Local Bonjour / mDNS Active</span>
+                    <span class="qr-hint">Scan with iPad Camera on same Wi-Fi</span>
+                    <button type="button" class="btn-airdrop-fallback" id="airdrop-fallback-btn">
+                      📡 Or Send via AirDrop
+                    </button>
+                  </div>
+                </div>
+              </div>
+
+              <!-- Center Scholarly PDF Document Page -->
+              <article class="pdf-page-surface" id="vault-pdf-surface">
+                <div class="pdf-running-head">
+                  <span id="pdf-journal-header">CIRCULATION • STATE-OF-THE-ART REVIEW</span>
+                  <span id="pdf-page-num-header">Page 4 of 16</span>
+                </div>
+
+                <h3 class="pdf-article-title" id="pdf-article-title">
+                  Sodium Glucose Cotransporter-2 Inhibition in Heart Failure: Potential Mechanisms, Clinical Applications, and Summary of Clinical Trials
+                </h3>
+                <div class="pdf-article-authors" id="pdf-article-authors">
+                  Yuliya Lytvyn, PhD; Petter Bjornstad, MD; Jacob A. Udell, MD, MPH; Julie A. Lovshin, MD, PhD; David Z.I. Cherney, MD, PhD (2017)
+                </div>
+
+                <div class="pdf-columns">
+                  <p class="pdf-body-p" id="pdf-passage-p4" data-highlight-color="emerald">
+                    <strong>Clinical Trial Outcomes (Page 4 • Results):</strong>
+                    <mark class="pdf-highlight-span active-passage" id="pdf-mark-p4">
+                      "The CANVAS trial (Canagliflozin Cardiovascular Assessment Study) subsequently reported a reduction in 3-point major adverse cardiovascular events and HF hospitalization risk (HR 0.67; 95% CI, 0.52–0.87), corroborating the rapid hemodynamic and natriuretic unloading observed in EMPA-REG OUTCOME."
+                    </mark>
+                  </p>
+
+                  <p class="pdf-body-p" id="pdf-passage-p6">
+                    <strong>Mechanistic Synthesis &amp; DAPA-HF Cross-Validation (Page 6 • Discussion):</strong>
+                    <mark class="pdf-highlight-span" id="pdf-mark-p6">
+                      "In subsequent dedicated heart failure cohorts including DAPA-HF (McMurray et al., 2019; HR 0.70; 95% CI, 0.59–0.83; P&lt;0.001) and EMPEROR-Reduced (Packer et al., 2020; HR 0.75; 95% CI, 0.65–0.86), reductions in worsening heart failure events remained identical between patients with and without type 2 diabetes."
+                    </mark>
+                  </p>
+                </div>
+              </article>
+
+              <!-- Bottom RAG Citation Jump Capsule -->
+              <div class="rag-jump-bar">
+                <button type="button" class="rag-jump-capsule" id="rag-jump-capsule-btn">
+                  <span aria-hidden="true">📍</span>
+                  <span id="rag-jump-text">Page 4 • Results — Jump to Verified Citation Passage</span>
+                </button>
+              </div>
+            </div>
+
+            <!-- RIGHT PANE: Clean Full-Height Multipurpose Panel (Orb & Scallop Cutout Removed per #11 & #12) -->
+            <div class="vault-right-panel-wrap">
+              <aside class="vault-multipurpose-panel" aria-label="Vault Multipurpose Synthesis and Metadata Panel">
+                <!-- Panel Header: Metadata | Chat Switcher + [G Link to Google] BYOK Pill -->
+                <div class="mp-panel-header">
+                  <div class="mp-mode-switcher" role="tablist" aria-label="Multipurpose Panel Mode">
+                    <button type="button" role="tab" aria-selected="false" class="mp-tab-btn" data-mp-mode="metadata">
+                      Metadata
+                    </button>
+                    <button type="button" role="tab" aria-selected="true" class="mp-tab-btn active" data-mp-mode="chat">
+                      💬 Chat
+                    </button>
+                  </div>
+
+                  <button type="button" class="byok-google-pill" id="byok-google-btn" title="1-Click Bring Your Own Gemini Key Setup">
+                    <span class="g-badge" aria-hidden="true">G</span>
+                    <span id="byok-google-label">Link to Google</span>
+                  </button>
+                </div>
+
+                <!-- CHAT VIEW (Default) -->
+                <div class="mp-panel-body" id="mp-view-chat">
+                  <div class="mp-synthesis-banner">
+                    <span class="dot-violet">●</span>
+                    <span>Synthesizing <strong>3 Checked Papers</strong> (RAG Grounded)</span>
+                  </div>
+
+                  <div class="mp-user-query">
+                    <span class="q-badge">Q</span>
+                    <p id="mp-query-display">"Compare primary HF hospitalization hazard ratios across trials."</p>
+                  </div>
+
+                  <div class="mp-ai-response" id="mp-ai-response-box">
+                    <div class="ai-resp-title">✦ Grounded Multi-Paper Synthesis:</div>
+
+                    <div class="synthesis-item">
+                      <p>
+                        <strong>Lytvyn &amp; Bjornstad (2017):</strong> CANVAS reported a <strong>33% relative risk reduction</strong> in HF hospitalization (<code>HR 0.67; 95% CI, 0.52–0.87</code>).
+                      </p>
+                      <button type="button" class="view-in-pdf-chip active" data-jump-target="p4">
+                        📄 View in PDF (Page 4) ↗
+                      </button>
+                    </div>
+
+                    <div class="synthesis-item">
+                      <p>
+                        <strong>McMurray et al. (2019):</strong> DAPA-HF demonstrated a primary HF hospitalization hazard ratio of <strong>0.70</strong> (<code>95% CI, 0.59–0.83; P&lt;0.001</code>) independent of baseline diabetes status.
+                      </p>
+                      <button type="button" class="view-in-pdf-chip" data-jump-target="p6">
+                        📄 View in PDF (Page 6) ↗
+                      </button>
+                    </div>
+                  </div>
+
+                  <!-- Full-Width Input Bar Docked Cleanly at the Very Bottom of Right Pane -->
+                  <form class="mp-chat-input-bar" id="mp-chat-form">
+                    <input type="text" id="mp-chat-input" class="mp-chat-input" placeholder="Ask across 3 checked papers..." aria-label="Ask across 3 checked papers">
+                    <button type="submit" class="mp-send-icon" aria-label="Send multi-paper query">↑</button>
+                  </form>
+                </div>
+
+                <!-- METADATA VIEW (Completely Hidden via [hidden] when Chat is Active) -->
+                <div class="mp-panel-body" id="mp-view-metadata" hidden>
+                  <div class="meta-dossier-list">
+                    <div class="meta-row">
+                      <span class="meta-key">Publication</span>
+                      <span class="meta-val" id="mp-meta-pub">Circulation (AHA) • Oct 2017</span>
+                    </div>
+                    <div class="meta-row">
+                      <span class="meta-key">Verified DOI</span>
+                      <span class="meta-val mono-doi" id="mp-meta-doi">10.1161/CIRCULATIONAHA.117.030012</span>
+                    </div>
+                    <div class="meta-row">
+                      <span class="meta-key">Local RAG Index</span>
+                      <span class="meta-val emerald-text" id="mp-meta-rag">✓ 68 Passages Indexed (&lt;2ms)</span>
+                    </div>
+                    <div class="meta-row">
+                      <span class="meta-key">Co-Author Compatibility</span>
+                      <span class="meta-val">Zotero / Mendeley / EndNote Sync Ready</span>
+                    </div>
+                  </div>
+                </div>
+              </aside>
+            </div>
+          </div>
+        </div>
+
+        <!-- 4-Column Capability Strip Directly Beneath the Vault Window (SVGs replacing emojis per #13) -->
+        <div class="vault-capability-strip">
+          <div class="cap-strip-card">
+            <div class="cap-icon-svg" aria-hidden="true">
+              <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M21 2v6h-6"></path>
+                <path d="M3 12a9 9 0 0 1 15-6.7L21 8"></path>
+                <path d="M3 22v-6h6"></path>
+                <path d="M21 12a9 9 0 0 1-15 6.7L3 16"></path>
+              </svg>
+            </div>
+            <h3>1-Click Zotero Import &amp; 100% Backward Compatibility</h3>
+            <p>Migrate your entire Zotero, Mendeley, or EndNote library in seconds. Co-authors still on legacy managers can edit shared manuscripts with zero broken citations.</p>
+          </div>
+          <div class="cap-strip-card">
+            <div class="cap-icon-svg" aria-hidden="true">
+              <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M22 19a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h5l2 3h9a2 2 0 0 1 2 2z"></path>
+                <path d="M12 11v6"></path>
+                <path d="M9 14h6"></path>
+              </svg>
+            </div>
+            <h3>Zero-Trigger Real-Time Auto-Folders</h3>
+            <p>Drop arbitrary PDFs into your Vault; Kyodo automatically extracts metadata and files them into clean topic collections without manual tagging.</p>
+          </div>
+          <div class="cap-strip-card">
+            <div class="cap-icon-svg" aria-hidden="true">
+              <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"></path>
+                <path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"></path>
+              </svg>
+            </div>
+            <h3>Persistent Global Citations Across Shared Files</h3>
+            <p>Share manuscripts across co-authors and devices (<code>Mac ↔ Windows</code>); every citation remains cryptographically anchored to its source passage.</p>
+          </div>
+          <div class="cap-strip-card">
+            <div class="cap-icon-svg" aria-hidden="true">
+              <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+                <rect x="4" y="2" width="16" height="20" rx="2" ry="2"></rect>
+                <line x1="12" y1="18" x2="12.01" y2="18"></line>
+                <path d="M14.5 6.5l3 3L10 17H7v-3l7.5-7.5z"></path>
+              </svg>
+            </div>
+            <h3>Duet Mode &amp; iPad Apple Pencil Canvas</h3>
+            <p>Share a live synchronized Vault with a research partner (Duet Mode) and cast any PDF to your iPad for low-latency Apple Pencil annotation.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- SECTION 3: COMPETITOR POSITIONING MATRIX -->
+    <section class="compare-section scroll-reveal" id="compare">
+      <div class="container">
+        <div class="section-header">
+          <span class="section-eyebrow">The Competitive Landscape</span>
+          <h2 class="section-title">Why Researchers Switch to an Ambient Epistemic Companion</h2>
+          <p class="section-subtitle">
+            Legacy reference managers are blind to sentence meaning; generative AI wrappers ghostwrite synthetic prose and bloat RAM. Kyodo occupies a new quadrant.
+          </p>
+        </div>
+
+        <div class="compare-split-grid">
+          <!-- Left 4 Columns: 2x2 Epistemic Positioning Quadrant -->
+          <div class="quadrant-card">
+            <div class="quadrant-axis-top">
+              <span>▲ AMBIENT OS-LEVEL NATIVE COMPANION</span>
+              <small>(Word, Pages, Docs, Notes, LaTeX, PDFs)</small>
+            </div>
+
+            <div class="quadrant-2x2-matrix">
+              <!-- Top-Left Quadrant -->
+              <div class="quad-cell quad-tl">
+                <span class="quad-tag">Static Metadata &amp; Filing</span>
+                <h4>Legacy Reference Managers</h4>
+                <p>Zotero, Mendeley, EndNote, Bookends</p>
+                <small>Passive citation tags; blind to whether paper supports your sentence.</small>
+              </div>
+
+              <!-- Top-Right Quadrant: KYODO -->
+              <div class="quad-cell quad-tr">
+                <span class="quad-tag quad-tag-emerald">✦ Live Epistemic Audit</span>
+                <h4>KYODO (Native macOS)</h4>
+                <p>Live Claim &amp; Citation Verification</p>
+                <small>Zero AI ghostwriting • &lt;2ms local recall • &lt;20 MB RAM.</small>
+              </div>
+
+              <!-- Bottom-Left Quadrant -->
+              <div class="quad-cell quad-bl">
+                <span class="quad-tag">Synthetic Essay Generation</span>
+                <h4>AI Ghostwriters &amp; Copilots</h4>
+                <p>Jenni AI, SciSpace, Paperpal</p>
+                <small>Forces you into a siloed web editor; generates synthetic paragraphs.</small>
+              </div>
+
+              <!-- Bottom-Right Quadrant -->
+              <div class="quad-cell quad-br">
+                <span class="quad-tag">Manual Query Search</span>
+                <h4>Static Web Search Portals</h4>
+                <p>scite.ai, Consensus, Elicit</p>
+                <small>Siloed browser tabs requiring manual copy-pasting per query.</small>
+              </div>
+            </div>
+
+            <div class="quadrant-axis-bottom">
+              <span>▼ SILOED BROWSER WEB APPLICATION</span>
+            </div>
+          </div>
+
+          <!-- Right 8 Columns: Sticky Semantic Comparison Table (modern-web-guidance: responsive-table) -->
+          <div class="comparison-table-col">
+            <div tabindex="0" role="region" aria-labelledby="competitor-matrix-caption" class="table-wrapper">
+              <table class="semantic-compare-table">
+                <caption id="competitor-matrix-caption" class="sr-only">
+                  Comparison of Kyodo against Legacy Reference Managers, AI Ghostwriters, and Web Search Portals
+                </caption>
+                <thead>
+                  <tr>
+                    <th scope="col">Capability / Metric</th>
+                    <th scope="col" class="col-kyodo">✦ Kyodo (Native macOS)</th>
+                    <th scope="col">Legacy Managers <small>(Zotero, Mendeley, EndNote)</small></th>
+                    <th scope="col">AI Ghostwriters <small>(Jenni AI, SciSpace, Paperpal)</small></th>
+                    <th scope="col">Web Search Portals <small>(scite.ai, Consensus, Elicit)</small></th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <th scope="row">Core Epistemic Role</th>
+                    <td class="col-kyodo"><strong>Ambient Co-Researcher</strong> <em>(Zero AI Ghostwriting)</em></td>
+                    <td>Passive PDF &amp; Citation Filing Cabinet</td>
+                    <td>Generative AI Essay Autocomplete</td>
+                    <td>Browser-Only Search Engine</td>
+                  </tr>
+                  <tr>
+                    <th scope="row">Works Natively Inside Word, Pages, Docs, Notes &amp; LaTeX</th>
+                    <td class="col-kyodo"><span class="emerald-text">✓ Ambient OS-Level Overlay</span> <em>(Zero brittle plugins)</em></td>
+                    <td>Partial <em>(Heavy Word plugins that stall on large manuscripts)</em></td>
+                    <td><span class="rose-text">✕</span> Forces you to write inside their web editor</td>
+                    <td><span class="rose-text">✕</span> Browser tab only (Manual copy-paste)</td>
+                  </tr>
+                  <tr>
+                    <th scope="row">Audits Whether Cited Paper Supports Your Claim</th>
+                    <td class="col-kyodo"><span class="emerald-text">✓ Live Entailment &amp; Misquote Audit</span> (<code>&lt;2ms</code> local)</td>
+                    <td><span class="rose-text">✕</span> Blind to the meaning of your sentence</td>
+                    <td><span class="rose-text">✕</span> Frequently hallucinates or misattributes</td>
+                    <td>Partial <em>(Manual web search per query)</em></td>
+                  </tr>
+                  <tr>
+                    <th scope="row">Instant PDF &amp; Browser Citation Introspection</th>
+                    <td class="col-kyodo"><span class="emerald-text">✓ Automatic on Open</span> <em>(Zero screen recording)</em></td>
+                    <td><span class="rose-text">✕</span> Manual lookup only</td>
+                    <td><span class="rose-text">✕</span> Requires uploading each PDF to cloud</td>
+                    <td><span class="rose-text">✕</span> Browser extension only</td>
+                  </tr>
+                  <tr>
+                    <th scope="row">1-Click In-Place Style Transmutation</th>
+                    <td class="col-kyodo"><span class="emerald-text">✓ Instant</span> (<code>APA</code> ↔ <code>Vancouver</code> ↔ <code>Nature</code>)</td>
+                    <td>Requires plugin refresh / fragile field codes</td>
+                    <td>Web export only</td>
+                    <td><span class="rose-text">✕</span> No manuscript formatting</td>
+                  </tr>
+                  <tr>
+                    <th scope="row">Native RAM &amp; Idle CPU Footprint</th>
+                    <td class="col-kyodo"><strong class="emerald-text">&lt;20 MB RAM • 0.00% Idle CPU</strong> <em>(Native SwiftUI)</em></td>
+                    <td><code>350 MB – 900 MB</code></td>
+                    <td><code>500 MB+</code> per browser tab</td>
+                    <td><code>400 MB+</code> per browser tab</td>
+                  </tr>
+                  <tr>
+                    <th scope="row">Offline Privacy &amp; Permanent Free Fallback</th>
+                    <td class="col-kyodo"><span class="emerald-text">✓ 100% Local Vault</span> + Permanent ₹0/$0 Basic Mode</td>
+                    <td><span class="emerald-text">✓</span> Local storage (Zotero)</td>
+                    <td><span class="rose-text">✕</span> Cloud-locked</td>
+                    <td><span class="rose-text">✕</span> Cloud-locked</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- SECTION 4: INTERACTIVE 5-TIER PRICING & MODULAR DECOY CALCULATOR -->
+    <section class="pricing-section scroll-reveal" id="pricing">
+      <div class="container">
+        <div class="section-header">
+          <span class="section-eyebrow">Transparent Pricing Architecture</span>
+          <h2 class="section-title">Permanent Free Local Vault. Modular Power When You Scale.</h2>
+          <p class="section-subtitle">
+            Every macOS download starts with a <strong>14-Day Full Pro-Elite Trial</strong> (no credit card required) and never locks out your local PDFs or manual citations.
+          </p>
+        </div>
+
+        <!-- 30-Seat Closed Beta Launch Banner -->
+        <div class="closed-beta-banner" role="region" aria-label="30-Seat Closed Beta Launch Announcement">
+          <div class="beta-banner-content">
+            <div class="beta-banner-badge">
+              <span class="pulse-dot-emerald" aria-hidden="true"></span>
+              <span>FOUNDATIONAL CLOSED BETA: 30 RESEARCHER SEATS — 100% FREE FULL PRO-ELITE ACCESS</span>
+            </div>
+            <p class="beta-banner-text">
+              We are inviting 30 medical doctors, PhDs, postdocs, and academic writers to our foundational macOS beta cohort with <strong>full Pro-Elite unlocked at ₹0 / $0</strong> (Built-In Cloud AI, Unlimited LiveCite Manuscripts, Multi-Paper Synthesis, Duet Mode &amp; iPad Canvas). Your local PDFs and Free Basic Mode remain 100% yours on your Mac forever.
+            </p>
+          </div>
+          <div class="beta-banner-actions">
+            <button type="button" class="btn-emerald-primary" commandfor="beta-modal" command="show-modal">
+              ✦ Claim 1 of 30 Free Pro-Elite Seats
+            </button>
+            <button type="button" class="btn-glass-secondary" commandfor="download-modal" command="show-modal">
+               Download Universal .dmg
+            </button>
+          </div>
+        </div>
+
+        <!-- Interactive Dual Toggles: Currency (INR / USD) & Billing Cycle (Monthly / Annual) -->
+        <div class="pricing-controls-bar" role="group" aria-label="Currency and Billing Cycle Controls">
+          <div class="segmented-pill-group" role="group" aria-label="Currency Toggle">
+            <button type="button" class="seg-btn active" id="currency-btn-inr" data-currency="inr">
+              🇮🇳 ₹ INR
+            </button>
+            <button type="button" class="seg-btn" id="currency-btn-usd" data-currency="usd">
+              🌐 $ USD
+            </button>
+          </div>
+
+          <div class="segmented-pill-group" role="group" aria-label="Billing Cycle Toggle">
+            <button type="button" class="seg-btn" id="billing-btn-monthly" data-billing="monthly">
+              Monthly
+            </button>
+            <button type="button" class="seg-btn active" id="billing-btn-annual" data-billing="annual">
+              Annual <span class="save-badge">Save ~17% • 2 Months Free</span>
+            </button>
+          </div>
+        </div>
+
+        <!-- Smart Value Recommendation Banner (Decoy Ladder Engine - Dynamic) -->
+        <div class="smart-value-banner" id="smart-value-banner" hidden aria-live="polite">
+          <div class="sv-banner-left">
+            <span class="sv-icon" aria-hidden="true">⚡</span>
+            <div>
+              <strong id="sv-banner-title">Better Value Available — Switch to Pro &amp; Save</strong>
+              <p id="sv-banner-desc">Your customized add-ons exceed the next tier. Upgrade to unlock Unlimited Manuscripts, Multi-Paper Synthesis, and Co-Author Compatibility for less.</p>
+            </div>
+          </div>
+          <button type="button" class="btn-sv-upgrade" id="sv-upgrade-btn" data-target-tier="pro">
+            ✦ Switch Plan &amp; Save →
+          </button>
+        </div>
+
+        <!-- 5-Tier Pricing Grid -->
+        <div class="pricing-tiers-grid">
+          <!-- TIER 1: FREE / STARTER -->
+          <article class="pricing-card tier-free" id="tier-card-free">
+            <div class="tier-header">
+              <span class="tier-badge badge-slate">1. Free / Starter</span>
+              <h3 class="tier-name">Basic Mode Forever</h3>
+              <p class="tier-tagline">Permanent offline PDF vault &amp; manual citations with zero lockout.</p>
+            </div>
+
+            <div class="tier-price-box">
+              <div class="price-main">
+                <span class="price-amount" id="price-free">₹0</span>
+                <span class="price-period">/ forever</span>
+              </div>
+              <div class="price-sub" id="sub-free">Includes 14-Day Full Pro-Elite Trial</div>
+            </div>
+
+            <ul class="tier-features-list">
+              <li><strong>40 Free Cloud AI Calls</strong> (25 LiveCite groundings, 10 citation audits, 5 auto-folder calls)</li>
+              <li><strong>30-Article Local PDF Vault</strong></li>
+              <li><strong>Permanent Passive PDF Vault &amp; Manual Citations</strong> in Word, Pages &amp; Docs forever</li>
+              <li>1-Click Citation Style Transmuter (APA, Vancouver, Nature, AMA, Harvard)</li>
+            </ul>
+
+            <div class="tier-addons-box tier-addons-muted">
+              <div class="addons-title">Permanent Fallback Guarantee</div>
+              <p class="addons-note">Your local PDFs and manual manuscript citations never expire or lock out.</p>
+            </div>
+
+            <button type="button" class="btn-tier-cta btn-glass-secondary" commandfor="download-modal" command="show-modal">
+               Download Free (.dmg)
+            </button>
+          </article>
+
+          <!-- TIER 2: SCHOLAR (Sapphire) -->
+          <article class="pricing-card tier-scholar" id="tier-card-scholar">
+            <div class="tier-header">
+              <span class="tier-badge badge-sapphire">2. Scholar • Solo BYOK</span>
+              <h3 class="tier-name">Scholar</h3>
+              <p class="tier-tagline">Unlimited local vault &amp; 1-click Gemini BYOK for solo researchers.</p>
+            </div>
+
+            <div class="tier-price-box">
+              <div class="price-main">
+                <span class="price-amount" id="price-scholar">₹250</span>
+                <span class="price-period">/ mo</span>
+              </div>
+              <div class="price-sub" id="sub-scholar">Billed ₹2,999/yr (vs ₹299/mo)</div>
+            </div>
+
+            <ul class="tier-features-list">
+              <li><strong>Bring Your Own Gemini Key (BYOK)</strong> + Unlimited On-Device AI</li>
+              <li><strong>Unlimited PDF Vault</strong> &amp; Full-Text Search</li>
+              <li><strong>2 Active LiveCite Manuscripts</strong></li>
+              <li><strong>1 Editable Citation-Attached Shared Document</strong></li>
+              <li>Unlimited In-Paper Citation Audit &amp; 1-Click Auto-Folders</li>
+            </ul>
+
+            <!-- Interactive Add-On Steppers for Scholar -->
+            <div class="tier-addons-box">
+              <div class="addons-title">Customize Scholar Add-Ons</div>
+
+              <div class="addon-row">
+                <div class="addon-info">
+                  <span class="addon-name">+1 Active Manuscript</span>
+                  <span class="addon-cost" data-cost-inr="+₹50/mo" data-cost-usd="+$3/mo">+₹50/mo</span>
+                </div>
+                <div class="stepper-ctrl">
+                  <button type="button" class="step-btn" data-tier="scholar" data-addon="ms1" data-dir="-1" aria-label="Remove 1 active manuscript">−</button>
+                  <span class="step-val" id="val-scholar-ms1">0</span>
+                  <button type="button" class="step-btn" data-tier="scholar" data-addon="ms1" data-dir="1" aria-label="Add 1 active manuscript">+</button>
+                </div>
+              </div>
+
+              <div class="addon-row">
+                <div class="addon-info">
+                  <span class="addon-name">+3 Manuscripts Bundle</span>
+                  <span class="addon-cost" data-cost-inr="+₹150/mo" data-cost-usd="+$8/mo">+₹150/mo</span>
+                </div>
+                <div class="stepper-ctrl">
+                  <button type="button" class="step-btn" data-tier="scholar" data-addon="ms3" data-dir="-1" aria-label="Remove 3 manuscripts bundle">−</button>
+                  <span class="step-val" id="val-scholar-ms3">0</span>
+                  <button type="button" class="step-btn" data-tier="scholar" data-addon="ms3" data-dir="1" aria-label="Add 3 manuscripts bundle">+</button>
+                </div>
+              </div>
+
+              <div class="addon-row" id="row-scholar-shared1">
+                <div class="addon-info">
+                  <span class="addon-name">+1 Shared Co-Author Doc</span>
+                  <span class="addon-cost" id="cost-scholar-shared1" data-cost-inr="+₹50/mo" data-cost-usd="+$3/mo">+₹50/mo</span>
+                </div>
+                <div class="stepper-ctrl">
+                  <button type="button" class="step-btn" data-tier="scholar" data-addon="shared1" data-dir="-1" aria-label="Remove 1 shared co-author document">−</button>
+                  <span class="step-val" id="val-scholar-shared1">0</span>
+                  <button type="button" class="step-btn" data-tier="scholar" data-addon="shared1" data-dir="1" aria-label="Add 1 shared co-author document">+</button>
+                </div>
+              </div>
+
+              <div class="addon-row">
+                <div class="addon-info">
+                  <span class="addon-name">Unlimited Sharing &amp; Sync</span>
+                  <span class="addon-cost" data-cost-inr="+₹250/mo" data-cost-usd="+$10/mo">+₹250/mo</span>
+                </div>
+                <div class="stepper-ctrl">
+                  <button type="button" class="step-btn" data-tier="scholar" data-addon="unlimSync" data-dir="-1" aria-label="Remove unlimited sharing and sync">−</button>
+                  <span class="step-val" id="val-scholar-unlimSync">0</span>
+                  <button type="button" class="step-btn" data-tier="scholar" data-addon="unlimSync" data-dir="1" aria-label="Add unlimited sharing and sync">+</button>
+                </div>
+              </div>
+            </div>
+
+            <button type="button" class="btn-tier-cta btn-sapphire-outline" id="checkout-btn-scholar" data-checkout-tier="scholar">
+              Subscribe to Scholar (₹2,999/yr)
+            </button>
+          </article>
+
+          <!-- TIER 3: PRO (Most Popular - Violet) -->
+          <article class="pricing-card tier-pro featured-tier" id="tier-card-pro">
+            <div class="popular-ribbon">✦ MOST POPULAR FOR ACTIVE AUTHORS</div>
+            <div class="tier-header">
+              <span class="tier-badge badge-violet">3. Pro • Unlimited Manuscripts</span>
+              <h3 class="tier-name">Pro</h3>
+              <p class="tier-tagline">Unlimited LiveCite manuscripts, Multi-Paper LiveChat &amp; Zotero co-author sync.</p>
+            </div>
+
+            <div class="tier-price-box">
+              <div class="price-main">
+                <span class="price-amount" id="price-pro">₹416</span>
+                <span class="price-period">/ mo</span>
+              </div>
+              <div class="price-sub" id="sub-pro">Billed ₹4,999/yr (vs ₹499/mo)</div>
+            </div>
+
+            <ul class="tier-features-list">
+              <li><strong>BYOK + Unlimited On-Device AI</strong></li>
+              <li><strong>Unlimited Active LiveCite Manuscripts</strong></li>
+              <li><strong>Multi-Article LiveChat &amp; Cross-Paper Synthesis</strong></li>
+              <li><strong>100% Backward-Compatible Co-Author Citations</strong> (Zotero, Mendeley, EndNote)</li>
+              <li><strong>2 Editable Citation-Attached Shared Documents</strong></li>
+            </ul>
+
+            <!-- Interactive Add-On Steppers for Pro -->
+            <div class="tier-addons-box">
+              <div class="addons-title">Customize Pro Add-Ons</div>
+
+              <div class="addon-row">
+                <div class="addon-info">
+                  <span class="addon-name">Built-In Cloud AI (Zero Key)</span>
+                  <span class="addon-cost" data-cost-inr="+₹350/mo" data-cost-usd="+$14/mo">+₹350/mo</span>
+                </div>
+                <div class="stepper-ctrl">
+                  <button type="button" class="step-btn" data-tier="pro" data-addon="cloudAi" data-dir="-1" aria-label="Remove built-in cloud AI">−</button>
+                  <span class="step-val" id="val-pro-cloudAi">0</span>
+                  <button type="button" class="step-btn" data-tier="pro" data-addon="cloudAi" data-dir="1" aria-label="Add built-in cloud AI">+</button>
+                </div>
+              </div>
+
+              <div class="addon-row">
+                <div class="addon-info">
+                  <span class="addon-name">Unlimited Sharing &amp; Sync</span>
+                  <span class="addon-cost" data-cost-inr="+₹250/mo" data-cost-usd="+$10/mo">+₹250/mo</span>
+                </div>
+                <div class="stepper-ctrl">
+                  <button type="button" class="step-btn" data-tier="pro" data-addon="unlimSync" data-dir="-1" aria-label="Remove unlimited sharing and sync">−</button>
+                  <span class="step-val" id="val-pro-unlimSync">0</span>
+                  <button type="button" class="step-btn" data-tier="pro" data-addon="unlimSync" data-dir="1" aria-label="Add unlimited sharing and sync">+</button>
+                </div>
+              </div>
+
+              <div class="addon-row" id="row-pro-shared1">
+                <div class="addon-info">
+                  <span class="addon-name">+1 Shared Co-Author Doc</span>
+                  <span class="addon-cost" id="cost-pro-shared1" data-cost-inr="+₹50/mo" data-cost-usd="+$3/mo">+₹50/mo</span>
+                </div>
+                <div class="stepper-ctrl">
+                  <button type="button" class="step-btn" data-tier="pro" data-addon="shared1" data-dir="-1" aria-label="Remove 1 shared co-author document">−</button>
+                  <span class="step-val" id="val-pro-shared1">0</span>
+                  <button type="button" class="step-btn" data-tier="pro" data-addon="shared1" data-dir="1" aria-label="Add 1 shared co-author document">+</button>
+                </div>
+              </div>
+
+              <div class="addon-row">
+                <div class="addon-info">
+                  <span class="addon-name">+1 Vault Collaborator</span>
+                  <span class="addon-cost" data-cost-inr="+₹250/mo" data-cost-usd="+$10/mo">+₹250/mo</span>
+                </div>
+                <div class="stepper-ctrl">
+                  <button type="button" class="step-btn" data-tier="pro" data-addon="collab1" data-dir="-1" aria-label="Remove 1 vault collaborator">−</button>
+                  <span class="step-val" id="val-pro-collab1">0</span>
+                  <button type="button" class="step-btn" data-tier="pro" data-addon="collab1" data-dir="1" aria-label="Add 1 vault collaborator">+</button>
+                </div>
+              </div>
+            </div>
+
+            <button type="button" class="btn-tier-cta btn-violet-primary" id="checkout-btn-pro" data-checkout-tier="pro">
+              Subscribe to Pro (₹4,999/yr)
+            </button>
+          </article>
+
+          <!-- TIER 4: PRO-ELITE (Complete - Emerald) -->
+          <article class="pricing-card tier-pro-elite" id="tier-card-pro-elite">
+            <div class="elite-ribbon">🟢 UNLOCKED FREE IN 30-SEAT BETA</div>
+            <div class="tier-header">
+              <span class="tier-badge badge-emerald">4. Pro-Elite • Complete Suite</span>
+              <h3 class="tier-name">Pro-Elite</h3>
+              <p class="tier-tagline">Built-in Cloud AI, Duet Mode (2 seats), Unlimited Sync &amp; iPad Apple Pencil Canvas.</p>
+            </div>
+
+            <div class="tier-price-box">
+              <div class="price-main">
+                <span class="price-amount" id="price-pro-elite">₹833</span>
+                <span class="price-period">/ mo</span>
+              </div>
+              <div class="price-sub" id="sub-pro-elite">Billed ₹9,999/yr (vs ₹999/mo)</div>
+            </div>
+
+            <ul class="tier-features-list">
+              <li><strong>Built-In Managed Cloud AI Included Out-of-the-Box</strong></li>
+              <li><strong>Zero-Trigger Real-Time Auto-Folders</strong></li>
+              <li><strong>Unlimited Shared Manuscripts &amp; Multi-Device Sync (Mac ↔ Windows)</strong></li>
+              <li><strong>Duet Mode:</strong> Shared Research Vault for <strong>2 Collaborators Included</strong></li>
+              <li><strong>Cast to iPad Canvas</strong> for Apple Pencil Markup</li>
+            </ul>
+
+            <div class="tier-addons-box">
+              <div class="addons-title">Expand Duet Vault Seats</div>
+              <div class="addon-row">
+                <div class="addon-info">
+                  <span class="addon-name">+ Extra Collaborator Seat</span>
+                  <span class="addon-cost" data-cost-inr="+₹500/seat/mo" data-cost-usd="+$20/seat/mo">+₹500/seat/mo</span>
+                </div>
+                <div class="stepper-ctrl">
+                  <button type="button" class="step-btn" data-tier="proElite" data-addon="extraSeat" data-dir="-1" aria-label="Remove extra collaborator seat">−</button>
+                  <span class="step-val" id="val-proElite-extraSeat">0</span>
+                  <button type="button" class="step-btn" data-tier="proElite" data-addon="extraSeat" data-dir="1" aria-label="Add extra collaborator seat">+</button>
+                </div>
+              </div>
+            </div>
+
+            <button type="button" class="btn-tier-cta btn-emerald-primary" id="checkout-btn-pro-elite" data-checkout-tier="pro_elite">
+              Subscribe to Pro-Elite (₹9,999/yr)
+            </button>
+          </article>
+
+          <!-- TIER 5: B2B LAB / ENTERPRISE / UNIVERSITY (Amber) -->
+          <article class="pricing-card tier-lab" id="tier-card-lab">
+            <div class="tier-header">
+              <span class="tier-badge badge-amber">5. B2B Lab &amp; University</span>
+              <h3 class="tier-name">Research Lab</h3>
+              <p class="tier-tagline">Pooled lab vault, air-gapped grant lock &amp; institutional Vertex AI governance.</p>
+            </div>
+
+            <div class="tier-price-box">
+              <div class="price-main">
+                <span class="price-amount" id="price-lab">₹1,250</span>
+                <span class="price-period">/ seat / mo</span>
+              </div>
+              <div class="price-sub" id="sub-lab">Billed ₹14,999/seat/yr (vs ₹1,499/mo)</div>
+            </div>
+
+            <ul class="tier-features-list">
+              <li><strong>Central Pooled Lab Vault</strong> with Unlimited Papers</li>
+              <li><strong>100% Air-Gapped Offline Privacy Lock</strong> for Unpublished Grants</li>
+              <li><strong>Institutional &amp; University Vertex AI Integration</strong></li>
+              <li>Real-Time Lab Taxonomy Sync, PI Admin Console &amp; All Pro-Elite + iPad Features</li>
+            </ul>
+
+            <div class="tier-addons-box">
+              <div class="addons-title">Departmental Seat Calculator</div>
+              <div class="addon-row">
+                <div class="addon-info">
+                  <span class="addon-name">Active Lab Researchers</span>
+                  <span class="addon-cost" id="lab-total-summary">Total: ₹2,500 / mo (2 seats)</span>
+                </div>
+                <div class="stepper-ctrl">
+                  <button type="button" class="step-btn" data-tier="lab" data-addon="seats" data-dir="-1" aria-label="Decrease lab seats">−</button>
+                  <span class="step-val" id="val-lab-seats">2</span>
+                  <button type="button" class="step-btn" data-tier="lab" data-addon="seats" data-dir="1" aria-label="Increase lab seats">+</button>
+                </div>
+              </div>
+            </div>
+
+            <button type="button" class="btn-tier-cta btn-amber-outline" id="checkout-btn-lab" data-checkout-tier="b2b_lab">
+              Subscribe Lab (2 Seats • ₹29,998/yr)
+            </button>
+          </article>
+        </div>
+
+        <!-- COLLAPSIBLE FULL 28-ROW FEATURE COMPARISON MATRIX ACCORDION -->
+        <details class="glass-matrix-accordion">
+          <summary class="matrix-accordion-summary">
+            <span>▾ Compare All 28 Features Across Free, Scholar, Pro, Pro-Elite &amp; Research Labs</span>
+            <span class="matrix-summary-tag">Full 3-Page Specification</span>
+          </summary>
+
+          <div class="matrix-accordion-body">
+            <div tabindex="0" role="region" aria-labelledby="full-feature-matrix-caption" class="table-wrapper">
+              <table class="full-feature-matrix-table">
+                <caption id="full-feature-matrix-caption" class="sr-only">
+                  Complete 28-Row Feature Comparison Matrix Across All 5 Kyodo Plans
+                </caption>
+                <thead>
+                  <tr>
+                    <th scope="col">Feature Category &amp; Granular Capability</th>
+                    <th scope="col">Free / Starter</th>
+                    <th scope="col">Scholar</th>
+                    <th scope="col" class="col-kyodo">Pro</th>
+                    <th scope="col" class="col-elite">Pro-Elite</th>
+                    <th scope="col">B2B Lab / University</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <!-- Category 1 -->
+                  <tr class="matrix-cat-row">
+                    <th scope="row" colspan="6">01. AI &amp; Epistemic Verification Engine</th>
+                  </tr>
+                  <tr>
+                    <th scope="row">1. On-Device Local Claim &amp; Citation Verification (<code>&lt;2ms</code>)</th>
+                    <td>✓</td>
+                    <td>✓ Unlimited</td>
+                    <td class="col-kyodo">✓ Unlimited</td>
+                    <td class="col-elite">✓ Unlimited</td>
+                    <td>✓ Unlimited</td>
+                  </tr>
+                  <tr>
+                    <th scope="row">2. Cloud AI Grounding &amp; Global Literature Discovery</th>
+                    <td>40 Free Calls <small>(25 LiveCite, 10 Audits, 5 Auto-Folder)</small></td>
+                    <td>Unlimited <small>(1-Click BYOK Gemini Key)</small></td>
+                    <td class="col-kyodo">Unlimited <small>(BYOK or +₹350/+$14 Managed)</small></td>
+                    <td class="col-elite"><strong>✓ Built-In Managed Cloud AI Included</strong></td>
+                    <td><strong>✓ Built-In + University Vertex AI</strong></td>
+                  </tr>
+                  <tr>
+                    <th scope="row">3. Verbatim Passage Extraction &amp; Entailment Scoring</th>
+                    <td>✓ (40 Trial Calls)</td>
+                    <td>✓ Unlimited</td>
+                    <td class="col-kyodo">✓ Unlimited</td>
+                    <td class="col-elite">✓ Unlimited</td>
+                    <td>✓ Unlimited</td>
+                  </tr>
+                  <tr>
+                    <th scope="row">4. Misquoted Citation &amp; Contradictory Evidence Alerts</th>
+                    <td>✓ (10 Trial Audits)</td>
+                    <td>✓ Unlimited</td>
+                    <td class="col-kyodo">✓ Unlimited</td>
+                    <td class="col-elite">✓ Unlimited</td>
+                    <td>✓ Unlimited</td>
+                  </tr>
+                  <tr>
+                    <th scope="row">5. Domain Adaptation in Reading Mode <small>(Medicine, Bio, CS, Law, Humanities)</small></th>
+                    <td>✓</td>
+                    <td>✓</td>
+                    <td class="col-kyodo">✓</td>
+                    <td class="col-elite">✓</td>
+                    <td>✓</td>
+                  </tr>
+                  <tr>
+                    <th scope="row">6. 100% Anti-Ghostwriting Guarantee <small>(Zero synthetic prose generation)</small></th>
+                    <td>✓ Always Enforced</td>
+                    <td>✓ Always Enforced</td>
+                    <td class="col-kyodo">✓ Always Enforced</td>
+                    <td class="col-elite">✓ Always Enforced</td>
+                    <td>✓ Always Enforced</td>
+                  </tr>
+
+                  <!-- Category 2 -->
+                  <tr class="matrix-cat-row">
+                    <th scope="row" colspan="6">02. Writing &amp; LiveCite Manuscript Workflow</th>
+                  </tr>
+                  <tr>
+                    <th scope="row">7. Active LiveCite Manuscripts <small>(Cite &amp; verify as you type)</small></th>
+                    <td>Manual Citations Only</td>
+                    <td><strong>2 Active Docs</strong> <small>(Expandable via add-ons)</small></td>
+                    <td class="col-kyodo"><strong>Unlimited</strong></td>
+                    <td class="col-elite"><strong>Unlimited</strong></td>
+                    <td><strong>Unlimited</strong></td>
+                  </tr>
+                  <tr>
+                    <th scope="row">8. Universal Editor Support <small>(Word, Google Docs, Pages, Notes, LaTeX)</small></th>
+                    <td>✓</td>
+                    <td>✓</td>
+                    <td class="col-kyodo">✓</td>
+                    <td class="col-elite">✓</td>
+                    <td>✓</td>
+                  </tr>
+                  <tr>
+                    <th scope="row">9. Zero-Caret-Theft Citation Injection</th>
+                    <td>✓</td>
+                    <td>✓</td>
+                    <td class="col-kyodo">✓</td>
+                    <td class="col-elite">✓</td>
+                    <td>✓</td>
+                  </tr>
+                  <tr>
+                    <th scope="row">10. Top-3 Candidate Drawer &amp; 1-Click Citation Hot-Swap</th>
+                    <td>✓</td>
+                    <td>✓</td>
+                    <td class="col-kyodo">✓</td>
+                    <td class="col-elite">✓</td>
+                    <td>✓</td>
+                  </tr>
+                  <tr>
+                    <th scope="row">11. 1-Click Citation Schema Transmutation <small>(APA, Vancouver, Nature, AMA, Harvard)</small></th>
+                    <td>✓</td>
+                    <td>✓</td>
+                    <td class="col-kyodo">✓</td>
+                    <td class="col-elite">✓</td>
+                    <td>✓</td>
+                  </tr>
+                  <tr>
+                    <th scope="row">12. Auto-Synchronized Live Bibliography Generation</th>
+                    <td>✓</td>
+                    <td>✓</td>
+                    <td class="col-kyodo">✓</td>
+                    <td class="col-elite">✓</td>
+                    <td>✓</td>
+                  </tr>
+                  <tr>
+                    <th scope="row">13. Natural Language Citation &amp; Bibliography Commands</th>
+                    <td>—</td>
+                    <td>✓</td>
+                    <td class="col-kyodo">✓</td>
+                    <td class="col-elite">✓</td>
+                    <td>✓</td>
+                  </tr>
+
+                  <!-- Category 3 -->
+                  <tr class="matrix-cat-row">
+                    <th scope="row" colspan="6">03. Reading, Central Spatial Vault &amp; Literature Synthesis</th>
+                  </tr>
+                  <tr>
+                    <th scope="row">14. Local PDF Vault Capacity</th>
+                    <td>Up to <strong>30 PDFs</strong></td>
+                    <td><strong>Unlimited PDFs</strong></td>
+                    <td class="col-kyodo"><strong>Unlimited PDFs</strong></td>
+                    <td class="col-elite"><strong>Unlimited PDFs</strong></td>
+                    <td><strong>Unlimited Pooled Lab Vault</strong></td>
+                  </tr>
+                  <tr>
+                    <th scope="row">15. Permanent Passive PDF Reader &amp; Local File Ownership</th>
+                    <td>✓ Forever Free</td>
+                    <td>✓ Forever Free</td>
+                    <td class="col-kyodo">✓ Forever Free</td>
+                    <td class="col-elite">✓ Forever Free</td>
+                    <td>✓ Forever Free</td>
+                  </tr>
+                  <tr>
+                    <th scope="row">16. Instant PDF &amp; Browser Citation Introspection <small>(Zero screen recording)</small></th>
+                    <td>10 Free Audits</td>
+                    <td>✓ Unlimited</td>
+                    <td class="col-kyodo">✓ Unlimited</td>
+                    <td class="col-elite">✓ Unlimited</td>
+                    <td>✓ Unlimited</td>
+                  </tr>
+                  <tr>
+                    <th scope="row">17. Single-Paper Grounded RAG Chat &amp; Page Jump</th>
+                    <td>✓ (Trial Calls)</td>
+                    <td>✓ Unlimited</td>
+                    <td class="col-kyodo">✓ Unlimited</td>
+                    <td class="col-elite">✓ Unlimited</td>
+                    <td>✓ Unlimited</td>
+                  </tr>
+                  <tr>
+                    <th scope="row">18. Multi-Article LiveChat &amp; Cross-Paper Literature Synthesis</th>
+                    <td>—</td>
+                    <td>—</td>
+                    <td class="col-kyodo"><strong>✓ Included</strong></td>
+                    <td class="col-elite"><strong>✓ Included</strong></td>
+                    <td><strong>✓ Included</strong></td>
+                  </tr>
+                  <tr>
+                    <th scope="row">19. Topic &amp; Folder Organization</th>
+                    <td>5 Free Calls + Manual</td>
+                    <td><strong>1-Click AI Auto-Folders</strong></td>
+                    <td class="col-kyodo"><strong>1-Click AI Auto-Folders</strong></td>
+                    <td class="col-elite"><strong>Zero-Trigger Real-Time Auto-Folders</strong></td>
+                    <td><strong>Zero-Trigger Shared Lab Taxonomy</strong></td>
+                  </tr>
+
+                  <!-- Category 4 -->
+                  <tr class="matrix-cat-row">
+                    <th scope="row" colspan="6">04. Co-Authoring, Sync &amp; Hardware Ecosystem</th>
+                  </tr>
+                  <tr>
+                    <th scope="row">20. 1-Click Zotero, Mendeley &amp; EndNote Import</th>
+                    <td>✓</td>
+                    <td>✓</td>
+                    <td class="col-kyodo">✓</td>
+                    <td class="col-elite">✓</td>
+                    <td>✓</td>
+                  </tr>
+                  <tr>
+                    <th scope="row">21. 100% Backward-Compatible Co-Author Citations <small>(Zotero/Mendeley/EndNote)</small></th>
+                    <td>—</td>
+                    <td>—</td>
+                    <td class="col-kyodo"><strong>✓ Included</strong></td>
+                    <td class="col-elite"><strong>✓ Included</strong></td>
+                    <td><strong>✓ Included</strong></td>
+                  </tr>
+                  <tr>
+                    <th scope="row">22. Persistent Global Citations Across Shared Files</th>
+                    <td>—</td>
+                    <td>✓</td>
+                    <td class="col-kyodo">✓</td>
+                    <td class="col-elite">✓</td>
+                    <td>✓</td>
+                  </tr>
+                  <tr>
+                    <th scope="row">23. Editable Citation-Attached Document Sharing with Co-Authors</th>
+                    <td>—</td>
+                    <td><strong>1 Unique Doc</strong> <small>(+₹50/+$3 per extra)</small></td>
+                    <td class="col-kyodo"><strong>2 Unique Docs</strong> <small>(+₹50/+$3 per extra)</small></td>
+                    <td class="col-elite"><strong>Unlimited Shared Docs</strong></td>
+                    <td><strong>Unlimited Departmental Docs</strong></td>
+                  </tr>
+                  <tr>
+                    <th scope="row">24. Multi-Device Cloud Sync (<code>Mac ↔ Windows</code> Cross-Platform Sync)</th>
+                    <td>—</td>
+                    <td>Optional Add-On <small>(+₹250/+$10)</small></td>
+                    <td class="col-kyodo">Optional Add-On <small>(+₹250/+$10)</small></td>
+                    <td class="col-elite"><strong>✓ Included Out-of-the-Box</strong></td>
+                    <td><strong>✓ Included Out-of-the-Box</strong></td>
+                  </tr>
+                  <tr>
+                    <th scope="row">25. Shared Research Vault Collaboration <small>(Duet / Lab Mode)</small></th>
+                    <td>Solo</td>
+                    <td>Solo</td>
+                    <td class="col-kyodo">Optional <small>(+₹250/+$10 per head)</small></td>
+                    <td class="col-elite"><strong>✓ Duet Mode (2 Scholars Included)</strong></td>
+                    <td><strong>✓ Pooled Multi-Seat Lab Vault</strong></td>
+                  </tr>
+                  <tr>
+                    <th scope="row">26. Cast to iPad Canvas for Apple Pencil Markup</th>
+                    <td>—</td>
+                    <td>—</td>
+                    <td class="col-kyodo">—</td>
+                    <td class="col-elite"><strong>✓ Included</strong></td>
+                    <td><strong>✓ Included</strong></td>
+                  </tr>
+
+                  <!-- Category 5 -->
+                  <tr class="matrix-cat-row">
+                    <th scope="row" colspan="6">05. Enterprise Governance &amp; Security</th>
+                  </tr>
+                  <tr>
+                    <th scope="row">27. 100% Air-Gapped Offline Privacy Lock for Unpublished Grants</th>
+                    <td>—</td>
+                    <td>—</td>
+                    <td class="col-kyodo">—</td>
+                    <td class="col-elite">—</td>
+                    <td><strong>✓ Enforced Policy Lock</strong></td>
+                  </tr>
+                  <tr>
+                    <th scope="row">28. Centralized PI / Departmental Seat &amp; Billing Console</th>
+                    <td>—</td>
+                    <td>—</td>
+                    <td class="col-kyodo">—</td>
+                    <td class="col-elite">—</td>
+                    <td><strong>✓ Included</strong></td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </details>
+      </div>
+    </section>
+
+    <!-- SECTION 5: NATIVE macOS CRAFTSMANSHIP, SECURITY & MEDICAL DOCTOR FOUNDERS -->
+    <section class="security-founders-section scroll-reveal" id="security-founders">
+      <div class="container">
+        <div class="section-header">
+          <span class="section-eyebrow">Native Craftsmanship &amp; Founding Team</span>
+          <h2 class="section-title">Crafted Natively for macOS. Built by Medical Doctors.</h2>
+          <p class="section-subtitle">
+            No Electron bloat. Zero screen recording permissions. Engineered for uncompromising scientific integrity.
+          </p>
+        </div>
+
+        <!-- 3 Hardware Telemetry Bento Gauges -->
+        <div class="telemetry-gauges-grid">
+          <div class="telemetry-gauge-card">
+            <span class="gauge-eyebrow">Unified Memory Footprint</span>
+            <div class="gauge-value emerald-text">&lt; 20 MB</div>
+            <div class="gauge-label">Resident RAM</div>
+            <p class="gauge-desc">Pure native macOS SwiftUI engineering—no bloated Electron or Chromium runtime eating gigabytes of your MacBook's unified memory.</p>
+          </div>
+
+          <div class="telemetry-gauge-card">
+            <span class="gauge-eyebrow">3-Tier Quiescent Thermal Engine</span>
+            <div class="gauge-value sapphire-text">0.00%</div>
+            <div class="gauge-label">Idle CPU &amp; GPU</div>
+            <p class="gauge-desc">Adaptive native power management drops into quiescent zero-GPU sleep after 8 seconds of inactivity to preserve battery life.</p>
+          </div>
+
+          <div class="telemetry-gauge-card">
+            <span class="gauge-eyebrow">Apple Silicon M1 / M2 / M3 / M4</span>
+            <div class="gauge-value violet-text">&lt; 2 ms</div>
+            <div class="gauge-label">Local Vault Lookup (&lt; 25 ms Verification)</div>
+            <p class="gauge-desc">Sub-2ms local library recall and &lt;25ms on-device semantic verification without sending unpublished clinical datasets to third-party servers.</p>
+          </div>
+        </div>
+
+        <!-- Full-Width Privacy Pledge Card (Notarization Terminal Removed per #14) -->
+        <div class="privacy-pledge-card privacy-pledge-full">
+          <div class="pledge-badge">🛡️ Zero Screen Recording &amp; Zero Prose Generation Pledge</div>
+          <h3>We Never Capture a Single Pixel of Your Screen</h3>
+          <p>
+            Unlike intrusive AI overlays that demand macOS Screen Recording permissions to scrape your desktop, Kyodo operates via clean, permission-respecting document introspection.
+          </p>
+          <ul class="pledge-checklist">
+            <li><strong>0 Pixels Captured:</strong> Never asks for macOS Screen Recording permissions. Clinical patient charts, private emails, and browser tabs remain strictly untouched.</li>
+            <li><strong>0 Words Ghostwritten:</strong> Kyodo never generates synthetic essay paragraphs. Every word in your manuscript remains 100% yours.</li>
+            <li><strong>Air-Gapped Grant Mode:</strong> Lock any sensitive manuscript or folder to 100% offline local verification.</li>
+          </ul>
+        </div>
+
+        <!-- Medical Doctor Founders Dossier Card (All 4 Co-Founders, Zero Hospital/City Mentions per #16 & #17) -->
+        <article class="founders-dossier-card">
+          <div class="founders-left">
+            <span class="dossier-eyebrow">FOUNDING TEAM • PHYSICIAN-ENGINEERED RESEARCH INFRASTRUCTURE</span>
+            <h3 class="founders-heading">Built by Medical Doctors Who Lived the Pain</h3>
+
+            <div class="founders-4col-grid">
+              <div class="founder-profile-card">
+                <img
+                  class="founder-photo"
+                  loading="lazy"
+                  width="76"
+                  height="76"
+                  alt="Dr. Apoorva Suresh"
+                  src="assets/founder-apoorva.jpg"
+                />
+                <div class="founder-meta">
+                  <div class="founder-name">Dr. Apoorva Suresh</div>
+                  <div class="founder-credentials">MBBS</div>
+                  <div class="founder-role">Co-Founder</div>
+                  <a href="https://www.linkedin.com" target="_blank" rel="noopener noreferrer" class="founder-linkedin-link" data-founder-linkedin="apoorva" aria-label="Dr. Apoorva Suresh LinkedIn Profile">
+                    <svg width="13" height="13" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+                      <path d="M19 3a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h14m-.5 15.5v-5.3a3.26 3.26 0 0 0-3.26-3.26c-.85 0-1.84.52-2.28 1.3v-1.11h-2.79v8.37h2.79v-4.93c0-.77.62-1.4 1.39-1.4a1.4 1.4 0 0 1 1.4 1.4v4.93h2.75M6.88 8.56a1.68 1.68 0 0 0 1.68-1.68c0-.93-.75-1.69-1.68-1.69a1.69 1.69 0 0 0-1.69 1.69c0 .93.76 1.68 1.69 1.68m1.39 9.94v-8.37H5.5v8.37h2.77z"></path>
+                    </svg>
+                    <span>LinkedIn</span>
+                  </a>
+                </div>
+              </div>
+
+              <div class="founder-profile-card">
+                <img
+                  class="founder-photo"
+                  loading="lazy"
+                  width="76"
+                  height="76"
+                  alt="Dr. Gunjit Glen"
+                  src="assets/founder-gunjit.jpg"
+                />
+                <div class="founder-meta">
+                  <div class="founder-name">Dr. Gunjit Glen</div>
+                  <div class="founder-credentials">MBBS</div>
+                  <div class="founder-role">Co-Founder</div>
+                  <a href="https://www.linkedin.com" target="_blank" rel="noopener noreferrer" class="founder-linkedin-link" data-founder-linkedin="gunjit" aria-label="Dr. Gunjit Glen LinkedIn Profile">
+                    <svg width="13" height="13" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+                      <path d="M19 3a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h14m-.5 15.5v-5.3a3.26 3.26 0 0 0-3.26-3.26c-.85 0-1.84.52-2.28 1.3v-1.11h-2.79v8.37h2.79v-4.93c0-.77.62-1.4 1.39-1.4a1.4 1.4 0 0 1 1.4 1.4v4.93h2.75M6.88 8.56a1.68 1.68 0 0 0 1.68-1.68c0-.93-.75-1.69-1.68-1.69a1.69 1.69 0 0 0-1.69 1.69c0 .93.76 1.68 1.69 1.68m1.39 9.94v-8.37H5.5v8.37h2.77z"></path>
+                    </svg>
+                    <span>LinkedIn</span>
+                  </a>
+                </div>
+              </div>
+
+              <div class="founder-profile-card">
+                <img
+                  class="founder-photo"
+                  loading="lazy"
+                  width="76"
+                  height="76"
+                  alt="Dr. Nalina P Sahayaraj"
+                  src="assets/founder-nalina.jpg?v=2"
+                />
+                <div class="founder-meta">
+                  <div class="founder-name">Dr. Nalina P Sahayaraj</div>
+                  <div class="founder-credentials">MBBS</div>
+                  <div class="founder-role">Co-Founder</div>
+                  <a href="https://www.linkedin.com" target="_blank" rel="noopener noreferrer" class="founder-linkedin-link" data-founder-linkedin="nalina" aria-label="Dr. Nalina P Sahayaraj LinkedIn Profile">
+                    <svg width="13" height="13" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+                      <path d="M19 3a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h14m-.5 15.5v-5.3a3.26 3.26 0 0 0-3.26-3.26c-.85 0-1.84.52-2.28 1.3v-1.11h-2.79v8.37h2.79v-4.93c0-.77.62-1.4 1.39-1.4a1.4 1.4 0 0 1 1.4 1.4v4.93h2.75M6.88 8.56a1.68 1.68 0 0 0 1.68-1.68c0-.93-.75-1.69-1.68-1.69a1.69 1.69 0 0 0-1.69 1.69c0 .93.76 1.68 1.69 1.68m1.39 9.94v-8.37H5.5v8.37h2.77z"></path>
+                    </svg>
+                    <span>LinkedIn</span>
+                  </a>
+                </div>
+              </div>
+
+              <div class="founder-profile-card">
+                <img
+                  class="founder-photo"
+                  loading="lazy"
+                  width="76"
+                  height="76"
+                  alt="Dr. Shruthi Kulkarni"
+                  src="assets/founder-shruthi.jpg"
+                />
+                <div class="founder-meta">
+                  <div class="founder-name">Dr. Shruthi Kulkarni</div>
+                  <div class="founder-credentials">MBBS, DNB, MNAMS (General Medicine)</div>
+                  <div class="founder-role">Co-Founder</div>
+                  <a href="https://www.linkedin.com" target="_blank" rel="noopener noreferrer" class="founder-linkedin-link" data-founder-linkedin="shruthi" aria-label="Dr. Shruthi Kulkarni LinkedIn Profile">
+                    <svg width="13" height="13" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+                      <path d="M19 3a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h14m-.5 15.5v-5.3a3.26 3.26 0 0 0-3.26-3.26c-.85 0-1.84.52-2.28 1.3v-1.11h-2.79v8.37h2.79v-4.93c0-.77.62-1.4 1.39-1.4a1.4 1.4 0 0 1 1.4 1.4v4.93h2.75M6.88 8.56a1.68 1.68 0 0 0 1.68-1.68c0-.93-.75-1.69-1.68-1.69a1.69 1.69 0 0 0-1.69 1.69c0 .93.76 1.68 1.69 1.68m1.39 9.94v-8.37H5.5v8.37h2.77z"></path>
+                    </svg>
+                    <span>LinkedIn</span>
+                  </a>
+                </div>
+              </div>
+            </div>
+
+            <blockquote class="founders-quote">
+              "We are medical doctors. Having faced the challenges of academic writing firsthand, we built Kyodo to solve one of its biggest bottlenecks—eliminating citation hunting and verification anxiety while minimizing generative AI and keeping the ethos and spirit of scientific inquiry alive."
+            </blockquote>
+          </div>
+
+          <div class="founders-right-cta">
+            <div class="dossier-seal">
+              <span class="seal-icon" aria-hidden="true">⚕️</span>
+              <span class="seal-title">Clinician-Scientist Engineered</span>
+              <span class="seal-sub">Native macOS • Epistemic Integrity</span>
+            </div>
+            <button type="button" class="btn-emerald-primary full-width-btn" commandfor="beta-modal" command="show-modal">
+              ✦ Join the 30-Seat Foundational Beta
+            </button>
+            <button type="button" class="btn-glass-secondary full-width-btn" commandfor="download-modal" command="show-modal">
+               Download Universal .dmg
+            </button>
+          </div>
+        </article>
+      </div>
+    </section>
+  </main>
+
+  <!-- FOOTER -->
+  <footer class="site-footer">
+    <div class="container footer-inner">
+      <div class="footer-brand">
+        <div class="brand-lockup">
+          <img src="assets/kyodo-app-icon.jpg" alt="Kyodo" class="brand-app-icon" width="32" height="32">
+          <span class="brand-wordmark">Kyodo</span>
+          <span class="nav-version-tag">Local Grammarly for Scientific Truth</span>
+        </div>
+        <p class="footer-copy">
+          Built by Medical Doctors. Native macOS epistemic claim and citation verification.
+        </p>
+      </div>
+
+      <div class="footer-links">
+        <a href="#features">Workspace Intelligence</a>
+        <a href="#spatial-vault">Central Spatial Vault</a>
+        <a href="#compare">Competitor Matrix</a>
+        <a href="#pricing">Pricing (₹ INR / $ USD)</a>
+        <a href="#security-founders">Security &amp; Founders</a>
+        <a href="#kyodo-web-extension-placeholder" data-extension-download-link>Download Web Extension</a>
+        <a href="https://www.linkedin.com" target="_blank" rel="noopener noreferrer" data-founder-linkedin="gunjit">Founder LinkedIn</a>
+        <button type="button" class="footer-link-btn" commandfor="privacy-modal" command="show-modal">Privacy Policy</button>
+      </div>
+
+      <div class="footer-legal">
+        <span>© 2026 Kyodo Epistemic Labs. All rights reserved.</span>
+        <span>✓ Apple Notarized macOS Binary • macOS 14+ (Sonoma / Sequoia) • Apple Silicon Native</span>
+      </div>
+    </div>
+  </footer>
+
+  <!-- DECLARATIVE MODAL 1: UNIVERSAL .DMG DOWNLOAD & QUICKSTART (<dialog>) -->
+  <dialog id="download-modal" class="glass-modal kyodo-modal" aria-labelledby="download-modal-title">
+    <div class="modal-inner">
+      <div class="modal-header">
+        <div class="modal-title-group">
+          <span class="modal-badge badge-sapphire">✓ Apple Notarized macOS Binary &amp; Web Companion</span>
+          <h2 id="download-modal-title">Download Kyodo for macOS</h2>
+        </div>
+        <button type="button" class="modal-close-btn" commandfor="download-modal" command="close" aria-label="Close download modal">
+          ✕
+        </button>
+      </div>
+
+      <!-- Post-Payment Auto-Unlock & License Key Activation Banner (#3) -->
+      <div id="modal-license-unlocked-banner" class="modal-license-unlocked-banner" hidden aria-live="polite">
+        <div class="license-banner-title">✅ Payment Verified — Your Subscription Key is Ready</div>
+        <p id="modal-unlock-status-note" class="license-banner-note">
+          Kyodo.dmg download started automatically. Paste this key in Kyodo after installing, or keep this tab open while launching Kyodo for instant auto-unlock.
+        </p>
+        <div class="license-key-copy-row">
+          <code id="modal-license-key-text" class="license-key-code">KYODO-SUB-PRO-ANNUAL-S0B0D0U0L0H0-ALL-XXXX-XXXXXXXXXX</code>
+          <button type="button" id="modal-copy-license-btn" class="btn-copy-license">
+            Copy License Key
+          </button>
+        </div>
+      </div>
+
+      <p class="modal-lead">
+        Includes your automatic <strong>14-Day Full Pro-Elite Trial</strong> (zero credit card required) and permanent <strong>₹0 / $0 Free Basic Mode</strong> fallback forever.
+      </p>
+
+      <div class="modal-download-box">
+        <a href="https://github.com/GlenEchoes/kyodo-releases/releases/latest/download/Kyodo.dmg" id="direct-dmg-link" data-dmg-download-link rel="noopener" class="btn-emerald-primary modal-main-dl-btn">
+          <span> Download Kyodo.dmg</span>
+          <small>✓ Apple Notarized macOS Binary • Apple Silicon (M1–M4) • Automatic Download</small>
+        </a>
+      </div>
+
+      <div class="modal-quickstart-steps">
+        <div class="qs-step">
+          <span class="qs-num">1</span>
+          <div>
+            <strong>Drag Kyodo.app to /Applications</strong>
+            <p>Open <code>Kyodo.dmg</code> and drag Kyodo into your macOS Applications folder.</p>
+          </div>
+        </div>
+        <div class="qs-step">
+          <span class="qs-num">2</span>
+          <div class="qs-step-ext-body">
+            <strong>Install the Kyodo Web Browser Extension</strong>
+            <p>Enable live epistemic claim grounding and zero-screen-recording citation auditing inside Google Docs and web journals (Chrome, Brave &amp; Edge).</p>
+            <a href="#kyodo-web-extension-placeholder" class="btn-modal-extension-dl" data-extension-download-link>
+              <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                <path d="M19.439 7.85c-.049.322.059.648.289.878l1.568 1.568c.47.47.706 1.087.706 1.704s-.235 1.233-.706 1.704l-1.611 1.611a.98.98 0 0 1-.837.276c-.47-.07-.802-.48-.968-.925a2.501 2.501 0 1 0-3.214 3.214c.446.166.855.497.925.968a.979.979 0 0 1-.276.837l-1.61 1.61a2.404 2.404 0 0 1-1.705.707 2.402 2.402 0 0 1-1.704-.706l-1.568-1.568a1.026 1.026 0 0 0-.877-.29c-.493.074-.84.504-1.02.968a2.5 2.5 0 1 1-3.237-3.237c.464-.18.894-.527.967-1.02a1.026 1.026 0 0 0-.289-.877l-1.568-1.568A2.402 2.402 0 0 1 1.998 12c0-.617.236-1.234.706-1.704L4.315 8.685a.98.98 0 0 1 .837-.276c.47.07.802.48.968.925a2.501 2.501 0 1 0 3.214-3.214c-.446-.166-.855-.497-.925-.968a.979.979 0 0 1 .276-.837l1.61-1.61a2.404 2.404 0 0 1 1.705-.707c.617 0 1.234.236 1.704.706l1.568 1.568c.23.23.556.338.877.29.493-.074.84-.504 1.02-.968a2.5 2.5 0 1 1 3.237 3.237c-.464.18-.894.527-.967 1.02Z"></path>
+              </svg>
+              <span>Download Web Companion Extension →</span>
+            </a>
+          </div>
+        </div>
+        <div class="qs-step">
+          <span class="qs-num">3</span>
+          <div>
+            <strong>1-Click Zotero / PDF Vault Import</strong>
+            <p>Import your existing Zotero/Mendeley collection or drop a folder of PDFs into the Central Spatial Vault.</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="modal-footer">
+        <button type="button" class="footer-link-btn" commandfor="privacy-modal" command="show-modal">
+          🛡️ View Privacy Policy
+        </button>
+        <button type="button" class="btn-glass-secondary" commandfor="download-modal" command="close">
+          Done
+        </button>
+      </div>
+    </div>
+  </dialog>
+
+  <!-- DECLARATIVE MODAL 2: 30-SEAT CLOSED BETA PRO-ELITE CLAIM (<dialog>) -->
+  <dialog id="beta-modal" class="glass-modal" aria-labelledby="beta-modal-title">
+    <div class="modal-inner">
+      <div class="modal-header">
+        <div class="modal-title-group">
+          <span class="modal-badge badge-emerald">🟢 Foundational Cohort • 30 Researcher Seats</span>
+          <h2 id="beta-modal-title">Claim 1 of 30 Free Full Pro-Elite Seats</h2>
+        </div>
+        <button type="button" class="modal-close-btn" commandfor="beta-modal" command="close" aria-label="Close beta claim modal">
+          ✕
+        </button>
+      </div>
+
+      <p class="modal-lead">
+        Foundational cohort members receive <strong>100% Free Full Pro-Elite Access</strong> (Built-In Managed Cloud AI, Unlimited LiveCite Manuscripts, Multi-Paper Synthesis, Duet Mode &amp; iPad Canvas) in exchange for direct research workflow feedback with our founding medical team.
+      </p>
+
+      <form id="beta-claim-form" class="beta-claim-form" novalidate>
+        <div class="form-row">
+          <label for="beta-name">Full Name &amp; Title</label>
+          <input type="text" id="beta-name" name="name" required placeholder="e.g., Dr. Priya Sharma, MD / PhD Candidate" autocomplete="name">
+        </div>
+
+        <div class="form-row">
+          <label for="beta-email">Academic or Institutional Email</label>
+          <input type="email" id="beta-email" name="email" required placeholder="name@university.edu or hospital.org" autocomplete="email">
+        </div>
+
+        <div class="form-grid-2">
+          <div class="form-row">
+            <label for="beta-discipline">Primary Research Discipline</label>
+            <select id="beta-discipline" name="discipline">
+              <option value="clinical-medicine">Clinical Medicine &amp; Trials</option>
+              <option value="wet-lab-bio">Wet-Lab Biology &amp; Neuroscience</option>
+              <option value="cs-ai">Computer Science &amp; Engineering</option>
+              <option value="economics-policy">Economics &amp; Public Health</option>
+              <option value="law-humanities">Law &amp; Humanities</option>
+            </select>
+          </div>
+
+          <div class="form-row">
+            <label for="beta-editor">Primary Writing Environment</label>
+            <select id="beta-editor" name="editor">
+              <option value="word">Microsoft Word (macOS)</option>
+              <option value="gdocs">Google Docs</option>
+              <option value="pages">Apple Pages / Notes</option>
+              <option value="latex">Overleaf / LaTeX</option>
+            </select>
+          </div>
+        </div>
+
+        <div class="form-submit-row">
+          <button type="submit" class="btn-emerald-primary full-width-btn" id="beta-submit-btn">
+            ✦ Reserve My Free Pro-Elite Beta Seat →
+          </button>
+        </div>
+
+        <div class="beta-form-feedback" id="beta-form-feedback" hidden aria-live="polite"></div>
+      </form>
+
+      <div class="modal-footer">
+        <span class="esc-hint">Press <kbd>Esc</kbd> to close • Direct Tally/Form URL configurable in <code>app.js</code></span>
+        <button type="button" class="btn-glass-secondary" commandfor="beta-modal" command="close">
+          Cancel
+        </button>
+      </div>
+    </div>
+  </dialog>
+
+  <!-- DECLARATIVE MODAL 3: KYODO PRIVACY POLICY (<dialog id="privacy-modal">) -->
+  <dialog id="privacy-modal" class="glass-modal kyodo-modal" aria-labelledby="privacy-modal-title">
+    <div class="modal-inner">
+      <div class="modal-header">
+        <div class="modal-title-group">
+          <span class="modal-badge badge-emerald">🛡️ Epistemic Data Sovereignty • Last Updated 2026</span>
+          <h2 id="privacy-modal-title">Kyodo Privacy Policy</h2>
+        </div>
+        <button type="button" class="modal-close-btn" commandfor="privacy-modal" command="close" aria-label="Close privacy policy modal">
+          ✕
+        </button>
+      </div>
+
+      <p class="modal-lead">
+        Kyodo is built by medical doctors and researchers for unpublished scientific manuscripts, clinical trials, and grant proposals. Your data sovereignty is foundational to our architecture.
+      </p>
+
+      <div class="modal-quickstart-steps privacy-policy-sections">
+        <div class="qs-step">
+          <span class="qs-num">1</span>
+          <div>
+            <strong>100% Local Manuscript &amp; Vault Processing</strong>
+            <p>Your unpublished manuscripts, PDFs, and local citation graphs stay on your Mac. Kyodo never sells, rents, or trains generative models on your research data.</p>
+          </div>
+        </div>
+
+        <div class="qs-step">
+          <span class="qs-num">2</span>
+          <div>
+            <strong>Zero Screen Recording &amp; Zero Keylogging</strong>
+            <p>Kyodo never captures desktop pixels or records your screen (<code>0 pixels captured</code>). It never requests macOS Screen Recording permissions.</p>
+          </div>
+        </div>
+
+        <div class="qs-step">
+          <span class="qs-num">3</span>
+          <div>
+            <strong>Browser Companion Extension (<code>nativeMessaging</code>, <code>activeTab</code>, <code>storage</code>)</strong>
+            <p>The Chrome/Brave/Edge extension communicates strictly with your local macOS Kyodo app over standard stdio framing to resolve academic DOIs, clip open-access papers into your local Vault, and ground scientific claims in Google Docs.</p>
+          </div>
+        </div>
+
+        <div class="qs-step">
+          <span class="qs-num">4</span>
+          <div>
+            <strong>Bring-Your-Own-Key (BYOK) &amp; Managed Cloud Calls</strong>
+            <p>When you link your own Google Gemini key or use Managed LiveCite/LiveChat synthesis, only the specific claim snippet or selected paper passage needed for verification is transmitted over TLS.</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="modal-footer">
+        <span class="esc-hint">Direct link: <code>/#privacy</code> • Press <kbd>Esc</kbd> to close</span>
+        <button type="button" class="btn-glass-secondary" commandfor="privacy-modal" command="close">
+          Close
+        </button>
+      </div>
+    </div>
+  </dialog>
+
+  <script src="app.js" defer></script>
+</body>
+</html>
