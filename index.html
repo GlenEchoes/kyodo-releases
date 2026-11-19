@@ -2227,6 +2227,14 @@
         </div>
       </div>
 
+      <!-- Founding Scholar Closed Beta Verification Banner -->
+      <div id="modal-beta-confirmed-banner" class="modal-license-unlocked-banner" hidden aria-live="polite">
+        <div id="modal-beta-confirmed-title" class="license-banner-title">✅ Founding Scholar Seat Confirmed — Downloading Kyodo.dmg...</div>
+        <p id="modal-beta-confirmed-note" class="license-banner-note">
+          Your academic profile &amp; email are verified. Your Kyodo.dmg download has started automatically — join our Discord or WhatsApp scholars group below to share direct workflow feedback with the founding team.
+        </p>
+      </div>
+
       <p class="modal-lead">
         Includes your automatic <strong>14-Day Full Pro-Elite Trial</strong> (zero credit card required) and permanent <strong>₹0 / $0 Free Basic Mode</strong> fallback forever.
       </p>
@@ -2266,6 +2274,21 @@
             <p>Import your existing Zotero/Mendeley collection or drop a folder of PDFs into the Central Spatial Vault.</p>
           </div>
         </div>
+        <div class="qs-step qs-step-community">
+          <span class="qs-num">4</span>
+          <div class="qs-step-ext-body">
+            <strong>Beta Testers Feedback Community</strong>
+            <p>Join our direct researcher channels to share manuscript workflow feedback, request citation styles, and chat directly with our founding physicians.</p>
+            <div class="community-buttons-row">
+              <a href="#kyodo-discord-community-placeholder" target="_blank" rel="noopener noreferrer" class="btn-community-link btn-community-discord" data-discord-invite-link>
+                <span>💬 Join Discord Beta Community</span>
+              </a>
+              <a href="#kyodo-whatsapp-community-placeholder" target="_blank" rel="noopener noreferrer" class="btn-community-link btn-community-whatsapp" data-whatsapp-invite-link>
+                <span>📱 Join WhatsApp Scholars Group</span>
+              </a>
+            </div>
+          </div>
+        </div>
       </div>
 
       <div class="modal-footer">
@@ -2296,26 +2319,53 @@
         Foundational cohort members receive <strong>100% Free Full Pro-Elite Access</strong> (Built-In Managed Cloud AI, Unlimited LiveCite Manuscripts, Multi-Paper Synthesis, Duet Mode &amp; iPad Canvas) in exchange for direct research workflow feedback with our founding medical team.
       </p>
 
+      <!-- STEP 1: Researcher Profile & Email Form -->
       <form id="beta-claim-form" class="beta-claim-form" novalidate>
-        <div class="form-row">
-          <label for="beta-name">Full Name &amp; Title</label>
-          <input type="text" id="beta-name" name="name" required placeholder="e.g., Dr. Priya Sharma, MD / PhD Candidate" autocomplete="name">
+        <div class="form-grid-2">
+          <div class="form-row">
+            <label for="beta-name">Full Name &amp; Title</label>
+            <input type="text" id="beta-name" name="name" required placeholder="e.g., Dr. Priya Sharma, MD / PhD" autocomplete="name">
+          </div>
+
+          <div class="form-row">
+            <label for="beta-email">Academic or Institutional Email</label>
+            <input type="email" id="beta-email" name="email" required placeholder="name@university.edu or hospital.org" autocomplete="email">
+          </div>
         </div>
 
-        <div class="form-row">
-          <label for="beta-email">Academic or Institutional Email</label>
-          <input type="email" id="beta-email" name="email" required placeholder="name@university.edu or hospital.org" autocomplete="email">
+        <div class="form-grid-profile">
+          <div class="form-row">
+            <label for="beta-profile-type">Researcher Profile Platform</label>
+            <select id="beta-profile-type" name="profile_type">
+              <option value="linkedin">LinkedIn Profile URL</option>
+              <option value="orcid">ORCID iD</option>
+              <option value="google_scholar">Google Scholar Profile</option>
+              <option value="researchgate">ResearchGate Profile</option>
+            </select>
+          </div>
+
+          <div class="form-row">
+            <label for="beta-profile-id">Verifiable Profile URL or ID <span class="req-star">*</span></label>
+            <input type="text" id="beta-profile-id" name="profile_id" required placeholder="e.g., linkedin.com/in/yourname or ORCID 0000-0002-...">
+          </div>
         </div>
 
         <div class="form-grid-2">
           <div class="form-row">
             <label for="beta-discipline">Primary Research Discipline</label>
             <select id="beta-discipline" name="discipline">
-              <option value="clinical-medicine">Clinical Medicine &amp; Trials</option>
-              <option value="wet-lab-bio">Wet-Lab Biology &amp; Neuroscience</option>
-              <option value="cs-ai">Computer Science &amp; Engineering</option>
-              <option value="economics-policy">Economics &amp; Public Health</option>
-              <option value="law-humanities">Law &amp; Humanities</option>
+              <option value="clinical-medicine">Clinical Medicine, Surgery &amp; Trials (MD / MS / DNB / DM)</option>
+              <option value="biomedical-wet-lab">Biomedical, Molecular &amp; Wet-Lab Sciences</option>
+              <option value="neuroscience-psychiatry">Neuroscience, Psychiatry &amp; Cognitive Sciences</option>
+              <option value="public-health-epi">Public Health, Epidemiology &amp; Biostatistics</option>
+              <option value="pharma-biotech">Pharmacology, Biotech &amp; Pharmaceutical R&amp;D</option>
+              <option value="cs-ai-bioinfo">Computer Science, AI / ML &amp; Bioinformatics</option>
+              <option value="physical-engineering">Physical Sciences, Chemistry, Materials &amp; Engineering</option>
+              <option value="earth-environmental">Earth, Environmental &amp; Agricultural Sciences</option>
+              <option value="economics-policy">Economics, Finance &amp; Public Policy</option>
+              <option value="psychology-sociology">Psychology, Sociology &amp; Education</option>
+              <option value="law-humanities">Law, Patent / IP &amp; Humanities</option>
+              <option value="other">Other (Specify below...)</option>
             </select>
           </div>
 
@@ -2324,23 +2374,81 @@
             <select id="beta-editor" name="editor">
               <option value="word">Microsoft Word (macOS)</option>
               <option value="gdocs">Google Docs</option>
-              <option value="pages">Apple Pages / Notes</option>
-              <option value="latex">Overleaf / LaTeX</option>
+              <option value="pages-notes">Apple Pages / Apple Notes</option>
+              <option value="overleaf-latex">Overleaf / LaTeX</option>
+              <option value="scrivener-obsidian">Scrivener / Obsidian / Markdown</option>
+              <option value="other">Other (Specify below...)</option>
             </select>
           </div>
         </div>
 
+        <div class="form-row" id="beta-discipline-other-wrap" hidden>
+          <label for="beta-discipline-other">Specify Your Research Discipline</label>
+          <input type="text" id="beta-discipline-other" name="discipline_other" placeholder="Specify your research discipline...">
+        </div>
+
+        <div class="form-row" id="beta-editor-other-wrap" hidden>
+          <label for="beta-editor-other">Specify Your Primary Writing Environment</label>
+          <input type="text" id="beta-editor-other" name="editor_other" placeholder="Specify your primary writing app...">
+        </div>
+
         <div class="form-submit-row">
           <button type="submit" class="btn-emerald-primary full-width-btn" id="beta-submit-btn">
-            ✦ Reserve My Free Pro-Elite Beta Seat →
+            ✦ Send Email Confirmation &amp; Reserve Free Pro-Elite Seat →
           </button>
         </div>
 
         <div class="beta-form-feedback" id="beta-form-feedback" hidden aria-live="polite"></div>
       </form>
 
+      <!-- STEP 2: 6-Digit Email Verification & Instant Confirmation Link Polling View -->
+      <div id="beta-otp-step-box" class="beta-otp-step-box" hidden aria-live="polite">
+        <div class="otp-step-header">
+          <span class="otp-step-badge">📩 Step 2 of 2 • Email Verification Required</span>
+          <h3 class="otp-step-title">Confirmation Link &amp; 6-Digit Code Sent to <span id="beta-otp-email-display" class="sapphire-text">researcher@university.edu</span></h3>
+        </div>
+        <p class="otp-step-desc">
+          Enter the 6-digit verification code from your email below — <strong>or simply click the confirmation link inside your email inbox</strong> (this window will detect it automatically within 3 seconds and start your <code>Kyodo.dmg</code> download).
+        </p>
+
+        <div class="otp-input-action-row">
+          <input
+            type="text"
+            id="beta-otp-input"
+            class="otp-code-input"
+            maxlength="6"
+            inputmode="numeric"
+            autocomplete="one-time-code"
+            placeholder="6-Digit Code"
+            aria-label="6-Digit Email Verification Code"
+          />
+          <button type="button" id="beta-verify-code-btn" class="btn-emerald-primary otp-confirm-btn">
+            ✓ Confirm Code &amp; Download Kyodo.dmg →
+          </button>
+        </div>
+
+        <div id="beta-otp-feedback" class="beta-form-feedback" hidden aria-live="polite"></div>
+
+        <div class="otp-step-footer-links">
+          <span class="otp-polling-indicator">● Listening for email link confirmation...</span>
+          <button type="button" id="beta-back-to-step1-btn" class="footer-link-btn">
+            ← Edit Email or Resend Code
+          </button>
+        </div>
+      </div>
+
+      <!-- 14-Day Free Trial Reminder & Direct Download Fallback Card -->
+      <div class="beta-trial-fallback-card">
+        <p class="trial-fallback-text">
+          Don't have a LinkedIn, ORCID, ResearchGate, or Google Scholar ID yet? Eligibility for the 30-seat closed cohort requires a verifiable researcher profile—but you can still use Kyodo right now for the full <strong>14-Day Pro-Elite Trial</strong> (and request an extension key at the end of 14 days) simply by downloading the <code>.dmg</code> directly.
+        </p>
+        <button type="button" id="beta-skip-to-trial-dmg-btn" class="btn-glass-secondary full-width-btn">
+          ⬇ Skip Cohort &amp; Download Kyodo.dmg (14-Day Free Trial) →
+        </button>
+      </div>
+
       <div class="modal-footer">
-        <span class="esc-hint">Press <kbd>Esc</kbd> to close • Direct Tally/Form URL configurable in <code>app.js</code></span>
+        <span class="esc-hint">Press <kbd>Esc</kbd> to close • Strict privacy isolation from in-app telemetry</span>
         <button type="button" class="btn-glass-secondary" commandfor="beta-modal" command="close">
           Cancel
         </button>

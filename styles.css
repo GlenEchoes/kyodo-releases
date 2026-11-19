@@ -3739,6 +3739,17 @@ section {
   gap: 12px;
 }
 
+.form-grid-profile {
+  display: grid;
+  grid-template-columns: 0.9fr 1.4fr;
+  gap: 12px;
+}
+
+.req-star {
+  color: var(--accent-emerald-text);
+  font-weight: 800;
+}
+
 .beta-form-feedback {
   padding: 10px 12px;
   border-radius: 10px;
@@ -3747,6 +3758,142 @@ section {
   color: var(--accent-emerald-text);
   font-size: 0.82rem;
   font-weight: 600;
+}
+
+.beta-form-feedback.is-error {
+  background: rgba(245, 92, 117, 0.16);
+  border-color: var(--accent-rose);
+  color: var(--accent-rose-text);
+}
+
+/* Step 2: 6-Digit Email OTP & Link Confirmation Box */
+.beta-otp-step-box {
+  padding: 16px;
+  border-radius: 14px;
+  background: var(--bg-card-fill);
+  border: 1.5px solid rgba(46, 166, 250, 0.45);
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.otp-step-badge {
+  display: inline-block;
+  padding: 3px 10px;
+  border-radius: var(--radius-pill);
+  background: rgba(46, 166, 250, 0.16);
+  color: var(--accent-sapphire-text);
+  font-size: 0.72rem;
+  font-weight: 800;
+  margin-bottom: 6px;
+}
+
+.otp-step-title {
+  font-size: 1.02rem;
+  line-height: 1.35;
+}
+
+.otp-step-desc {
+  font-size: 0.82rem;
+  color: var(--text-secondary);
+  line-height: 1.5;
+}
+
+.otp-input-action-row {
+  display: flex;
+  align-items: stretch;
+  gap: 10px;
+}
+
+.otp-code-input {
+  width: 155px;
+  padding: 10px 12px;
+  border-radius: 10px;
+  background: var(--bg-quote-well);
+  border: 1.5px solid var(--accent-sapphire);
+  font-family: var(--font-mono);
+  font-size: 1.1rem;
+  font-weight: 800;
+  letter-spacing: 0.16em;
+  text-align: center;
+}
+
+.otp-confirm-btn {
+  flex: 1;
+}
+
+.otp-step-footer-links {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 8px;
+  font-size: 0.76rem;
+}
+
+.otp-polling-indicator {
+  color: var(--accent-emerald-text);
+  font-weight: 600;
+}
+
+/* 14-Day Free Trial Reminder & Direct Download Fallback Card */
+.beta-trial-fallback-card {
+  padding: 13px 15px;
+  border-radius: 12px;
+  background: var(--bg-quote-well);
+  border: 1px solid var(--border-subtle);
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.trial-fallback-text {
+  font-size: 0.78rem;
+  color: var(--text-secondary);
+  line-height: 1.48;
+}
+
+/* Discord & WhatsApp Feedback Group Buttons Inside #download-modal */
+.community-buttons-row {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 8px;
+  margin-top: 6px;
+}
+
+.btn-community-link {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  padding: 8px 11px;
+  border-radius: 9px;
+  font-size: 0.76rem;
+  font-weight: 700;
+  text-align: center;
+  transition: transform 0.18s ease, background-color 0.18s ease;
+}
+
+.btn-community-discord {
+  background: rgba(88, 101, 242, 0.18);
+  border: 1px solid rgba(88, 101, 242, 0.5);
+  color: #A5B4FC;
+}
+
+.btn-community-discord:hover {
+  background: rgba(88, 101, 242, 0.28);
+  transform: translateY(-1px);
+}
+
+.btn-community-whatsapp {
+  background: rgba(16, 185, 129, 0.16);
+  border: 1px solid rgba(16, 185, 129, 0.45);
+  color: var(--accent-emerald-text);
+}
+
+.btn-community-whatsapp:hover {
+  background: rgba(16, 185, 129, 0.26);
+  transform: translateY(-1px);
 }
 
 .modal-footer {
@@ -3832,8 +3979,18 @@ section {
   .pledge-checklist,
   .pricing-tiers-grid,
   .founders-4col-grid,
-  .form-grid-2 {
+  .form-grid-2,
+  .form-grid-profile,
+  .community-buttons-row {
     grid-template-columns: 1fr;
+  }
+
+  .otp-input-action-row {
+    flex-direction: column;
+  }
+
+  .otp-code-input {
+    width: 100%;
   }
 
   .vault-3pane-body {

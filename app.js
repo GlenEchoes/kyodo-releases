@@ -7,6 +7,8 @@
 const DMG_DOWNLOAD_URL = "https://github.com/GlenEchoes/kyodo-releases/releases/latest/download/Kyodo.dmg";
 const WEB_EXTENSION_DOWNLOAD_URL = "#kyodo-web-extension-placeholder";
 const CLOSED_BETA_FORM_URL = "#closed-beta-tally-placeholder";
+const DISCORD_INVITE_URL = "#kyodo-discord-community-placeholder";
+const WHATSAPP_INVITE_URL = "#kyodo-whatsapp-community-placeholder";
 const FOUNDER_LINKEDIN_URLS = {
   apoorva: "https://www.linkedin.com",
   gunjit: "https://www.linkedin.com",
@@ -71,6 +73,18 @@ function initPlaceholderLinks() {
   document.querySelectorAll("[data-extension-download-link]").forEach((el) => {
     if (WEB_EXTENSION_DOWNLOAD_URL) {
       el.setAttribute("href", WEB_EXTENSION_DOWNLOAD_URL);
+    }
+  });
+
+  document.querySelectorAll("[data-discord-invite-link]").forEach((el) => {
+    if (DISCORD_INVITE_URL) {
+      el.setAttribute("href", DISCORD_INVITE_URL);
+    }
+  });
+
+  document.querySelectorAll("[data-whatsapp-invite-link]").forEach((el) => {
+    if (WHATSAPP_INVITE_URL) {
+      el.setAttribute("href", WHATSAPP_INVITE_URL);
     }
   });
 
@@ -1351,8 +1365,20 @@ function initPricingCalculator() {
 }
 
 /* ============================================================================
-   8. 30-SEAT CLOSED BETA FORM & DECLARATIVE MODAL FALLBACKS
+   8. 30-SEAT CLOSED BETA VERIFICATION PIPELINE & DECLARATIVE MODAL FALLBACKS
    ============================================================================ */
+const CLIENT_DISPOSABLE_EMAIL_DOMAINS = new Set([
+  "mailinator.com",
+  "tempmail.com",
+  "10minutemail.com",
+  "guerrillamail.com",
+  "yopmail.com",
+  "trashmail.com",
+  "sharklasers.com",
+  "fakeinbox.com",
+  "getnada.com"
+]);
+
 function initFormsAndModals() {
   const copyLicenseBtn = document.getElementById("modal-copy-license-btn");
   const licenseKeyTextEl = document.getElementById("modal-license-key-text");
@@ -1373,28 +1399,360 @@ function initFormsAndModals() {
     });
   }
 
+  // Dynamic "Other (Specify below...)" visibility for Discipline & Editor
+  const disciplineSelect = document.getElementById("beta-discipline");
+  const disciplineOtherWrap = document.getElementById("beta-discipline-other-wrap");
+  if (disciplineSelect && disciplineOtherWrap) {
+    disciplineSelect.addEventListener("change", () => {
+      disciplineOtherWrap.hidden = disciplineSelect.value !== "other";
+    });
+  }
+
+  const editorSelect = document.getElementById("beta-editor");
+  const editorOtherWrap = document.getElementById("beta-editor-other-wrap");
+  if (editorSelect && editorOtherWrap) {
+    editorSelect.addEventListener("change", () => {
+      editorOtherWrap.hidden = editorSelect.value !== "other";
+    });
+  }
+
+  // Dynamic Researcher Profile Placeholder
+  const profileTypeSelect = document.getElementById("beta-profile-type");
+  const profileIdInput = document.getElementById("beta-profile-id");
+  const PROFILE_PLACEHOLDERS = {
+    linkedin: "e.g., linkedin.com/in/yourname",
+    orcid: "e.g., 0000-0002-1825-0097 or orcid.org/0000-...",
+    google_scholar: "e.g., scholar.google.com/citations?user=...",
+    researchgate: "e.g., researchgate.net/profile/Your-Name"
+  };
+  if (profileTypeSelect && profileIdInput) {
+    profileTypeSelect.addEventListener("change", () => {
+      const ph = PROFILE_PLACEHOLDERS[profileTypeSelect.value];
+      if (ph) profileIdInput.setAttribute("placeholder", ph);
+    });
+  }
+
+  const betaModal = document.getElementById("beta-modal");
+  const downloadModal = document.getElementById("download-modal");
+  const betaConfirmedBanner = document.getElementById("modal-beta-confirmed-banner");
+  const betaConfirmedTitle = document.getElementById("modal-beta-confirmed-title");
+  const betaConfirmedNote = document.getElementById("modal-beta-confirmed-note");
+
   const betaForm = document.getElementById("beta-claim-form");
   const feedbackEl = document.getElementById("beta-form-feedback");
-  if (betaForm && feedbackEl) {
-    betaForm.addEventListener("submit", (event) => {
-      event.preventDefault();
-      const nameVal = (document.getElementById("beta-name")?.value || "Researcher").trim();
-      const emailVal = (document.getElementById("beta-email")?.value || "").trim();
+  const submitBtn = document.getElementById("beta-submit-btn");
 
-      if (!emailVal) {
-        feedbackEl.hidden = false;
-        feedbackEl.textContent = "Please enter your academic or institutional email address to reserve your seat.";
+  const otpStepBox = document.getElementById("beta-otp-step-box");
+  const otpEmailDisplay = document.getElementById("beta-otp-email-display");
+  const otpInput = document.getElementById("beta-otp-input");
+  const otpVerifyBtn = document.getElementById("beta-verify-code-btn");
+  const otpFeedbackEl = document.getElementById("beta-otp-feedback");
+  const backToStep1Btn = document.getElementById("beta-back-to-step1-btn");
+  const skipToTrialBtn = document.getElementById("beta-skip-to-trial-dmg-btn");
+
+  let activeBetaStatusPoller = null;
+  let pendingBetaEmail = "";
+  let betaAlreadyCompleted = false;
+
+  function showFormFeedback(el, msg, isError = false) {
+    if (!el) return;
+    el.hidden = false;
+    el.classList.toggle("is-error", isError);
+    el.innerHTML = msg;
+  }
+
+  function completeBetaVerificationAndDownload({ seatNumber = 1, name = "Researcher", email = "" }) {
+    if (betaAlreadyCompleted) return;
+    betaAlreadyCompleted = true;
+
+    if (activeBetaStatusPoller) {
+      clearInterval(activeBetaStatusPoller);
+      activeBetaStatusPoller = null;
+    }
+
+    if (betaModal && betaModal.open && typeof betaModal.close === "function") {
+      betaModal.close();
+    }
+
+    if (betaConfirmedBanner) {
+      betaConfirmedBanner.hidden = false;
+    }
+    if (betaConfirmedTitle) {
+      betaConfirmedTitle.textContent = `✅ Founding Scholar Seat #${seatNumber} of 30 Confirmed — Downloading Kyodo.dmg...`;
+    }
+    if (betaConfirmedNote) {
+      betaConfirmedNote.textContent = `Welcome to the Founding Cohort, ${name}${email ? ` (${email})` : ""}! Your Kyodo.dmg download has started automatically — join our Discord or WhatsApp scholars group below to share direct workflow feedback with the founding team.`;
+    }
+
+    if (downloadModal) {
+      if (typeof downloadModal.showModal === "function") {
+        if (!downloadModal.open) downloadModal.showModal();
+      } else {
+        downloadModal.setAttribute("open", "");
+      }
+    }
+
+    startDirectDmgDownload();
+  }
+
+  function startBetaEmailLinkStatusPoller(emailNorm) {
+    if (activeBetaStatusPoller) clearInterval(activeBetaStatusPoller);
+    if (!emailNorm) return;
+
+    const pollStatus = async () => {
+      try {
+        const res = await fetch(
+          `${KYODO_WORKER_BASE_URL}/v1/beta/status?email=${encodeURIComponent(emailNorm)}`
+        );
+        if (!res.ok) return;
+        const data = await res.json();
+        if (data && data.verified) {
+          completeBetaVerificationAndDownload({
+            seatNumber: data.seat_number || 1,
+            name: data.name || (document.getElementById("beta-name")?.value || "Researcher").trim(),
+            email: emailNorm
+          });
+        }
+      } catch (_) {}
+    };
+
+    activeBetaStatusPoller = setInterval(pollStatus, 3000);
+  }
+
+  // "Skip Cohort & Download Kyodo.dmg (14-Day Free Trial)" button inside #beta-modal
+  if (skipToTrialBtn) {
+    skipToTrialBtn.addEventListener("click", () => {
+      if (activeBetaStatusPoller) {
+        clearInterval(activeBetaStatusPoller);
+        activeBetaStatusPoller = null;
+      }
+      if (betaModal && betaModal.open && typeof betaModal.close === "function") {
+        betaModal.close();
+      }
+      if (downloadModal) {
+        if (typeof downloadModal.showModal === "function") {
+          if (!downloadModal.open) downloadModal.showModal();
+        } else {
+          downloadModal.setAttribute("open", "");
+        }
+      }
+      startDirectDmgDownload();
+    });
+  }
+
+  // Step 1 Form Submit -> Request 6-digit OTP & Email Confirmation Link
+  if (betaForm && feedbackEl) {
+    betaForm.addEventListener("submit", async (event) => {
+      event.preventDefault();
+      feedbackEl.hidden = true;
+
+      const nameVal = (document.getElementById("beta-name")?.value || "").trim();
+      const emailVal = (document.getElementById("beta-email")?.value || "").trim().toLowerCase();
+      const profileTypeVal = (profileTypeSelect?.value || "linkedin").trim();
+      const profileIdVal = (profileIdInput?.value || "").trim();
+      const disciplineVal = (disciplineSelect?.value || "clinical-medicine").trim();
+      const disciplineOtherVal = (document.getElementById("beta-discipline-other")?.value || "").trim();
+      const editorVal = (editorSelect?.value || "word").trim();
+      const editorOtherVal = (document.getElementById("beta-editor-other")?.value || "").trim();
+
+      if (!nameVal || nameVal.length < 2) {
+        showFormFeedback(feedbackEl, "Please enter your full name and academic/clinical title.", true);
         return;
       }
 
-      if (CLOSED_BETA_FORM_URL && !CLOSED_BETA_FORM_URL.startsWith("#")) {
-        window.open(CLOSED_BETA_FORM_URL, "_blank", "noopener,noreferrer");
+      if (!/^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/.test(emailVal)) {
+        showFormFeedback(feedbackEl, "Please enter a valid academic or institutional email address.", true);
+        return;
       }
 
-      feedbackEl.hidden = false;
-      feedbackEl.innerHTML = `✓ <strong>Foundational Beta Seat Reserved for ${nameVal}!</strong> Your Pro-Elite activation key and onboarding invite will be sent to <code>${emailVal}</code>.`;
+      const emailDomain = emailVal.split("@")[1] || "";
+      for (const blocked of CLIENT_DISPOSABLE_EMAIL_DOMAINS) {
+        if (emailDomain === blocked || emailDomain.endsWith(`.${blocked}`)) {
+          showFormFeedback(
+            feedbackEl,
+            "Disposable temporary email addresses are not eligible for the 30-seat founding cohort.",
+            true
+          );
+          return;
+        }
+      }
+
+      if (!profileIdVal || profileIdVal.length < 4) {
+        showFormFeedback(
+          feedbackEl,
+          "Please provide your verifiable LinkedIn URL, ORCID iD, Google Scholar, or ResearchGate profile — or click <strong>Skip Cohort &amp; Download Kyodo.dmg (14-Day Free Trial)</strong> below.",
+          true
+        );
+        return;
+      }
+
+      if (disciplineVal === "other" && !disciplineOtherVal) {
+        showFormFeedback(feedbackEl, "Please specify your research discipline.", true);
+        return;
+      }
+
+      if (editorVal === "other" && !editorOtherVal) {
+        showFormFeedback(feedbackEl, "Please specify your primary writing environment.", true);
+        return;
+      }
+
+      const origBtnLabel = submitBtn ? submitBtn.textContent : "";
+      if (submitBtn) {
+        submitBtn.disabled = true;
+        submitBtn.textContent = "Sending Verification Code & Confirmation Link...";
+      }
+
+      try {
+        const returnUrl = `${window.location.origin}${window.location.pathname}`;
+        const res = await fetch(`${KYODO_WORKER_BASE_URL}/v1/beta/request-verification`, {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({
+            name: nameVal,
+            email: emailVal,
+            profile_type: profileTypeVal,
+            profile_id: profileIdVal,
+            discipline: disciplineVal,
+            discipline_other: disciplineOtherVal,
+            editor: editorVal,
+            editor_other: editorOtherVal,
+            return_url: returnUrl
+          })
+        });
+
+        const data = await res.json();
+        if (!res.ok) {
+          showFormFeedback(
+            feedbackEl,
+            data.message || "Could not send verification email. Please verify your details and try again.",
+            true
+          );
+          if (submitBtn) {
+            submitBtn.disabled = false;
+            submitBtn.textContent = origBtnLabel;
+          }
+          return;
+        }
+
+        pendingBetaEmail = emailVal;
+        betaAlreadyCompleted = false;
+        betaForm.hidden = true;
+        if (otpStepBox) otpStepBox.hidden = false;
+        if (otpEmailDisplay) otpEmailDisplay.textContent = emailVal;
+        if (otpInput) {
+          otpInput.value = "";
+          otpInput.focus();
+        }
+
+        if (data.fallback_demo_code && otpFeedbackEl) {
+          showFormFeedback(
+            otpFeedbackEl,
+            `✓ Verification code generated: <code>${data.fallback_demo_code}</code> (Enter this 6-digit code above to confirm immediately).`,
+            false
+          );
+        } else if (otpFeedbackEl) {
+          otpFeedbackEl.hidden = true;
+        }
+
+        startBetaEmailLinkStatusPoller(emailVal);
+      } catch (_) {
+        showFormFeedback(
+          feedbackEl,
+          "Network error while contacting the verification server. Please check your connection or use the 14-Day Free Trial download below.",
+          true
+        );
+      } finally {
+        if (submitBtn) {
+          submitBtn.disabled = false;
+          submitBtn.textContent = origBtnLabel;
+        }
+      }
     });
   }
+
+  // Step 2: Confirm 6-Digit Code Button
+  async function verifySixDigitCode() {
+    if (!otpInput || !otpFeedbackEl) return;
+    const codeVal = (otpInput.value || "").trim();
+    if (!/^\d{6}$/.test(codeVal)) {
+      showFormFeedback(otpFeedbackEl, "Please enter the 6-digit numeric verification code from your email.", true);
+      return;
+    }
+
+    const origLabel = otpVerifyBtn ? otpVerifyBtn.textContent : "";
+    if (otpVerifyBtn) {
+      otpVerifyBtn.disabled = true;
+      otpVerifyBtn.textContent = "Verifying Code...";
+    }
+
+    try {
+      const res = await fetch(`${KYODO_WORKER_BASE_URL}/v1/beta/verify-code`, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          email: pendingBetaEmail,
+          code: codeVal
+        })
+      });
+      const data = await res.json();
+      if (!res.ok || !data.verified) {
+        showFormFeedback(
+          otpFeedbackEl,
+          data.message || "Incorrect 6-digit verification code. Please double-check your email.",
+          true
+        );
+        return;
+      }
+
+      completeBetaVerificationAndDownload({
+        seatNumber: data.seat_number || 1,
+        name: data.name || (document.getElementById("beta-name")?.value || "Researcher").trim(),
+        email: pendingBetaEmail
+      });
+    } catch (_) {
+      showFormFeedback(otpFeedbackEl, "Could not verify code due to a network error. Please try again.", true);
+    } finally {
+      if (otpVerifyBtn) {
+        otpVerifyBtn.disabled = false;
+        otpVerifyBtn.textContent = origLabel;
+      }
+    }
+  }
+
+  if (otpVerifyBtn) {
+    otpVerifyBtn.addEventListener("click", verifySixDigitCode);
+  }
+  if (otpInput) {
+    otpInput.addEventListener("keydown", (e) => {
+      if (e.key === "Enter") {
+        e.preventDefault();
+        verifySixDigitCode();
+      }
+    });
+  }
+
+  // Step 2 -> Back to Step 1 button
+  if (backToStep1Btn && betaForm && otpStepBox) {
+    backToStep1Btn.addEventListener("click", () => {
+      if (activeBetaStatusPoller) {
+        clearInterval(activeBetaStatusPoller);
+        activeBetaStatusPoller = null;
+      }
+      otpStepBox.hidden = true;
+      betaForm.hidden = false;
+    });
+  }
+
+  // Auto-open #download-modal and trigger Kyodo.dmg download when redirected back from email confirmation link (?beta_verified=1)
+  try {
+    const params = new URLSearchParams(window.location.search);
+    if (params.get("beta_verified") === "1") {
+      const seat = parseInt(params.get("seat") || "1", 10) || 1;
+      const name = params.get("name") || "Founding Scholar";
+      const email = params.get("email") || "";
+      completeBetaVerificationAndDownload({ seatNumber: seat, name, email });
+    }
+  } catch (_) {}
 
   if (!("commandForElement" in HTMLButtonElement.prototype)) {
     document.querySelectorAll("button[commandfor][command]").forEach((btn) => {
