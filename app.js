@@ -7,8 +7,8 @@
 const DMG_DOWNLOAD_URL = "https://github.com/GlenEchoes/kyodo-releases/releases/latest/download/Kyodo.dmg";
 const WEB_EXTENSION_DOWNLOAD_URL = "#kyodo-web-extension-placeholder";
 const CLOSED_BETA_FORM_URL = "#closed-beta-tally-placeholder";
-const DISCORD_INVITE_URL = "#kyodo-discord-community-placeholder";
-const WHATSAPP_INVITE_URL = "#kyodo-whatsapp-community-placeholder";
+const DISCORD_INVITE_URL = "https://discord.gg/ccwNMaqSz";
+const WHATSAPP_INVITE_URL = "https://chat.whatsapp.com/JPINRPY8Kc78sTun9oneuV";
 const FOUNDER_LINKEDIN_URLS = {
   apoorva: "https://www.linkedin.com",
   gunjit: "https://www.linkedin.com",
