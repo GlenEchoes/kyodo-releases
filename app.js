@@ -23,6 +23,11 @@ const DEMO_VIDEO_URLS = {
   spatialVault: "",
   zoteroAndIpad: ""
 };
+const COMPANION_TASK_VIDEO_URLS = {
+  grounding: "",      // Drop-in .mp4 for Task 1: Live Claim Grounding
+  audit: "",          // Drop-in .mp4 for Task 2: In-Paper Citation Audit
+  transmutation: ""   // Drop-in .mp4 for Task 3: 1-Click Style Transmutation
+};
 const KYODO_WORKER_BASE_URL = "https://kyodo-trial-proxy.gunjit-glen.workers.dev";
 
 /* ============================================================================
@@ -1822,6 +1827,293 @@ function initScrollRevealFallback() {
 }
 
 /* ============================================================================
+   10. SECTION 1 (#bottleneck): CLICK-TO-EXPAND 2/3 LEFT + 1/3 RIGHT STACKED CARDS
+   ============================================================================ */
+function initBottleneckExpansion() {
+  const grid = document.getElementById("bottleneck-grid");
+  if (!grid) return;
+
+  const cards = Array.from(grid.querySelectorAll(".bottleneck-card"));
+  if (!cards.length) return;
+
+  function setExpandedCard(targetCard) {
+    const isAlreadyExpanded = targetCard && targetCard.classList.contains("is-expanded");
+
+    if (!targetCard || isAlreadyExpanded) {
+      grid.classList.remove("has-expanded");
+      cards.forEach((card) => {
+        card.classList.remove("is-expanded", "is-stacked");
+        card.setAttribute("aria-expanded", "false");
+        const pill = card.querySelector(".bottleneck-explore-pill");
+        if (pill) pill.textContent = "+ Click to explore";
+      });
+      return;
+    }
+
+    grid.classList.add("has-expanded");
+    cards.forEach((card) => {
+      const pill = card.querySelector(".bottleneck-explore-pill");
+      if (card === targetCard) {
+        card.classList.add("is-expanded");
+        card.classList.remove("is-stacked");
+        card.setAttribute("aria-expanded", "true");
+        if (pill) pill.textContent = "✕ Click to collapse";
+      } else {
+        card.classList.remove("is-expanded");
+        card.classList.add("is-stacked");
+        card.setAttribute("aria-expanded", "false");
+        if (pill) pill.textContent = "+ Click to explore";
+      }
+    });
+  }
+
+  cards.forEach((card) => {
+    card.addEventListener("click", () => {
+      setExpandedCard(card);
+    });
+    card.addEventListener("keydown", (e) => {
+      if (e.key === "Enter" || e.key === " ") {
+        e.preventDefault();
+        setExpandedCard(card);
+      }
+    });
+  });
+}
+
+/* ============================================================================
+   11. SECTION 2A (#features): APPLE "GET TO KNOW MACBOOK PRO" COMPANION STAGE
+   ============================================================================ */
+function initAppleCompanionStage() {
+  const pills = Array.from(document.querySelectorAll(".companion-pill-item[data-companion-task]"));
+  const scenes = Array.from(document.querySelectorAll(".companion-scene[data-companion-scene]"));
+  const winTitle = document.getElementById("companion-window-title");
+  const taskVideo = document.getElementById("companion-task-video");
+  const cinemaCanvas = document.getElementById("companion-cinema-canvas");
+
+  if (!pills.length) return;
+
+  const TITLES = {
+    grounding: "Kyodo Ambient Companion — Live Claim Grounding",
+    audit: "Kyodo Ambient Companion — In-Paper Citation Audit",
+    transmutation: "Kyodo Ambient Companion — 1-Click Style Transmutation"
+  };
+
+  function activateCompanionTask(taskKey) {
+    pills.forEach((pill) => {
+      const isMatch = pill.getAttribute("data-companion-task") === taskKey;
+      pill.classList.toggle("active", isMatch);
+      pill.setAttribute("aria-selected", isMatch ? "true" : "false");
+    });
+
+    if (winTitle && TITLES[taskKey]) {
+      winTitle.textContent = TITLES[taskKey];
+    }
+
+    const configuredVideoUrl =
+      (COMPANION_TASK_VIDEO_URLS && COMPANION_TASK_VIDEO_URLS[taskKey]) || "";
+
+    if (taskVideo && cinemaCanvas) {
+      if (configuredVideoUrl) {
+        cinemaCanvas.hidden = true;
+        taskVideo.hidden = false;
+        if (taskVideo.getAttribute("src") !== configuredVideoUrl) {
+          taskVideo.setAttribute("src", configuredVideoUrl);
+          taskVideo.load();
+        }
+        taskVideo.play().catch(() => {});
+      } else {
+        if (!taskVideo.paused) taskVideo.pause();
+        taskVideo.hidden = true;
+        cinemaCanvas.hidden = false;
+      }
+    }
+
+    scenes.forEach((scene) => {
+      const isMatch = scene.getAttribute("data-companion-scene") === taskKey;
+      scene.hidden = !isMatch;
+      scene.classList.toggle("active", isMatch);
+    });
+  }
+
+  pills.forEach((pill) => {
+    pill.addEventListener("click", () => {
+      const taskKey = pill.getAttribute("data-companion-task");
+      if (taskKey) activateCompanionTask(taskKey);
+    });
+  });
+
+  // Gentle continuous token loop inside Scene 3 (Transmutation)
+  const styleToken = document.getElementById("cs-loop-style-token");
+  if (styleToken && window.matchMedia("(prefers-reduced-motion: no-preference)").matches) {
+    const TOKENS = [
+      "(Lytvyn & Bjornstad, 2017; McMurray et al., 2019)",
+      "[1, 2]",
+      "¹,²",
+      "(Lytvyn & Bjornstad, 2017; McMurray et al., 2019) → [1,2] → ¹,²"
+    ];
+    let tokenIdx = 0;
+    setInterval(() => {
+      tokenIdx = (tokenIdx + 1) % TOKENS.length;
+      styleToken.textContent = TOKENS[tokenIdx];
+    }, 2400);
+  }
+}
+
+/* ============================================================================
+   12. SECTION 2B (#spatial-vault): STAGGERED SCROLL-DRIVEN SLIDE-IN & RISING ITEMS
+   ============================================================================ */
+function initSpatialVaultStaggerScroll() {
+  const leftPanel = document.getElementById("vault-slide-left");
+  const rightPanel = document.getElementById("vault-slide-right");
+  const chatBubbles = Array.from(document.querySelectorAll(".vault-chat-bubble"));
+  const risingFolders = Array.from(document.querySelectorAll(".vault-rising-folder"));
+
+  if (!leftPanel && !rightPanel) return;
+
+  const reducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+  if (reducedMotion) return;
+
+  let ticking = false;
+
+  function clamp01(val) {
+    return Math.max(0, Math.min(1, val));
+  }
+
+  function updateVaultScrollState() {
+    const vh = window.innerHeight || document.documentElement.clientHeight || 800;
+
+    if (leftPanel) {
+      const rect1 = leftPanel.getBoundingClientRect();
+      // Progress 0 when bottom enters viewport, 1 when panel center reaches 55% of viewport
+      const prog1 = clamp01((vh - rect1.top) / (vh * 0.62));
+      const slideXLeft = (1 - prog1) * -64;
+      leftPanel.style.transform = `translate3d(${slideXLeft.toFixed(1)}px, 0, 0)`;
+      leftPanel.style.opacity = (0.25 + prog1 * 0.75).toFixed(3);
+
+      chatBubbles.forEach((bubble, idx) => {
+        const staggerStart = idx * 0.14;
+        const itemProg = clamp01((prog1 - staggerStart) / Math.max(0.25, 1 - staggerStart));
+        const riseY = (1 - itemProg) * 26;
+        bubble.style.transform = `translate3d(0, ${riseY.toFixed(1)}px, 0)`;
+        bubble.style.opacity = (0.15 + itemProg * 0.85).toFixed(3);
+      });
+    }
+
+    if (rightPanel) {
+      const rect2 = rightPanel.getBoundingClientRect();
+      const prog2 = clamp01((vh - rect2.top) / (vh * 0.62));
+      const slideXRight = (1 - prog2) * 64;
+      rightPanel.style.transform = `translate3d(${slideXRight.toFixed(1)}px, 0, 0)`;
+      rightPanel.style.opacity = (0.25 + prog2 * 0.75).toFixed(3);
+
+      risingFolders.forEach((folder, idx) => {
+        const staggerStart = idx * 0.12;
+        const itemProg = clamp01((prog2 - staggerStart) / Math.max(0.25, 1 - staggerStart));
+        const riseY = (1 - itemProg) * 22;
+        folder.style.transform = `translate3d(0, ${riseY.toFixed(1)}px, 0)`;
+        folder.style.opacity = (0.15 + itemProg * 0.85).toFixed(3);
+      });
+    }
+
+    ticking = false;
+  }
+
+  window.addEventListener(
+    "scroll",
+    () => {
+      if (!ticking) {
+        ticking = true;
+        window.requestAnimationFrame(updateVaultScrollState);
+      }
+    },
+    { passive: true }
+  );
+
+  updateVaultScrollState();
+}
+
+/* ============================================================================
+   13. SECTION 4 (#pricing): SMOOTH ANIMATED 28-ROW MATRIX ACCORDION
+   ============================================================================ */
+function initSmoothMatrixAccordion() {
+  const trigger = document.getElementById("matrix-accordion-trigger");
+  const collapse = document.getElementById("matrix-accordion-collapse");
+  if (!trigger || !collapse) return;
+
+  trigger.addEventListener("click", () => {
+    const isExpanded = trigger.getAttribute("aria-expanded") === "true";
+    const nextState = !isExpanded;
+    trigger.setAttribute("aria-expanded", nextState ? "true" : "false");
+    collapse.classList.toggle("is-open", nextState);
+  });
+}
+
+/* ============================================================================
+   14. SECTION 5 (#security-founders): SCROLL-DRIVEN TELEMETRY COUNTDOWN
+   ============================================================================ */
+function initTelemetryScrollCountdown() {
+  const strip = document.getElementById("telemetry-countdown-strip");
+  const ramEl = document.getElementById("telemetry-val-ram");
+  const cpuEl = document.getElementById("telemetry-val-cpu");
+  const lookupEl = document.getElementById("telemetry-val-lookup");
+
+  if (!strip || !ramEl || !cpuEl || !lookupEl) return;
+
+  const reducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+  if (reducedMotion) {
+    ramEl.textContent = "< 20 MB";
+    cpuEl.textContent = "0.00%";
+    lookupEl.textContent = "< 2 ms";
+    return;
+  }
+
+  let ticking = false;
+
+  function updateTelemetryNumbers() {
+    const vh = window.innerHeight || document.documentElement.clientHeight || 800;
+    const rect = strip.getBoundingClientRect();
+    const stripCenter = rect.top + rect.height * 0.5;
+    const screenCenter = vh * 0.5;
+
+    // Progress = 0 when strip enters bottom of screen (stripCenter = vh)
+    // Progress = 1 when strip reaches or passes screen center (stripCenter <= screenCenter)
+    const rawProgress = (vh - stripCenter) / Math.max(1, vh - screenCenter);
+    const progress = Math.max(0, Math.min(1, rawProgress));
+    // Ease-out cubic so numbers settle smoothly into their final target at screen center
+    const eased = 1 - Math.pow(1 - progress, 3);
+
+    if (progress >= 0.995) {
+      ramEl.textContent = "< 20 MB";
+      cpuEl.textContent = "0.00%";
+      lookupEl.textContent = "< 2 ms";
+    } else {
+      const currentRam = Math.round(850 - (850 - 20) * eased);
+      const currentCpu = Math.max(0, 18 * (1 - eased));
+      const currentLookup = Math.round(120 - (120 - 2) * eased);
+
+      ramEl.textContent = `${currentRam} MB`;
+      cpuEl.textContent = `${currentCpu.toFixed(2)}%`;
+      lookupEl.textContent = `${currentLookup} ms`;
+    }
+
+    ticking = false;
+  }
+
+  window.addEventListener(
+    "scroll",
+    () => {
+      if (!ticking) {
+        ticking = true;
+        window.requestAnimationFrame(updateTelemetryNumbers);
+      }
+    },
+    { passive: true }
+  );
+
+  updateTelemetryNumbers();
+}
+
+/* ============================================================================
    INITIALIZE ALL MODULES ON DOM READY
    ============================================================================ */
 document.addEventListener("DOMContentLoaded", () => {
@@ -1829,9 +2121,14 @@ document.addEventListener("DOMContentLoaded", () => {
   initThemeToggle();
   initHeroSlide1Demo();
   initVideoCarousel();
+  initBottleneckExpansion();
+  initAppleCompanionStage();
   initOrbShowcase2A();
   initSpatialVault2B();
+  initSpatialVaultStaggerScroll();
   initPricingCalculator();
+  initSmoothMatrixAccordion();
+  initTelemetryScrollCountdown();
   initFormsAndModals();
   initScrollRevealFallback();
 });
