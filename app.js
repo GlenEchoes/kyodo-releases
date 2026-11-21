@@ -11,10 +11,8 @@ const CLOSED_BETA_FORM_URL = "#closed-beta-tally-placeholder";
 const DISCORD_INVITE_URL = "https://discord.gg/ccwNMaqSz";
 const WHATSAPP_INVITE_URL = "https://chat.whatsapp.com/JPINRPY8Kc78sTun9oneuV";
 const FOUNDER_LINKEDIN_URLS = {
-  apoorva: "https://www.linkedin.com",
-  gunjit: "https://www.linkedin.com",
-  nalina: "https://www.linkedin.com",
-  shruthi: "https://www.linkedin.com"
+  gunjit: "https://www.linkedin.com/in/gunjit-glen-1605781b1/",
+  nalina: "https://www.linkedin.com/in/nalina-p-sahayaraj-7b754a326/"
 };
 const DEMO_VIDEO_MP4_URL = ""; // Optional global fallback .mp4 URL
 const DEMO_VIDEO_URLS = {
