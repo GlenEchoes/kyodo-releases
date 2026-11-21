@@ -487,6 +487,18 @@ kbd,
   box-shadow: 0 12px 30px rgba(16, 185, 129, 0.2);
 }
 
+.hero-extension-row {
+  display: flex;
+  align-items: stretch;
+  gap: 10px;
+  width: 100%;
+}
+
+.hero-extension-row .btn-hero-extension {
+  flex: 1;
+  min-width: 0;
+}
+
 .btn-hero-extension {
   background: var(--bg-card-fill);
   border: 1px solid rgba(46, 166, 250, 0.42);
@@ -497,6 +509,56 @@ kbd,
   transform: translateY(-2px);
   background: var(--bg-card-hover);
   box-shadow: 0 10px 26px rgba(46, 166, 250, 0.18);
+}
+
+.btn-hero-ext-manual-square {
+  aspect-ratio: 1 / 1;
+  width: 68px;
+  min-height: 68px;
+  flex-shrink: 0;
+  border-radius: 14px;
+  background: rgba(46, 166, 250, 0.12);
+  border: 1px solid rgba(46, 166, 250, 0.48);
+  color: var(--text-primary);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 2px;
+  padding: 6px;
+  cursor: pointer;
+  transition:
+    transform 0.2s ease,
+    background-color 0.2s ease,
+    border-color 0.2s ease,
+    box-shadow 0.2s ease;
+}
+
+.btn-hero-ext-manual-square:hover {
+  transform: translateY(-2px);
+  background: rgba(46, 166, 250, 0.22);
+  border-color: rgba(46, 166, 250, 0.82);
+  box-shadow: 0 10px 26px rgba(46, 166, 250, 0.24);
+}
+
+.manual-zip-icon {
+  color: var(--accent-sapphire-text);
+  flex-shrink: 0;
+}
+
+.manual-sq-label {
+  font-size: 0.72rem;
+  font-weight: 800;
+  line-height: 1.05;
+  color: var(--text-primary);
+}
+
+.manual-sq-sub {
+  font-family: var(--font-mono);
+  font-size: 0.66rem;
+  font-weight: 700;
+  line-height: 1;
+  color: var(--accent-sapphire-text);
 }
 
 .ext-puzzle-icon {
@@ -3524,6 +3586,15 @@ section {
 }
 
 /* Native <dialog> Modals */
+dialog:modal {
+  overscroll-behavior: contain;
+}
+
+dialog::backdrop {
+  overflow: hidden;
+  overscroll-behavior: contain;
+}
+
 .glass-modal {
   margin: auto;
   width: min(560px, 92vw);
@@ -3535,6 +3606,10 @@ section {
   backdrop-filter: blur(24px);
   -webkit-backdrop-filter: blur(24px);
   padding: 0;
+}
+
+.glass-modal.ext-install-modal {
+  width: min(740px, 94vw);
 }
 
 .glass-modal::backdrop {
@@ -3618,8 +3693,15 @@ section {
   gap: 4px;
 }
 
+.modal-ext-btn-row {
+  margin-top: 6px;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 8px;
+}
+
 .btn-modal-extension-dl {
-  margin-top: 4px;
   align-self: flex-start;
   display: inline-flex;
   align-items: center;
@@ -3637,6 +3719,793 @@ section {
 .btn-modal-extension-dl:hover {
   background: rgba(46, 166, 250, 0.25);
   transform: translateY(-1px);
+}
+
+.btn-modal-ext-manual-sq {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  padding: 6px 11px;
+  border-radius: 8px;
+  background: var(--bg-quote-well);
+  border: 1px solid rgba(46, 166, 250, 0.45);
+  color: var(--text-primary);
+  font-size: 0.76rem;
+  font-weight: 700;
+  cursor: pointer;
+  transition: background-color 0.18s ease, border-color 0.18s ease, transform 0.18s ease;
+}
+
+.btn-modal-ext-manual-sq:hover {
+  background: rgba(46, 166, 250, 0.2);
+  border-color: rgba(46, 166, 250, 0.85);
+  transform: translateY(-1px);
+}
+
+/* ==========================================================================
+   DECLARATIVE MODAL 4: MANUAL EXTENSION .ZIP & 4-SCENE SIMULATED VIDEO GUIDE
+   ========================================================================== */
+.ext-install-action-bar {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 10px;
+}
+
+.ext-zip-dl-btn {
+  flex: 1.25;
+  min-width: 220px;
+  padding: 11px 16px;
+  font-size: 0.88rem;
+  font-weight: 700;
+}
+
+.ext-copy-url-btn {
+  flex: 1;
+  min-width: 210px;
+  padding: 11px 14px;
+  font-size: 0.84rem;
+}
+
+.ext-copy-url-btn code {
+  font-family: var(--font-mono);
+  font-size: 0.78rem;
+  font-weight: 700;
+  color: var(--accent-sapphire-text);
+}
+
+.ext-sim-video-stage {
+  border-radius: 16px;
+  background: #070B14;
+  border: 1px solid rgba(255, 255, 255, 0.16);
+  box-shadow: 0 18px 42px rgba(0, 0, 0, 0.48);
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+}
+
+.ext-sim-player-bar {
+  padding: 10px 14px;
+  background: rgba(15, 23, 42, 0.92);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 10px;
+}
+
+.ext-sim-bar-left {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.ext-sim-step-pill {
+  padding: 2.5px 9px;
+  border-radius: 999px;
+  background: rgba(46, 166, 250, 0.2);
+  border: 1px solid rgba(46, 166, 250, 0.5);
+  color: #5AC8FA;
+  font-size: 0.68rem;
+  font-weight: 800;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+}
+
+.ext-sim-step-headline {
+  font-size: 0.82rem;
+  font-weight: 700;
+  color: #F8FAFC;
+}
+
+.ext-sim-bar-controls {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.ext-sim-ctrl-btn {
+  padding: 4px 10px;
+  border-radius: 7px;
+  background: rgba(255, 255, 255, 0.08);
+  border: 1px solid rgba(255, 255, 255, 0.16);
+  color: #E2E8F0;
+  font-size: 0.73rem;
+  font-weight: 700;
+  cursor: pointer;
+  transition: background-color 0.16s ease, border-color 0.16s ease;
+}
+
+.ext-sim-ctrl-btn:hover {
+  background: rgba(255, 255, 255, 0.16);
+  border-color: rgba(255, 255, 255, 0.32);
+}
+
+.ext-sim-viewport {
+  position: relative;
+  height: 256px;
+  background: radial-gradient(circle at 50% 15%, rgba(46, 166, 250, 0.14), rgba(6, 9, 17, 0.96) 72%);
+  overflow: hidden;
+  padding: 16px;
+}
+
+.ext-sim-scene {
+  position: absolute;
+  inset: 14px;
+  opacity: 0;
+  pointer-events: none;
+  transform: translate3d(0, 10px, 0) scale(0.985);
+  transition:
+    opacity 0.36s cubic-bezier(0.16, 1, 0.3, 1),
+    transform 0.36s cubic-bezier(0.16, 1, 0.3, 1);
+  display: flex;
+  flex-direction: column;
+}
+
+.ext-sim-scene.is-active {
+  opacity: 1;
+  pointer-events: auto;
+  transform: translate3d(0, 0, 0) scale(1);
+}
+
+/* Scene 1: Simulated macOS Finder Downloads Window */
+.sim-finder-window,
+.sim-browser-window,
+.sim-chrome-ext-page {
+  width: 100%;
+  height: 100%;
+  border-radius: 12px;
+  background: #0F172A;
+  border: 1px solid rgba(255, 255, 255, 0.16);
+  box-shadow: 0 12px 30px rgba(0, 0, 0, 0.5);
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  color: #F8FAFC;
+}
+
+.sim-win-titlebar {
+  padding: 8px 12px;
+  background: rgba(30, 41, 59, 0.95);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.sim-win-title {
+  font-size: 0.76rem;
+  font-weight: 700;
+  color: #CBD5E1;
+}
+
+.sim-finder-body {
+  display: grid;
+  grid-template-columns: 128px 1fr;
+  flex: 1;
+  min-height: 0;
+}
+
+.sim-finder-sidebar {
+  padding: 10px;
+  background: rgba(15, 23, 42, 0.9);
+  border-right: 1px solid rgba(255, 255, 255, 0.08);
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+  font-size: 0.72rem;
+  color: #94A3B8;
+}
+
+.sim-sb-heading {
+  font-size: 0.63rem;
+  font-weight: 800;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  color: #64748B;
+  margin-bottom: 2px;
+}
+
+.sim-sb-item {
+  padding: 4px 7px;
+  border-radius: 6px;
+}
+
+.sim-sb-item.is-selected {
+  background: rgba(10, 132, 255, 0.24);
+  color: #FFFFFF;
+  font-weight: 700;
+}
+
+.sim-finder-files {
+  padding: 12px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  justify-content: center;
+}
+
+.sim-file-row {
+  padding: 10px 12px;
+  border-radius: 10px;
+  background: rgba(30, 41, 59, 0.72);
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  transition:
+    transform 0.32s cubic-bezier(0.16, 1, 0.3, 1),
+    border-color 0.26s ease,
+    box-shadow 0.26s ease,
+    opacity 0.32s ease;
+}
+
+.sim-file-row.is-target-zip.is-clicked {
+  border-color: #38BDF8;
+  box-shadow: 0 0 0 2px rgba(56, 189, 248, 0.35);
+  background: rgba(10, 132, 255, 0.18);
+}
+
+.sim-extracted-folder {
+  opacity: 0;
+  transform: translate3d(0, 10px, 0) scale(0.96);
+  border-color: rgba(16, 185, 129, 0.55);
+  background: rgba(16, 185, 129, 0.12);
+}
+
+.sim-extracted-folder.is-visible {
+  opacity: 1;
+  transform: translate3d(0, 0, 0) scale(1);
+  box-shadow: 0 0 0 1.5px rgba(16, 185, 129, 0.38), 0 8px 20px rgba(16, 185, 129, 0.18);
+}
+
+.sim-file-icon {
+  font-size: 1.25rem;
+  flex-shrink: 0;
+}
+
+.sim-file-meta {
+  display: flex;
+  flex-direction: column;
+  gap: 1px;
+  flex: 1;
+  min-width: 0;
+}
+
+.sim-file-meta strong {
+  font-size: 0.82rem;
+  color: #FFFFFF;
+}
+
+.sim-file-meta small {
+  font-size: 0.7rem;
+  color: #94A3B8;
+}
+
+.sim-file-meta code {
+  font-family: var(--font-mono);
+  font-size: 0.67rem;
+  color: #CBD5E1;
+}
+
+.sim-action-tag {
+  padding: 3px 9px;
+  border-radius: 999px;
+  background: rgba(56, 189, 248, 0.18);
+  border: 1px solid rgba(56, 189, 248, 0.42);
+  color: #7DD3FC;
+  font-size: 0.68rem;
+  font-weight: 800;
+  white-space: nowrap;
+}
+
+.sim-action-tag.tag-emerald {
+  background: rgba(16, 185, 129, 0.22);
+  border-color: rgba(16, 185, 129, 0.55);
+  color: #6EE7B8;
+}
+
+/* Scene 2: Simulated Chromium Browser Omnibox */
+.sim-browser-tabs {
+  padding: 7px 12px 0;
+  background: #1E293B;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.sim-browser-tab {
+  padding: 6px 14px;
+  border-radius: 8px 8px 0 0;
+  background: #0F172A;
+  font-size: 0.74rem;
+  font-weight: 700;
+  color: #F8FAFC;
+}
+
+.sim-browser-omnibox-row {
+  padding: 10px 14px;
+  background: #0F172A;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.sim-omnibox {
+  padding: 8px 12px;
+  border-radius: 999px;
+  background: #1E293B;
+  border: 1.5px solid #38BDF8;
+  box-shadow: 0 0 0 3px rgba(56, 189, 248, 0.22);
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.sim-omni-icon {
+  font-size: 0.78rem;
+}
+
+.sim-omni-typed {
+  font-family: var(--font-mono);
+  font-size: 0.86rem;
+  font-weight: 700;
+  color: #38BDF8;
+}
+
+.sim-omni-caret {
+  width: 2px;
+  height: 15px;
+  background: #38BDF8;
+  display: inline-block;
+  animation: caret-blink 0.9s steps(2, start) infinite;
+}
+
+.sim-omni-enter-pill {
+  margin-left: auto;
+  padding: 2px 8px;
+  border-radius: 6px;
+  background: rgba(16, 185, 129, 0.22);
+  border: 1px solid rgba(16, 185, 129, 0.5);
+  color: #6EE7B8;
+  font-size: 0.68rem;
+  font-weight: 800;
+}
+
+.sim-browser-hint-stage {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 16px;
+}
+
+.sim-omni-callout,
+.sim-ce-body-callout {
+  padding: 14px 18px;
+  border-radius: 12px;
+  background: rgba(30, 41, 59, 0.8);
+  border: 1px solid rgba(56, 189, 248, 0.35);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  gap: 5px;
+  max-width: 480px;
+}
+
+.sim-omni-callout strong,
+.sim-ce-body-callout strong {
+  font-size: 0.88rem;
+  color: #FFFFFF;
+}
+
+.sim-omni-callout span,
+.sim-ce-body-callout span {
+  font-size: 0.76rem;
+  color: #94A3B8;
+}
+
+/* Scene 3 & 4: Simulated chrome://extensions Page */
+.sim-ce-topbar {
+  padding: 10px 14px;
+  background: #172033;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+}
+
+.sim-ce-brand {
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+  font-size: 0.84rem;
+  color: #FFFFFF;
+}
+
+.sim-ce-search {
+  padding: 4px 12px;
+  border-radius: 999px;
+  background: rgba(15, 23, 42, 0.85);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  font-size: 0.72rem;
+  color: #64748B;
+  flex: 1;
+  max-width: 210px;
+}
+
+.sim-ce-dev-wrap {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 4px 9px;
+  border-radius: 999px;
+  transition: box-shadow 0.25s ease, background-color 0.25s ease;
+}
+
+.sim-ce-dev-wrap.is-spotlight {
+  background: rgba(56, 189, 248, 0.16);
+  box-shadow: 0 0 0 2px #38BDF8, 0 0 18px rgba(56, 189, 248, 0.45);
+}
+
+.sim-ce-dev-label {
+  font-size: 0.74rem;
+  font-weight: 700;
+  color: #E2E8F0;
+}
+
+.sim-ce-switch {
+  width: 34px;
+  height: 18px;
+  border-radius: 999px;
+  background: #475569;
+  position: relative;
+  transition: background-color 0.24s ease;
+}
+
+.sim-ce-switch.is-on {
+  background: #38BDF8;
+}
+
+.sim-ce-switch-knob {
+  position: absolute;
+  top: 2px;
+  left: 2px;
+  width: 14px;
+  height: 14px;
+  border-radius: 50%;
+  background: #FFFFFF;
+  box-shadow: 0 1px 4px rgba(0, 0, 0, 0.4);
+  transition: transform 0.24s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.sim-ce-switch.is-on .sim-ce-switch-knob {
+  transform: translate3d(16px, 0, 0);
+}
+
+.sim-ce-subbar {
+  padding: 8px 14px;
+  background: rgba(30, 41, 59, 0.85);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  opacity: 0.38;
+  transition: opacity 0.28s ease;
+}
+
+.sim-ce-subbar.is-visible {
+  opacity: 1;
+}
+
+.sim-ce-btn {
+  padding: 4px 10px;
+  border-radius: 6px;
+  background: rgba(255, 255, 255, 0.08);
+  border: 1px solid rgba(255, 255, 255, 0.16);
+  font-size: 0.72rem;
+  font-weight: 700;
+  color: #E2E8F0;
+  transition: transform 0.22s ease, box-shadow 0.22s ease, background-color 0.22s ease;
+}
+
+.sim-ce-btn.is-primary-focus {
+  background: rgba(56, 189, 248, 0.22);
+  border-color: #38BDF8;
+  color: #FFFFFF;
+  box-shadow: 0 0 0 2px rgba(56, 189, 248, 0.35);
+}
+
+.sim-selected-folder-tag {
+  margin-left: auto;
+  font-size: 0.7rem;
+  font-weight: 800;
+  color: #6EE7B8;
+  opacity: 0;
+  transform: translate3d(-6px, 0, 0);
+  transition: opacity 0.28s ease, transform 0.28s ease;
+}
+
+.sim-selected-folder-tag.is-visible {
+  opacity: 1;
+  transform: translate3d(0, 0, 0);
+}
+
+.sim-ce-body-callout {
+  margin: auto;
+}
+
+.sim-callout-badge {
+  padding: 2px 8px;
+  border-radius: 999px;
+  background: rgba(56, 189, 248, 0.2);
+  color: #7DD3FC;
+  font-size: 0.66rem;
+  font-weight: 800;
+  text-transform: uppercase;
+}
+
+/* Scene 4 Installed Kyodo Card */
+.sim-installed-card-wrap {
+  flex: 1;
+  padding: 12px 14px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.sim-installed-ext-card {
+  width: 100%;
+  max-width: 520px;
+  padding: 11px 14px;
+  border-radius: 11px;
+  background: rgba(30, 41, 59, 0.92);
+  border: 1.5px solid rgba(16, 185, 129, 0.65);
+  box-shadow: 0 10px 26px rgba(0, 0, 0, 0.4), 0 0 0 2px rgba(16, 185, 129, 0.22);
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  opacity: 0.35;
+  transform: translate3d(0, 8px, 0) scale(0.97);
+  transition:
+    opacity 0.34s cubic-bezier(0.16, 1, 0.3, 1),
+    transform 0.34s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.sim-installed-ext-card.is-installed {
+  opacity: 1;
+  transform: translate3d(0, 0, 0) scale(1);
+}
+
+.sim-ext-card-top {
+  display: flex;
+  align-items: flex-start;
+  gap: 11px;
+}
+
+.sim-ext-icon {
+  width: 38px;
+  height: 38px;
+  border-radius: 9px;
+  object-fit: cover;
+  flex-shrink: 0;
+}
+
+.sim-ext-info {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.sim-ext-title-row {
+  display: flex;
+  align-items: center;
+  gap: 7px;
+}
+
+.sim-ext-title-row strong {
+  font-size: 0.84rem;
+  color: #FFFFFF;
+}
+
+.sim-ext-ver {
+  font-family: var(--font-mono);
+  font-size: 0.68rem;
+  padding: 1px 6px;
+  border-radius: 4px;
+  background: rgba(255, 255, 255, 0.1);
+  color: #CBD5E1;
+}
+
+.sim-ext-info p {
+  font-size: 0.73rem;
+  color: #94A3B8;
+  line-height: 1.35;
+  margin: 0;
+}
+
+.sim-ext-card-bottom {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+  padding-top: 6px;
+  border-top: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+.sim-ext-ready-pill {
+  font-size: 0.71rem;
+  font-weight: 800;
+  color: #6EE7B8;
+}
+
+/* Simulated Animated macOS Pointer Cursor */
+.ext-sim-cursor {
+  position: absolute;
+  top: 0;
+  left: 0;
+  z-index: 20;
+  pointer-events: none;
+  transform: translate3d(260px, 110px, 0);
+  transition: transform 0.65s cubic-bezier(0.22, 1, 0.36, 1);
+  filter: drop-shadow(0 4px 10px rgba(0, 0, 0, 0.65));
+}
+
+.ext-sim-cursor-ripple {
+  position: absolute;
+  top: -8px;
+  left: -8px;
+  width: 28px;
+  height: 28px;
+  border-radius: 50%;
+  border: 2px solid #38BDF8;
+  background: rgba(56, 189, 248, 0.28);
+  opacity: 0;
+  transform: scale(0.4);
+}
+
+.ext-sim-cursor.is-clicking .ext-sim-cursor-ripple {
+  animation: simCursorClickRipple 0.55s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+@keyframes simCursorClickRipple {
+  0% {
+    opacity: 1;
+    transform: scale(0.45);
+  }
+  100% {
+    opacity: 0;
+    transform: scale(1.75);
+  }
+}
+
+.ext-sim-timeline-track {
+  width: 100%;
+  height: 4px;
+  background: rgba(255, 255, 255, 0.1);
+  overflow: hidden;
+}
+
+.ext-sim-timeline-fill {
+  display: block;
+  height: 100%;
+  width: 0%;
+  background: linear-gradient(90deg, #38BDF8, #10B981);
+  transition: width 0.1s linear;
+}
+
+/* 4 Clickable Step Tabs below Simulated Player */
+.ext-sim-steps-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 8px;
+}
+
+.ext-step-tab {
+  padding: 9px 10px;
+  border-radius: 10px;
+  background: var(--bg-card-fill);
+  border: 1px solid var(--border-subtle);
+  display: flex;
+  align-items: flex-start;
+  gap: 8px;
+  text-align: left;
+  cursor: pointer;
+  transition:
+    background-color 0.18s ease,
+    border-color 0.18s ease,
+    transform 0.18s ease;
+}
+
+.ext-step-tab:hover {
+  background: var(--bg-card-hover);
+  transform: translateY(-1px);
+}
+
+.ext-step-tab.is-active {
+  background: rgba(46, 166, 250, 0.14);
+  border-color: var(--accent-sapphire);
+  box-shadow: 0 6px 18px rgba(46, 166, 250, 0.16);
+}
+
+.ext-step-num {
+  width: 20px;
+  height: 20px;
+  border-radius: 50%;
+  background: rgba(46, 166, 250, 0.2);
+  color: var(--accent-sapphire-text);
+  font-size: 0.72rem;
+  font-weight: 800;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  margin-top: 1px;
+}
+
+.ext-step-tab.is-active .ext-step-num {
+  background: var(--accent-sapphire);
+  color: #FFFFFF;
+}
+
+.ext-step-text {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  min-width: 0;
+}
+
+.ext-step-text strong {
+  font-size: 0.78rem;
+  color: var(--text-primary);
+  line-height: 1.2;
+}
+
+.ext-step-text span {
+  font-size: 0.7rem;
+  color: var(--text-secondary);
+  line-height: 1.25;
+}
+
+.ext-step-text code {
+  font-family: var(--font-mono);
+  font-size: 0.67rem;
+}
+
+@media (max-width: 680px) {
+  .ext-sim-steps-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  .sim-finder-body {
+    grid-template-columns: 1fr;
+  }
+
+  .sim-finder-sidebar {
+    display: none;
+  }
 }
 
 .modal-license-unlocked-banner {

@@ -6,6 +6,7 @@
  */
 const DMG_DOWNLOAD_URL = "https://github.com/GlenEchoes/kyodo-releases/releases/latest/download/Kyodo.dmg";
 const WEB_EXTENSION_DOWNLOAD_URL = "#kyodo-web-extension-placeholder";
+const EXTENSION_ZIP_DOWNLOAD_URL = "https://github.com/GlenEchoes/kyodo-releases/releases/latest/download/kyodo-extension.zip";
 const CLOSED_BETA_FORM_URL = "#closed-beta-tally-placeholder";
 const DISCORD_INVITE_URL = "https://discord.gg/ccwNMaqSz";
 const WHATSAPP_INVITE_URL = "https://chat.whatsapp.com/JPINRPY8Kc78sTun9oneuV";
@@ -56,6 +57,29 @@ function startDirectDmgDownload() {
   }
 }
 
+function startDirectExtensionZipDownload() {
+  if (!EXTENSION_ZIP_DOWNLOAD_URL || EXTENSION_ZIP_DOWNLOAD_URL.startsWith("#")) return;
+  try {
+    let dlFrame = document.getElementById("kyodo-ext-zip-download-iframe");
+    if (!dlFrame) {
+      dlFrame = document.createElement("iframe");
+      dlFrame.id = "kyodo-ext-zip-download-iframe";
+      dlFrame.style.display = "none";
+      dlFrame.setAttribute("aria-hidden", "true");
+      document.body.appendChild(dlFrame);
+    }
+    dlFrame.src = EXTENSION_ZIP_DOWNLOAD_URL;
+  } catch (_) {
+    const autoAnchor = document.createElement("a");
+    autoAnchor.href = EXTENSION_ZIP_DOWNLOAD_URL;
+    autoAnchor.rel = "noopener";
+    autoAnchor.style.display = "none";
+    document.body.appendChild(autoAnchor);
+    autoAnchor.click();
+    autoAnchor.remove();
+  }
+}
+
 function initPlaceholderLinks() {
   const dmgLink = document.getElementById("direct-dmg-link");
   if (dmgLink && DMG_DOWNLOAD_URL) {
@@ -79,6 +103,24 @@ function initPlaceholderLinks() {
     if (WEB_EXTENSION_DOWNLOAD_URL) {
       el.setAttribute("href", WEB_EXTENSION_DOWNLOAD_URL);
     }
+  });
+
+  document.querySelectorAll("[data-ext-zip-download-link]").forEach((el) => {
+    if (EXTENSION_ZIP_DOWNLOAD_URL) {
+      el.setAttribute("href", EXTENSION_ZIP_DOWNLOAD_URL);
+    }
+  });
+
+  // Automatically start downloading kyodo-extension.zip whenever any manual extension trigger opens #extension-install-modal
+  document.querySelectorAll("[data-manual-ext-trigger]").forEach((btn) => {
+    btn.addEventListener("click", () => {
+      if (window.location.hostname !== "127.0.0.1" && window.location.hostname !== "localhost") {
+        startDirectExtensionZipDownload();
+      }
+      if (typeof window.restartExtensionSimWalkthrough === "function") {
+        window.restartExtensionSimWalkthrough();
+      }
+    });
   });
 
   document.querySelectorAll("[data-discord-invite-link]").forEach((el) => {
@@ -2077,6 +2119,33 @@ function initAppleCompanionStage() {
 
   // Ensure initial default state ("grounding") plays immediately
   activateCompanionTask("grounding");
+
+  // Warm up / preload the other showcase videos in the background so switching pills is instant
+  const warmUpShowcaseVideos = () => {
+    try {
+      Object.values(COMPANION_TASK_VIDEO_URLS || {}).forEach((url) => {
+        if (!url) return;
+        const preloadLink = document.createElement("link");
+        preloadLink.rel = "preload";
+        preloadLink.as = "video";
+        preloadLink.href = url;
+        document.head.appendChild(preloadLink);
+
+        const bgVideo = document.createElement("video");
+        bgVideo.preload = "auto";
+        bgVideo.muted = true;
+        bgVideo.playsInline = true;
+        bgVideo.src = url;
+        bgVideo.load();
+      });
+    } catch (_) {}
+  };
+
+  if ("requestIdleCallback" in window) {
+    window.requestIdleCallback(warmUpShowcaseVideos, { timeout: 1500 });
+  } else {
+    setTimeout(warmUpShowcaseVideos, 700);
+  }
 }
 
 /* ============================================================================
@@ -2707,6 +2776,233 @@ function initTelemetryScrollCountdown() {
 }
 
 /* ============================================================================
+   15. MANUAL EXTENSION .ZIP INSTALL MODAL & 4-SCENE SIMULATED CHROMIUM VIDEO
+   ============================================================================ */
+function initExtensionInstallWalkthroughModal() {
+  const modal = document.getElementById("extension-install-modal");
+  const copyUrlBtn = document.getElementById("copy-chrome-ext-url-btn");
+  const badgeEl = document.getElementById("ext-sim-scene-badge");
+  const titleEl = document.getElementById("ext-sim-scene-title");
+  const playToggleBtn = document.getElementById("ext-sim-play-toggle");
+  const restartBtn = document.getElementById("ext-sim-restart-btn");
+  const progressFill = document.getElementById("ext-sim-progress-fill");
+  const cursorEl = document.getElementById("ext-sim-cursor");
+
+  const scenes = Array.from(document.querySelectorAll(".ext-sim-scene[data-ext-scene]"));
+  const stepTabs = Array.from(document.querySelectorAll(".ext-step-tab[data-ext-step-btn]"));
+
+  const zipRow = document.getElementById("ext-sim-zip-row");
+  const zipActionTag = document.getElementById("ext-sim-zip-action-tag");
+  const unzippedRow = document.getElementById("ext-sim-unzipped-row");
+  const omniTyped = document.getElementById("ext-sim-omni-typed");
+  const devToggle = document.getElementById("ext-sim-dev-toggle");
+  const subbarS3 = document.getElementById("ext-sim-subbar-s3");
+  const selectedFolderTag = document.getElementById("ext-sim-selected-folder-tag");
+  const installedCard = document.getElementById("ext-sim-installed-card");
+
+  if (copyUrlBtn) {
+    copyUrlBtn.addEventListener("click", async () => {
+      const origHtml = copyUrlBtn.innerHTML;
+      try {
+        await navigator.clipboard.writeText("chrome://extensions");
+        copyUrlBtn.innerHTML = "<span>✓ Copied <code>chrome://extensions</code></span>";
+      } catch (_) {
+        copyUrlBtn.innerHTML = "<span>✓ Paste <code>chrome://extensions</code> in browser</span>";
+      }
+      setTimeout(() => {
+        copyUrlBtn.innerHTML = origHtml;
+      }, 2200);
+    });
+  }
+
+  if (!scenes.length) return;
+
+  const SCENE_META = {
+    1: {
+      badge: "STEP 1 OF 4 • UNZIP ARCHIVE",
+      title: "Double-click kyodo-extension.zip in Downloads"
+    },
+    2: {
+      badge: "STEP 2 OF 4 • OPEN EXTENSIONS PAGE",
+      title: "Type or paste chrome://extensions into your browser address bar"
+    },
+    3: {
+      badge: "STEP 3 OF 4 • ENABLE DEVELOPER MODE",
+      title: "Toggle ON \"Developer mode\" in the top-right corner"
+    },
+    4: {
+      badge: "STEP 4 OF 4 • LOAD UNPACKED FOLDER",
+      title: "Click \"Load unpacked\" and select the unzipped kyodo-extension folder"
+    }
+  };
+
+  const SCENE_DURATION_MS = 3500;
+  const TOTAL_LOOP_MS = SCENE_DURATION_MS * 4; // 14 seconds total loop
+  const OMNIBOX_TARGET_URL = "chrome://extensions";
+
+  let isPlaying = true;
+  let elapsedMs = 0;
+  let lastFrameTs = null;
+  let rafId = null;
+  let activeSceneNum = 1;
+  let lastClickTriggerKey = "";
+
+  function triggerCursorClick(x, y, clickKey) {
+    if (!cursorEl) return;
+    cursorEl.style.transform = `translate3d(${x}px, ${y}px, 0)`;
+    if (clickKey && clickKey !== lastClickTriggerKey) {
+      lastClickTriggerKey = clickKey;
+      cursorEl.classList.remove("is-clicking");
+      void cursorEl.offsetWidth;
+      cursorEl.classList.add("is-clicking");
+    }
+  }
+
+  function applySceneVisualState(sceneNum, sceneLocalProg) {
+    if (sceneNum !== activeSceneNum) {
+      activeSceneNum = sceneNum;
+    }
+
+    scenes.forEach((sc) => {
+      const n = Number(sc.getAttribute("data-ext-scene"));
+      sc.classList.toggle("is-active", n === sceneNum);
+    });
+
+    stepTabs.forEach((tab) => {
+      const n = Number(tab.getAttribute("data-ext-step-btn"));
+      const isMatch = n === sceneNum;
+      tab.classList.toggle("is-active", isMatch);
+      tab.setAttribute("aria-selected", isMatch ? "true" : "false");
+    });
+
+    const meta = SCENE_META[sceneNum] || SCENE_META[1];
+    if (badgeEl) badgeEl.textContent = meta.badge;
+    if (titleEl) titleEl.textContent = meta.title;
+
+    // Scene 1: Unzip kyodo-extension.zip -> reveal folder
+    if (sceneNum === 1) {
+      const isExtracted = sceneLocalProg >= 0.34;
+      if (zipRow) zipRow.classList.toggle("is-clicked", sceneLocalProg >= 0.24);
+      if (zipActionTag) {
+        zipActionTag.textContent = isExtracted ? "✓ Extracted" : "Double-Click to Unzip";
+      }
+      if (unzippedRow) unzippedRow.classList.toggle("is-visible", isExtracted);
+
+      if (sceneLocalProg < 0.24) {
+        triggerCursorClick(340, 82, "");
+      } else if (sceneLocalProg < 0.65) {
+        triggerCursorClick(310, 96, "s1-unzip");
+      } else {
+        triggerCursorClick(315, 162, "");
+      }
+    }
+
+    // Scene 2: Type chrome://extensions into omnibox
+    if (sceneNum === 2) {
+      const typeProg = Math.max(0, Math.min(1, (sceneLocalProg - 0.08) / 0.56));
+      const charCount = Math.max(1, Math.round(typeProg * OMNIBOX_TARGET_URL.length));
+      if (omniTyped) {
+        omniTyped.textContent = OMNIBOX_TARGET_URL.slice(0, charCount);
+      }
+      if (sceneLocalProg < 0.7) {
+        triggerCursorClick(220, 62, "s2-omni");
+      } else {
+        triggerCursorClick(540, 62, "s2-enter");
+      }
+    }
+
+    // Scene 3: Toggle ON Developer mode in top-right corner
+    if (sceneNum === 3) {
+      const isToggledOn = sceneLocalProg >= 0.36;
+      if (devToggle) devToggle.classList.toggle("is-on", isToggledOn);
+      if (subbarS3) subbarS3.classList.toggle("is-visible", isToggledOn);
+
+      if (sceneLocalProg < 0.34) {
+        triggerCursorClick(440, 86, "");
+      } else {
+        triggerCursorClick(595, 24, "s3-devtoggle");
+      }
+    }
+
+    // Scene 4: Click Load unpacked & reveal installed Kyodo extension card
+    if (sceneNum === 4) {
+      const isFolderChosen = sceneLocalProg >= 0.28;
+      const isCardInstalled = sceneLocalProg >= 0.38;
+      if (selectedFolderTag) selectedFolderTag.classList.toggle("is-visible", isFolderChosen);
+      if (installedCard) installedCard.classList.toggle("is-installed", isCardInstalled);
+
+      if (sceneLocalProg < 0.26) {
+        triggerCursorClick(120, 64, "");
+      } else if (sceneLocalProg < 0.55) {
+        triggerCursorClick(74, 62, "s4-loadunpacked");
+      } else {
+        triggerCursorClick(340, 152, "");
+      }
+    }
+  }
+
+  function stepAnimation(ts) {
+    if (!lastFrameTs) lastFrameTs = ts;
+    const dt = Math.min(100, ts - lastFrameTs);
+    lastFrameTs = ts;
+
+    if (isPlaying && (!modal || modal.open)) {
+      elapsedMs = (elapsedMs + dt) % TOTAL_LOOP_MS;
+    }
+
+    const totalProg = Math.max(0, Math.min(1, elapsedMs / TOTAL_LOOP_MS));
+    if (progressFill) {
+      progressFill.style.width = `${(totalProg * 100).toFixed(1)}%`;
+    }
+
+    const currentSceneIndex = Math.min(4, Math.floor(elapsedMs / SCENE_DURATION_MS) + 1);
+    const sceneLocalProg = (elapsedMs % SCENE_DURATION_MS) / SCENE_DURATION_MS;
+    applySceneVisualState(currentSceneIndex, sceneLocalProg);
+
+    rafId = window.requestAnimationFrame(stepAnimation);
+  }
+
+  // Click any of the 4 step tabs to jump directly to that scene
+  stepTabs.forEach((tab) => {
+    tab.addEventListener("click", () => {
+      const targetScene = Math.max(1, Math.min(4, Number(tab.getAttribute("data-ext-step-btn")) || 1));
+      elapsedMs = (targetScene - 1) * SCENE_DURATION_MS + SCENE_DURATION_MS * 0.42;
+      lastClickTriggerKey = "";
+      applySceneVisualState(targetScene, 0.42);
+      if (progressFill) {
+        progressFill.style.width = `${((elapsedMs / TOTAL_LOOP_MS) * 100).toFixed(1)}%`;
+      }
+    });
+  });
+
+  if (playToggleBtn) {
+    playToggleBtn.addEventListener("click", () => {
+      isPlaying = !isPlaying;
+      playToggleBtn.textContent = isPlaying ? "⏸ Pause" : "▶ Play";
+    });
+  }
+
+  function restartWalkthrough() {
+    elapsedMs = 0;
+    lastFrameTs = null;
+    lastClickTriggerKey = "";
+    isPlaying = true;
+    if (playToggleBtn) playToggleBtn.textContent = "⏸ Pause";
+    applySceneVisualState(1, 0);
+  }
+
+  if (restartBtn) {
+    restartBtn.addEventListener("click", restartWalkthrough);
+  }
+
+  window.restartExtensionSimWalkthrough = restartWalkthrough;
+
+  // Start the animation loop
+  applySceneVisualState(1, 0.45);
+  rafId = window.requestAnimationFrame(stepAnimation);
+}
+
+/* ============================================================================
    INITIALIZE ALL MODULES ON DOM READY
    ============================================================================ */
 document.addEventListener("DOMContentLoaded", () => {
@@ -2723,6 +3019,7 @@ document.addEventListener("DOMContentLoaded", () => {
   initPricingCalculator();
   initSmoothMatrixAccordion();
   initTelemetryScrollCountdown();
+  initExtensionInstallWalkthroughModal();
   initFormsAndModals();
   initScrollRevealFallback();
 });

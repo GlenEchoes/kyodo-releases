@@ -13,7 +13,7 @@
   <meta name="description" content="Live epistemic claim and citation verification across Word, Google Docs, Pages, Notes, LaTeX, and PDFs for macOS. Zero AI ghostwriting. Zero screen recording. Built by Medical Doctors.">
   <meta name="theme-color" content="#060911">
   <link rel="icon" href="assets/kyodo-app-icon.jpg">
-  <link rel="stylesheet" href="styles.css?v=20261121v6">
+  <link rel="stylesheet" href="styles.css?v=20261122v1">
   <script type="module">
     if (!('commandForElement' in HTMLButtonElement.prototype)) {
       import('https://esm.run/invokers-polyfill').catch(() => {});
@@ -113,15 +113,35 @@
               <span class="btn-hero-sub">Foundational Researcher Cohort • ₹0 / $0 Full Access</span>
             </button>
 
-            <a href="#kyodo-web-extension-placeholder" class="btn-hero-extension" data-extension-download-link>
-              <span class="btn-hero-main">
-                <svg class="ext-puzzle-icon" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
-                  <path d="M19.439 7.85c-.049.322.059.648.289.878l1.568 1.568c.47.47.706 1.087.706 1.704s-.235 1.233-.706 1.704l-1.611 1.611a.98.98 0 0 1-.837.276c-.47-.07-.802-.48-.968-.925a2.501 2.501 0 1 0-3.214 3.214c.446.166.855.497.925.968a.979.979 0 0 1-.276.837l-1.61 1.61a2.404 2.404 0 0 1-1.705.707 2.402 2.402 0 0 1-1.704-.706l-1.568-1.568a1.026 1.026 0 0 0-.877-.29c-.493.074-.84.504-1.02.968a2.5 2.5 0 1 1-3.237-3.237c.464-.18.894-.527.967-1.02a1.026 1.026 0 0 0-.289-.877l-1.568-1.568A2.402 2.402 0 0 1 1.998 12c0-.617.236-1.234.706-1.704L4.315 8.685a.98.98 0 0 1 .837-.276c.47.07.802.48.968.925a2.501 2.501 0 1 0 3.214-3.214c-.446-.166-.855-.497-.925-.968a.979.979 0 0 1 .276-.837l1.61-1.61a2.404 2.404 0 0 1 1.705-.707c.617 0 1.234.236 1.704.706l1.568 1.568c.23.23.556.338.877.29.493-.074.84-.504 1.02-.968a2.5 2.5 0 1 1 3.237 3.237c-.464.18-.894.527-.967 1.02Z"></path>
+            <div class="hero-extension-row">
+              <a href="#kyodo-web-extension-placeholder" class="btn-hero-extension" data-extension-download-link>
+                <span class="btn-hero-main">
+                  <svg class="ext-puzzle-icon" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                    <path d="M19.439 7.85c-.049.322.059.648.289.878l1.568 1.568c.47.47.706 1.087.706 1.704s-.235 1.233-.706 1.704l-1.611 1.611a.98.98 0 0 1-.837.276c-.47-.07-.802-.48-.968-.925a2.501 2.501 0 1 0-3.214 3.214c.446.166.855.497.925.968a.979.979 0 0 1-.276.837l-1.61 1.61a2.404 2.404 0 0 1-1.705.707 2.402 2.402 0 0 1-1.704-.706l-1.568-1.568a1.026 1.026 0 0 0-.877-.29c-.493.074-.84.504-1.02.968a2.5 2.5 0 1 1-3.237-3.237c.464-.18.894-.527.967-1.02a1.026 1.026 0 0 0-.289-.877l-1.568-1.568A2.402 2.402 0 0 1 1.998 12c0-.617.236-1.234.706-1.704L4.315 8.685a.98.98 0 0 1 .837-.276c.47.07.802.48.968.925a2.501 2.501 0 1 0 3.214-3.214c-.446-.166-.855-.497-.925-.968a.979.979 0 0 1 .276-.837l1.61-1.61a2.404 2.404 0 0 1 1.705-.707c.617 0 1.234.236 1.704.706l1.568 1.568c.23.23.556.338.877.29.493-.074.84-.504 1.02-.968a2.5 2.5 0 1 1 3.237 3.237c-.464.18-.894.527-.967 1.02Z"></path>
+                  </svg>
+                  Download Web Browser Extension
+                </span>
+                <span class="btn-hero-sub">Chrome, Brave &amp; Edge Companion • Google Docs &amp; Web Journals</span>
+              </a>
+
+              <button
+                type="button"
+                class="btn-hero-ext-manual-square"
+                commandfor="extension-install-modal"
+                command="show-modal"
+                data-manual-ext-trigger
+                title="Manual .zip Download &amp; Developer Mode Install Guide"
+                aria-label="Manual .zip Download and Developer Mode Install Guide"
+              >
+                <svg class="manual-zip-icon" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                  <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path>
+                  <polyline points="7 10 12 15 17 10"></polyline>
+                  <line x1="12" y1="15" x2="12" y2="3"></line>
                 </svg>
-                Download Web Browser Extension
-              </span>
-              <span class="btn-hero-sub">Chrome, Brave &amp; Edge Companion • Google Docs &amp; Web Journals</span>
-            </a>
+                <span class="manual-sq-label">Manual</span>
+                <span class="manual-sq-sub">.zip</span>
+              </button>
+            </div>
           </div>
 
           <ul class="hero-trust-list" aria-label="Core Guarantees">
@@ -1974,12 +1994,24 @@
           <div class="qs-step-ext-body">
             <strong>Install the Kyodo Web Browser Extension</strong>
             <p>Enable live epistemic claim grounding and zero-screen-recording citation auditing inside Google Docs and web journals (Chrome, Brave &amp; Edge).</p>
-            <a href="#kyodo-web-extension-placeholder" class="btn-modal-extension-dl" data-extension-download-link>
-              <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
-                <path d="M19.439 7.85c-.049.322.059.648.289.878l1.568 1.568c.47.47.706 1.087.706 1.704s-.235 1.233-.706 1.704l-1.611 1.611a.98.98 0 0 1-.837.276c-.47-.07-.802-.48-.968-.925a2.501 2.501 0 1 0-3.214 3.214c.446.166.855.497.925.968a.979.979 0 0 1-.276.837l-1.61 1.61a2.404 2.404 0 0 1-1.705.707 2.402 2.402 0 0 1-1.704-.706l-1.568-1.568a1.026 1.026 0 0 0-.877-.29c-.493.074-.84.504-1.02.968a2.5 2.5 0 1 1-3.237-3.237c.464-.18.894-.527.967-1.02a1.026 1.026 0 0 0-.289-.877l-1.568-1.568A2.402 2.402 0 0 1 1.998 12c0-.617.236-1.234.706-1.704L4.315 8.685a.98.98 0 0 1 .837-.276c.47.07.802.48.968.925a2.501 2.501 0 1 0 3.214-3.214c-.446-.166-.855-.497-.925-.968a.979.979 0 0 1 .276-.837l1.61-1.61a2.404 2.404 0 0 1 1.705-.707c.617 0 1.234.236 1.704.706l1.568 1.568c.23.23.556.338.877.29.493-.074.84-.504 1.02-.968a2.5 2.5 0 1 1 3.237 3.237c-.464.18-.894.527-.967 1.02Z"></path>
-              </svg>
-              <span>Download Web Companion Extension →</span>
-            </a>
+            <div class="modal-ext-btn-row">
+              <a href="#kyodo-web-extension-placeholder" class="btn-modal-extension-dl" data-extension-download-link>
+                <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                  <path d="M19.439 7.85c-.049.322.059.648.289.878l1.568 1.568c.47.47.706 1.087.706 1.704s-.235 1.233-.706 1.704l-1.611 1.611a.98.98 0 0 1-.837.276c-.47-.07-.802-.48-.968-.925a2.501 2.501 0 1 0-3.214 3.214c.446.166.855.497.925.968a.979.979 0 0 1-.276.837l-1.61 1.61a2.404 2.404 0 0 1-1.705.707 2.402 2.402 0 0 1-1.704-.706l-1.568-1.568a1.026 1.026 0 0 0-.877-.29c-.493.074-.84.504-1.02.968a2.5 2.5 0 1 1-3.237-3.237c.464-.18.894-.527.967-1.02a1.026 1.026 0 0 0-.289-.877l-1.568-1.568A2.402 2.402 0 0 1 1.998 12c0-.617.236-1.234.706-1.704L4.315 8.685a.98.98 0 0 1 .837-.276c.47.07.802.48.968.925a2.501 2.501 0 1 0 3.214-3.214c-.446-.166-.855-.497-.925-.968a.979.979 0 0 1 .276-.837l1.61-1.61a2.404 2.404 0 0 1 1.705-.707c.617 0 1.234.236 1.704.706l1.568 1.568c.23.23.556.338.877.29.493-.074.84-.504 1.02-.968a2.5 2.5 0 1 1 3.237 3.237c-.464.18-.894.527-.967 1.02Z"></path>
+                </svg>
+                <span>Download Web Companion Extension →</span>
+              </a>
+              <button
+                type="button"
+                class="btn-modal-ext-manual-sq"
+                commandfor="extension-install-modal"
+                command="show-modal"
+                data-manual-ext-trigger
+                title="Manual .zip Download &amp; Developer Mode Install Guide"
+              >
+                <span>📦 Manual .zip &amp; Guide</span>
+              </button>
+            </div>
           </div>
         </div>
         <div class="qs-step">
@@ -2231,6 +2263,264 @@
     </div>
   </dialog>
 
-  <script src="app.js?v=20261121v6" defer></script>
+  <!-- DECLARATIVE MODAL 4: MANUAL EXTENSION .ZIP DOWNLOAD & 4-SCENE SIMULATED CHROMIUM INSTALL GUIDE (<dialog>) -->
+  <dialog id="extension-install-modal" class="glass-modal kyodo-modal ext-install-modal" aria-labelledby="ext-install-modal-title">
+    <div class="modal-inner">
+      <div class="modal-header">
+        <div class="modal-title-group">
+          <span class="modal-badge badge-sapphire">🧩 Chrome, Brave &amp; Edge • Developer Mode Quickstart</span>
+          <h2 id="ext-install-modal-title">Manual Browser Extension Install Guide</h2>
+        </div>
+        <button type="button" class="modal-close-btn" commandfor="extension-install-modal" command="close" aria-label="Close extension install guide modal">
+          ✕
+        </button>
+      </div>
+
+      <p class="modal-lead">
+        Your <code>kyodo-extension.zip</code> download has started automatically. Follow the 4 quick steps below to load the extension in Chrome, Brave, or Edge in under 20 seconds:
+      </p>
+
+      <!-- Top Quick-Action Bar: Direct .zip Download & 1-Click Copy chrome://extensions -->
+      <div class="ext-install-action-bar">
+        <a
+          href="https://github.com/GlenEchoes/kyodo-releases/releases/latest/download/kyodo-extension.zip"
+          id="direct-ext-zip-link"
+          data-ext-zip-download-link
+          rel="noopener"
+          class="btn-emerald-primary ext-zip-dl-btn"
+        >
+          <span>📦 Download kyodo-extension.zip</span>
+        </a>
+        <button type="button" id="copy-chrome-ext-url-btn" class="btn-glass-secondary ext-copy-url-btn">
+          <span>📋 Copy <code>chrome://extensions</code></span>
+        </button>
+      </div>
+
+      <!-- AUTO-PLAYING 4-SCENE SIMULATED CHROMIUM INSTALLATION VIDEO STAGE -->
+      <div class="ext-sim-video-stage" id="ext-sim-video-stage" role="region" aria-label="4-Step Simulated Chromium Extension Installation Video">
+        <!-- Player Top Control Header -->
+        <div class="ext-sim-player-bar">
+          <div class="ext-sim-bar-left">
+            <span class="ext-sim-step-pill" id="ext-sim-scene-badge">STEP 1 OF 4 • UNZIP ARCHIVE</span>
+            <span class="ext-sim-step-headline" id="ext-sim-scene-title">Double-click kyodo-extension.zip in Downloads</span>
+          </div>
+          <div class="ext-sim-bar-controls">
+            <button type="button" class="ext-sim-ctrl-btn" id="ext-sim-play-toggle" aria-label="Pause or play installation walkthrough">
+              ⏸ Pause
+            </button>
+            <button type="button" class="ext-sim-ctrl-btn" id="ext-sim-restart-btn" aria-label="Replay installation walkthrough from step 1">
+              ↺ Replay
+            </button>
+          </div>
+        </div>
+
+        <!-- Simulated Screen Viewport (Scenes 1–4 + Animated macOS Pointer Cursor) -->
+        <div class="ext-sim-viewport" id="ext-sim-viewport">
+          <!-- SCENE 1: Unzip kyodo-extension.zip in macOS Finder Downloads -->
+          <div class="ext-sim-scene is-active" data-ext-scene="1">
+            <div class="sim-finder-window">
+              <div class="sim-win-titlebar">
+                <div class="traffic-lights" aria-hidden="true">
+                  <span class="tl tl-close"></span>
+                  <span class="tl tl-min"></span>
+                  <span class="tl tl-max"></span>
+                </div>
+                <span class="sim-win-title">📁 Downloads — macOS Finder</span>
+              </div>
+              <div class="sim-finder-body">
+                <div class="sim-finder-sidebar">
+                  <span class="sim-sb-heading">Favorites</span>
+                  <span class="sim-sb-item">🖥 Desktop</span>
+                  <span class="sim-sb-item">📄 Documents</span>
+                  <span class="sim-sb-item is-selected">⬇ Downloads</span>
+                </div>
+                <div class="sim-finder-files">
+                  <div class="sim-file-row is-target-zip" id="ext-sim-zip-row">
+                    <span class="sim-file-icon">📦</span>
+                    <div class="sim-file-meta">
+                      <strong>kyodo-extension.zip</strong>
+                      <small>ZIP Archive • 248 KB • Just now</small>
+                    </div>
+                    <span class="sim-action-tag" id="ext-sim-zip-action-tag">Double-Click to Unzip</span>
+                  </div>
+
+                  <div class="sim-file-row sim-extracted-folder" id="ext-sim-unzipped-row">
+                    <span class="sim-file-icon">📁</span>
+                    <div class="sim-file-meta">
+                      <strong>kyodo-extension</strong>
+                      <small>Folder • <code>manifest.json</code>, <code>background/</code>, <code>content/</code>, <code>icons/</code></small>
+                    </div>
+                    <span class="sim-action-tag tag-emerald">✓ Extracted Folder Ready</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- SCENE 2: Open chrome://extensions in Chrome / Brave / Edge -->
+          <div class="ext-sim-scene" data-ext-scene="2">
+            <div class="sim-browser-window">
+              <div class="sim-browser-tabs">
+                <div class="traffic-lights" aria-hidden="true">
+                  <span class="tl tl-close"></span>
+                  <span class="tl tl-min"></span>
+                  <span class="tl tl-max"></span>
+                </div>
+                <div class="sim-browser-tab is-active">
+                  <span>🧩 Extensions</span>
+                </div>
+              </div>
+              <div class="sim-browser-omnibox-row">
+                <div class="sim-omnibox is-focused">
+                  <span class="sim-omni-icon">🔒</span>
+                  <code class="sim-omni-typed" id="ext-sim-omni-typed">chrome://extensions</code>
+                  <span class="sim-omni-caret" aria-hidden="true"></span>
+                  <span class="sim-omni-enter-pill">↵ Press Enter</span>
+                </div>
+              </div>
+              <div class="sim-browser-hint-stage">
+                <div class="sim-omni-callout">
+                  <strong>Paste <code>chrome://extensions</code> into your address bar</strong>
+                  <span>Works identically in Google Chrome, Brave (`brave://extensions`), and Microsoft Edge (`edge://extensions`).</span>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- SCENE 3: Toggle ON "Developer mode" (Top-Right Switch) -->
+          <div class="ext-sim-scene" data-ext-scene="3">
+            <div class="sim-chrome-ext-page">
+              <div class="sim-ce-topbar">
+                <div class="sim-ce-brand">
+                  <span class="sim-ce-puzzle">🧩</span>
+                  <strong>Extensions</strong>
+                </div>
+                <div class="sim-ce-search">Search extensions</div>
+                <div class="sim-ce-dev-wrap is-spotlight" id="ext-sim-dev-wrap">
+                  <span class="sim-ce-dev-label">Developer mode</span>
+                  <div class="sim-ce-switch" id="ext-sim-dev-toggle" role="presentation">
+                    <span class="sim-ce-switch-knob"></span>
+                  </div>
+                </div>
+              </div>
+              <div class="sim-ce-subbar" id="ext-sim-subbar-s3">
+                <span class="sim-ce-btn is-revealed-btn">Load unpacked</span>
+                <span class="sim-ce-btn">Pack extension</span>
+                <span class="sim-ce-btn">Update</span>
+              </div>
+              <div class="sim-ce-body-callout">
+                <span class="sim-callout-badge">Top-Right Corner</span>
+                <strong>Flip the "Developer mode" switch to ON</strong>
+                <span>Turning on Developer mode unlocks the <strong>Load unpacked</strong> button in the top-left toolbar.</span>
+              </div>
+            </div>
+          </div>
+
+          <!-- SCENE 4: Click "Load unpacked" & Select Unzipped kyodo-extension Folder -->
+          <div class="ext-sim-scene" data-ext-scene="4">
+            <div class="sim-chrome-ext-page">
+              <div class="sim-ce-topbar">
+                <div class="sim-ce-brand">
+                  <span class="sim-ce-puzzle">🧩</span>
+                  <strong>Extensions</strong>
+                </div>
+                <div class="sim-ce-dev-wrap">
+                  <span class="sim-ce-dev-label">Developer mode</span>
+                  <div class="sim-ce-switch is-on" role="presentation">
+                    <span class="sim-ce-switch-knob"></span>
+                  </div>
+                </div>
+              </div>
+              <div class="sim-ce-subbar is-visible">
+                <span class="sim-ce-btn is-primary-focus" id="ext-sim-load-unpacked-btn">📂 Load unpacked</span>
+                <span class="sim-ce-btn">Pack extension</span>
+                <span class="sim-ce-btn">Update</span>
+                <span class="sim-selected-folder-tag" id="ext-sim-selected-folder-tag">→ Selected: 📁 kyodo-extension</span>
+              </div>
+
+              <!-- Installed Kyodo Extension Card -->
+              <div class="sim-installed-card-wrap">
+                <div class="sim-installed-ext-card" id="ext-sim-installed-card">
+                  <div class="sim-ext-card-top">
+                    <img src="assets/kyodo-app-icon.jpg" alt="Kyodo" class="sim-ext-icon" width="38" height="38">
+                    <div class="sim-ext-info">
+                      <div class="sim-ext-title-row">
+                        <strong>Kyodo Companion &amp; Academic Clipper</strong>
+                        <span class="sim-ext-ver">1.0.0</span>
+                      </div>
+                      <p>Grounds scientific claims, audits in-paper citations, and clips PDFs to your local Kyodo Vault.</p>
+                    </div>
+                  </div>
+                  <div class="sim-ext-card-bottom">
+                    <span class="sim-ext-ready-pill">✓ Installed &amp; Active for Google Docs &amp; Web Journals</span>
+                    <div class="sim-ce-switch is-on" role="presentation">
+                      <span class="sim-ce-switch-knob"></span>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Animated Simulated macOS Cursor -->
+          <div class="ext-sim-cursor" id="ext-sim-cursor" aria-hidden="true">
+            <span class="ext-sim-cursor-ripple" id="ext-sim-cursor-ripple"></span>
+            <svg width="22" height="22" viewBox="0 0 24 24" fill="#FFFFFF" stroke="#060911" stroke-width="1.8">
+              <path d="M5.5 3.21V20.8c0 .45.54.67.85.35l4.86-4.86a.5.5 0 0 1 .35-.15h6.87c.45 0 .67-.54.35-.85L6.35 2.86a.5.5 0 0 0-.85.35Z"></path>
+            </svg>
+          </div>
+        </div>
+
+        <!-- Continuous Timeline Scrub / Progress Bar -->
+        <div class="ext-sim-timeline-track" aria-hidden="true">
+          <span class="ext-sim-timeline-fill" id="ext-sim-progress-fill"></span>
+        </div>
+      </div>
+
+      <!-- 4 Clickable Step Tabs (Click any step to jump directly to that scene) -->
+      <div class="ext-sim-steps-grid" role="tablist" aria-label="Extension Installation Steps">
+        <button type="button" class="ext-step-tab is-active" data-ext-step-btn="1" role="tab" aria-selected="true">
+          <span class="ext-step-num">1</span>
+          <div class="ext-step-text">
+            <strong>Unzip Archive</strong>
+            <span>Extract <code>kyodo-extension.zip</code></span>
+          </div>
+        </button>
+
+        <button type="button" class="ext-step-tab" data-ext-step-btn="2" role="tab" aria-selected="false">
+          <span class="ext-step-num">2</span>
+          <div class="ext-step-text">
+            <strong>Open Extensions</strong>
+            <span>Go to <code>chrome://extensions</code></span>
+          </div>
+        </button>
+
+        <button type="button" class="ext-step-tab" data-ext-step-btn="3" role="tab" aria-selected="false">
+          <span class="ext-step-num">3</span>
+          <div class="ext-step-text">
+            <strong>Developer Mode</strong>
+            <span>Toggle switch ON (top-right)</span>
+          </div>
+        </button>
+
+        <button type="button" class="ext-step-tab" data-ext-step-btn="4" role="tab" aria-selected="false">
+          <span class="ext-step-num">4</span>
+          <div class="ext-step-text">
+            <strong>Load Unpacked</strong>
+            <span>Select <code>kyodo-extension</code> folder</span>
+          </div>
+        </button>
+      </div>
+
+      <div class="modal-footer">
+        <span class="esc-hint">Press <kbd>Esc</kbd> to close • Click any step card above to inspect</span>
+        <button type="button" class="btn-glass-secondary" commandfor="extension-install-modal" command="close">
+          Done
+        </button>
+      </div>
+    </div>
+  </dialog>
+
+  <script src="app.js?v=20261122v1" defer></script>
 </body>
 </html>
