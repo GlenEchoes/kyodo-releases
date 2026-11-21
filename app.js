@@ -24,9 +24,9 @@ const DEMO_VIDEO_URLS = {
   zoteroAndIpad: ""
 };
 const COMPANION_TASK_VIDEO_URLS = {
-  grounding: "",      // Drop-in .mp4 for Task 1: Live Claim Grounding
-  audit: "",          // Drop-in .mp4 for Task 2: In-Paper Citation Audit
-  transmutation: ""   // Drop-in .mp4 for Task 3: 1-Click Style Transmutation
+  grounding: "assets/videos/live-claim-grounding.mp4",
+  audit: "assets/videos/in-paper-citation-audit.mp4",
+  transmutation: "assets/videos/style-transmutation.mp4"
 };
 const KYODO_WORKER_BASE_URL = "https://kyodo-trial-proxy.gunjit-glen.workers.dev";
 
@@ -1079,6 +1079,7 @@ function initPricingCalculator() {
   const btnAnnual = document.getElementById("billing-btn-annual");
 
   const priceFreeEl = document.getElementById("price-free");
+  const subFreeEl = document.getElementById("sub-free");
   const priceScholarEl = document.getElementById("price-scholar");
   const subScholarEl = document.getElementById("sub-scholar");
   const priceProEl = document.getElementById("price-pro");
@@ -1137,8 +1138,9 @@ function initPricingCalculator() {
       costProShared1.textContent = "Included in Unlimited Sync";
     }
 
-    // 1. Free
+    // 1. Free / Basic
     if (priceFreeEl) priceFreeEl.textContent = `${sym}0`;
+    if (subFreeEl) subFreeEl.textContent = "No credit card required";
 
     // 2. Scholar
     const scholarBaseMo = isAnnual ? cfg.scholar.annualMonthly : cfg.scholar.monthly;
@@ -1234,13 +1236,13 @@ function initPricingCalculator() {
       if (proAddonsMo > 0 && proTotalMo >= eliteBaseMo) {
         svBanner.hidden = false;
         svTitle.textContent = `⚡ Better Value Available — Switch to Pro-Elite (${sym}${formatNumber(eliteBaseMo)}/mo) & Save`;
-        svDesc.textContent = `Your customized Pro plan (${sym}${formatNumber(proTotalMo)}/mo) reaches or exceeds Pro-Elite. Upgrade to Pro-Elite to get Built-In Managed Cloud AI, Unlimited Sync, Duet Mode (2 seats), and iPad Canvas included.`;
+        svDesc.textContent = `Your customized Pro plan (${sym}${formatNumber(proTotalMo)}/mo) reaches or exceeds Pro-Elite. Upgrade to Pro-Elite to get Out-of-the-Box Cloud AI, AutoFolder Librarian, 2-Scholar Duet Vault, and Cast to iPad Canvas included.`;
         svUpgradeBtn.setAttribute("data-target-tier", "pro-elite");
         svUpgradeBtn.textContent = "✦ Switch to Pro-Elite & Save →";
       } else if (scholarAddonsMo > 0 && scholarTotalMo >= proBaseMo) {
         svBanner.hidden = false;
         svTitle.textContent = `⚡ Better Value Available — Switch to Pro (${sym}${formatNumber(proBaseMo)}/mo) & Save`;
-        svDesc.textContent = `Your customized Scholar plan (${sym}${formatNumber(scholarTotalMo)}/mo) reaches or exceeds Pro. Switch to Pro for Unlimited Active LiveCite Manuscripts, Multi-Paper LiveChat, and 100% Zotero Co-Author Compatibility.`;
+        svDesc.textContent = `Your customized Scholar plan (${sym}${formatNumber(scholarTotalMo)}/mo) reaches or exceeds Pro. Switch to Pro for Unlimited LiveCite Docs, Multi-Paper LiveChat, and Zotero, Mendeley & EndNote Co-Author Sync.`;
         svUpgradeBtn.setAttribute("data-target-tier", "pro");
         svUpgradeBtn.textContent = "✦ Switch to Pro & Save →";
       } else {
@@ -1827,75 +1829,199 @@ function initScrollRevealFallback() {
 }
 
 /* ============================================================================
-   10. SECTION 1 (#bottleneck): CLICK-TO-EXPAND 2/3 LEFT + 1/3 RIGHT STACKED CARDS
+   10. SECTION 1 (#bottleneck): CONCEPT 1 — STICKY SCROLL-DRIVEN 2/3 LEFT + 1/3 RIGHT STAGE
+       - Beat 1 (0.00 <= progress < 0.34): Card 0 (Epistemic Amnesia) expanded; Cards 1 & 2 stacked
+       - Beat 2 (0.34 <= progress < 0.67): Card 1 (Blind Reference Managers) expanded; Cards 0 & 2 stacked
+       - Beat 3 (0.67 <= progress <= 1.00): Card 2 (AI Ghostwriting & Cloud Leaks) expanded; Cards 0 & 1 stacked
    ============================================================================ */
 function initBottleneckExpansion() {
+  const track = document.getElementById("bottleneck-sticky-track");
   const grid = document.getElementById("bottleneck-grid");
   if (!grid) return;
 
   const cards = Array.from(grid.querySelectorAll(".bottleneck-card"));
   if (!cards.length) return;
 
-  function setExpandedCard(targetCard) {
-    const isAlreadyExpanded = targetCard && targetCard.classList.contains("is-expanded");
+  const fill0 = document.getElementById("bn-meter-fill-0");
+  const fill1 = document.getElementById("bn-meter-fill-1");
+  const fill2 = document.getElementById("bn-meter-fill-2");
+  const reducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+  let currentActiveIdx = -1;
 
-    if (!targetCard || isAlreadyExpanded) {
-      grid.classList.remove("has-expanded");
-      cards.forEach((card) => {
-        card.classList.remove("is-expanded", "is-stacked");
-        card.setAttribute("aria-expanded", "false");
-        const pill = card.querySelector(".bottleneck-explore-pill");
-        if (pill) pill.textContent = "+ Click to explore";
-      });
-      return;
-    }
+  function clamp01(val) {
+    return Math.max(0, Math.min(1, val));
+  }
 
+  function assignCardClasses(activeIdx) {
     grid.classList.add("has-expanded");
-    cards.forEach((card) => {
-      const pill = card.querySelector(".bottleneck-explore-pill");
-      if (card === targetCard) {
+    let stackSlot = 1;
+
+    cards.forEach((card, idx) => {
+      card.classList.remove("is-stack-slot-1", "is-stack-slot-2");
+      if (idx === activeIdx) {
         card.classList.add("is-expanded");
         card.classList.remove("is-stacked");
         card.setAttribute("aria-expanded", "true");
-        if (pill) pill.textContent = "✕ Click to collapse";
       } else {
         card.classList.remove("is-expanded");
-        card.classList.add("is-stacked");
+        card.classList.add("is-stacked", `is-stack-slot-${stackSlot}`);
         card.setAttribute("aria-expanded", "false");
-        if (pill) pill.textContent = "+ Click to explore";
+        stackSlot = Math.min(2, stackSlot + 1);
       }
     });
   }
 
-  cards.forEach((card) => {
+  function applyBottleneckBeat(activeIdx, rawProgress) {
+    if (activeIdx !== currentActiveIdx) {
+      const shouldAnimateFlip =
+        currentActiveIdx !== -1 &&
+        !reducedMotion &&
+        window.innerWidth > 680 &&
+        typeof cards[0].animate === "function";
+
+      if (shouldAnimateFlip) {
+        // 1. FIRST: Capture bounding boxes before changing grid slots
+        const firstRects = cards.map((c) => c.getBoundingClientRect());
+
+        // 2. LAST: Apply new grid classes & measure final positions
+        assignCardClasses(activeIdx);
+        const lastRects = cards.map((c) => c.getBoundingClientRect());
+
+        // 3. INVERT & PLAY: Smooth 60fps spatial glide via Web Animations API
+        cards.forEach((card, idx) => {
+          const dx = firstRects[idx].left - lastRects[idx].left;
+          const dy = firstRects[idx].top - lastRects[idx].top;
+
+          if (Math.abs(dx) > 1 || Math.abs(dy) > 1) {
+            if (card._flipAnim && typeof card._flipAnim.cancel === "function") {
+              card._flipAnim.cancel();
+            }
+            const isExpanding = idx === activeIdx;
+            const startScale = isExpanding ? 0.93 : 1.04;
+            const startOpacity = isExpanding ? 0.78 : 0.72;
+            const endOpacity = isExpanding ? 1 : 0.88;
+
+            card._flipAnim = card.animate(
+              [
+                {
+                  transform: `translate3d(${(dx * 0.65).toFixed(1)}px, ${(dy * 0.65).toFixed(1)}px, 0) scale(${startScale})`,
+                  opacity: startOpacity
+                },
+                {
+                  transform: "translate3d(0, 0, 0) scale(1)",
+                  opacity: endOpacity
+                }
+              ],
+              {
+                duration: 520,
+                easing: "cubic-bezier(0.16, 1, 0.3, 1)"
+              }
+            );
+          }
+        });
+      } else {
+        assignCardClasses(activeIdx);
+      }
+
+      currentActiveIdx = activeIdx;
+    }
+
+    const p = clamp01(rawProgress);
+    const prog0 = clamp01(p / 0.34);
+    const prog1 = clamp01((p - 0.34) / 0.33);
+    const prog2 = clamp01((p - 0.67) / 0.33);
+
+    if (fill0) fill0.style.width = `${(prog0 * 100).toFixed(1)}%`;
+    if (fill1) fill1.style.width = `${(prog1 * 100).toFixed(1)}%`;
+    if (fill2) fill2.style.width = `${(prog2 * 100).toFixed(1)}%`;
+  }
+
+  function scrollToCardBeat(card, idx) {
+    const targetProg = clamp01(Number(card.getAttribute("data-target-progress")) || (idx === 0 ? 0.14 : idx === 1 ? 0.50 : 0.84));
+    applyBottleneckBeat(idx, targetProg);
+
+    if (track && window.innerWidth > 680) {
+      const vh = window.innerHeight || document.documentElement.clientHeight || 800;
+      const pinTop = 86;
+      const totalPinnedTravel = Math.max(1, track.offsetHeight - vh);
+      const trackPageTop = track.getBoundingClientRect().top + window.scrollY;
+      const targetScrollY = trackPageTop - pinTop + targetProg * (totalPinnedTravel * 0.90);
+      window.scrollTo({ top: Math.max(0, targetScrollY), behavior: "smooth" });
+    }
+  }
+
+  cards.forEach((card, idx) => {
     card.addEventListener("click", () => {
-      setExpandedCard(card);
+      scrollToCardBeat(card, idx);
     });
     card.addEventListener("keydown", (e) => {
       if (e.key === "Enter" || e.key === " ") {
         e.preventDefault();
-        setExpandedCard(card);
+        scrollToCardBeat(card, idx);
       }
     });
   });
+
+  if (reducedMotion || !track) {
+    applyBottleneckBeat(0, 0.34);
+    return;
+  }
+
+  let ticking = false;
+
+  function updateBottleneckScroll() {
+    if (window.innerWidth <= 680) {
+      ticking = false;
+      return;
+    }
+
+    const vh = window.innerHeight || document.documentElement.clientHeight || 800;
+    const rect = track.getBoundingClientRect();
+    const pinTop = 86;
+    const totalPinnedTravel = Math.max(1, track.offsetHeight - vh);
+    const pinnedProg = clamp01((pinTop - rect.top) / (totalPinnedTravel * 0.90));
+
+    const activeIdx = pinnedProg < 0.34 ? 0 : pinnedProg < 0.67 ? 1 : 2;
+    applyBottleneckBeat(activeIdx, pinnedProg);
+
+    ticking = false;
+  }
+
+  function requestBottleneckTick() {
+    if (!ticking) {
+      ticking = true;
+      window.requestAnimationFrame(updateBottleneckScroll);
+    }
+  }
+
+  window.addEventListener("scroll", requestBottleneckTick, { passive: true });
+  window.addEventListener("resize", requestBottleneckTick, { passive: true });
+
+  updateBottleneckScroll();
 }
 
 /* ============================================================================
    11. SECTION 2A (#features): APPLE "GET TO KNOW MACBOOK PRO" COMPANION STAGE
    ============================================================================ */
 function initAppleCompanionStage() {
-  const pills = Array.from(document.querySelectorAll(".companion-pill-item[data-companion-task]"));
-  const scenes = Array.from(document.querySelectorAll(".companion-scene[data-companion-scene]"));
+  const pills = Array.from(document.querySelectorAll("[data-companion-task]"));
   const winTitle = document.getElementById("companion-window-title");
   const taskVideo = document.getElementById("companion-task-video");
-  const cinemaCanvas = document.getElementById("companion-cinema-canvas");
+  const placeholder = document.getElementById("companion-video-placeholder");
+  const placeholderTitle = document.getElementById("companion-placeholder-title");
 
   if (!pills.length) return;
 
   const TITLES = {
-    grounding: "Kyodo Ambient Companion — Live Claim Grounding",
-    audit: "Kyodo Ambient Companion — In-Paper Citation Audit",
-    transmutation: "Kyodo Ambient Companion — 1-Click Style Transmutation"
+    grounding: "Live Claim Grounding — Word, Google Docs & Notes",
+    audit: "In-Paper Citation Audit — PDFs & Web Journals",
+    transmutation: "1-Click Style Transmutation — APA ↔ Vancouver ↔ Nature"
+  };
+
+  const SHORT_TITLES = {
+    grounding: "Live Claim Grounding",
+    audit: "In-Paper Citation Audit",
+    transmutation: "1-Click Style Transmutation"
   };
 
   function activateCompanionTask(taskKey) {
@@ -1912,27 +2038,34 @@ function initAppleCompanionStage() {
     const configuredVideoUrl =
       (COMPANION_TASK_VIDEO_URLS && COMPANION_TASK_VIDEO_URLS[taskKey]) || "";
 
-    if (taskVideo && cinemaCanvas) {
+    if (taskVideo) {
       if (configuredVideoUrl) {
-        cinemaCanvas.hidden = true;
+        if (placeholder) placeholder.hidden = true;
         taskVideo.hidden = false;
+
         if (taskVideo.getAttribute("src") !== configuredVideoUrl) {
-          taskVideo.setAttribute("src", configuredVideoUrl);
-          taskVideo.load();
+          taskVideo.classList.add("is-fading");
+          setTimeout(() => {
+            taskVideo.setAttribute("src", configuredVideoUrl);
+            taskVideo.load();
+            taskVideo.play().catch(() => {});
+            taskVideo.classList.remove("is-fading");
+          }, 140);
+        } else {
+          taskVideo.classList.remove("is-fading");
+          taskVideo.play().catch(() => {});
         }
-        taskVideo.play().catch(() => {});
       } else {
         if (!taskVideo.paused) taskVideo.pause();
         taskVideo.hidden = true;
-        cinemaCanvas.hidden = false;
+        if (placeholder) {
+          if (placeholderTitle && SHORT_TITLES[taskKey]) {
+            placeholderTitle.textContent = SHORT_TITLES[taskKey];
+          }
+          placeholder.hidden = false;
+        }
       }
     }
-
-    scenes.forEach((scene) => {
-      const isMatch = scene.getAttribute("data-companion-scene") === taskKey;
-      scene.hidden = !isMatch;
-      scene.classList.toggle("active", isMatch);
-    });
   }
 
   pills.forEach((pill) => {
@@ -1942,36 +2075,377 @@ function initAppleCompanionStage() {
     });
   });
 
-  // Gentle continuous token loop inside Scene 3 (Transmutation)
-  const styleToken = document.getElementById("cs-loop-style-token");
-  if (styleToken && window.matchMedia("(prefers-reduced-motion: no-preference)").matches) {
-    const TOKENS = [
-      "(Lytvyn & Bjornstad, 2017; McMurray et al., 2019)",
-      "[1, 2]",
-      "¹,²",
-      "(Lytvyn & Bjornstad, 2017; McMurray et al., 2019) → [1,2] → ¹,²"
-    ];
-    let tokenIdx = 0;
-    setInterval(() => {
-      tokenIdx = (tokenIdx + 1) % TOKENS.length;
-      styleToken.textContent = TOKENS[tokenIdx];
-    }, 2400);
-  }
+  // Ensure initial default state ("grounding") plays immediately
+  activateCompanionTask("grounding");
 }
 
 /* ============================================================================
-   12. SECTION 2B (#spatial-vault): STAGGERED SCROLL-DRIVEN SLIDE-IN & RISING ITEMS
+   12A. ISOLATED VAULT LIVECHAT 4-STAGE SCROLL-VIDEO CONTROLLER
+        progress: 0.00 -> 1.00 while Row 1 is sticky-locked in #vault-row-1-track
+        - Stage 1 (0.00 – 0.14): Holds initial state with Paper 1 ((1 PAPER)) and greeting visible.
+        - Stage 2 (0.14 – 0.48): Paper 2 animates into pipeline ((2 PAPERS)); question types into #lc-typing-text.
+        - Stage 3 (0.48 – 0.68): Question posts from composer up into chat stream as blue bubble under You.
+        - Stage 4 (0.68 – 1.00): Grounded answer card + SOURCES IN PDF slides in from below (translateY(28px) -> 0).
+   ============================================================================ */
+const LIVECHAT_PROMPT_TEXT = "Compare and contrast the NOBLE and EXCEL trials.";
+
+function updateLiveChatScrollVideo(rawProgress) {
+  const panel = document.getElementById("vault-slide-left");
+  if (!panel) return;
+
+  const progress = Math.max(0, Math.min(1, Number(rawProgress) || 0));
+  const pipelineBox = document.getElementById("lc-pipeline-box");
+  const paperCountEl = document.getElementById("lc-paper-count");
+  const paper2Chip = document.getElementById("lc-paper-2-chip");
+  const chatStream = document.getElementById("vault-chat-stream");
+  const postedQuestion = document.getElementById("lc-posted-question");
+  const answerBlock = document.getElementById("lc-answer-block");
+  const composerBar = document.getElementById("lc-composer-bar");
+  const placeholderEl = document.getElementById("lc-composer-placeholder");
+  const typingTextEl = document.getElementById("lc-typing-text");
+  const typingCursorEl = document.getElementById("lc-typing-cursor");
+  const sendBtnEl = document.getElementById("lc-send-btn");
+
+  const isFinalDwell = progress >= 0.88;
+  const inStage1or2A = progress < 0.34;
+  const inStage3 = progress >= 0.48 && progress < 0.68;
+  const inStage4Focus = progress >= 0.68 && !isFinalDwell;
+
+  // Stage 2A (0.14 -> 0.28): Paper 2 chip animates into MULTI-PAPER RAG PIPELINE box
+  const p2Prog = Math.max(0, Math.min(1, (progress - 0.14) / 0.14));
+  if (paper2Chip) {
+    const p2MaxH = p2Prog * 36;
+    paper2Chip.style.maxHeight = `${p2MaxH.toFixed(1)}px`;
+    paper2Chip.style.opacity = p2Prog.toFixed(3);
+    paper2Chip.style.transform = `translate3d(0, ${((1 - p2Prog) * -6).toFixed(1)}px, 0)`;
+    paper2Chip.style.paddingTop = `${(p2Prog * 6).toFixed(1)}px`;
+    paper2Chip.style.paddingBottom = `${(p2Prog * 6).toFixed(1)}px`;
+    paper2Chip.style.marginTop = `${((p2Prog - 1) * 6).toFixed(1)}px`;
+    paper2Chip.setAttribute("aria-hidden", p2Prog < 0.5 ? "true" : "false");
+  }
+  if (chatStream) {
+    chatStream.style.setProperty("--lc-p2-comp", `${((1 - p2Prog) * 36).toFixed(1)}px`);
+  }
+  if (paperCountEl) {
+    const isLinked = progress >= 0.19;
+    paperCountEl.textContent = isLinked ? "(2 PAPERS LINKED)" : "(1 PAPER)";
+    paperCountEl.classList.toggle("is-linked-active", isLinked);
+  }
+
+  // Spotlight Focus & Soft Dimming on #lc-pipeline-box
+  if (pipelineBox) {
+    pipelineBox.classList.toggle("is-spotlight-focus", inStage1or2A);
+    if (isFinalDwell || progress < 0.48) {
+      pipelineBox.style.opacity = "1";
+    } else if (inStage3) {
+      pipelineBox.style.opacity = "0.72";
+    } else {
+      pipelineBox.style.opacity = "0.76";
+    }
+  }
+
+  // Stage 2B (0.14 -> 0.48): Deterministic character-by-character typing in #lc-typing-text
+  const inTypingStage = progress >= 0.14 && progress < 0.48;
+  const inTypingSpotlight = progress >= 0.22 && progress < 0.48;
+  const typingProg = Math.max(0, Math.min(1, (progress - 0.14) / 0.32));
+  const charCount = inTypingStage
+    ? Math.max(1, Math.min(LIVECHAT_PROMPT_TEXT.length, Math.floor(typingProg * LIVECHAT_PROMPT_TEXT.length)))
+    : 0;
+
+  if (typingTextEl && placeholderEl) {
+    if (inTypingStage) {
+      placeholderEl.hidden = true;
+      typingTextEl.textContent = LIVECHAT_PROMPT_TEXT.slice(0, charCount);
+    } else {
+      typingTextEl.textContent = "";
+      placeholderEl.hidden = false;
+      placeholderEl.textContent =
+        progress >= 0.19
+          ? "Ask across all 2 selected papers..."
+          : "Ask about claims, methods, or findings in this PDF...";
+    }
+  }
+
+  if (typingCursorEl) {
+    typingCursorEl.classList.toggle("is-active", inTypingStage);
+  }
+  if (composerBar) {
+    composerBar.classList.toggle("is-typing", inTypingSpotlight);
+  }
+  if (sendBtnEl) {
+    sendBtnEl.classList.toggle("is-ready", inTypingStage && charCount > 2);
+  }
+
+  // Stage 3 (0.48 -> 0.68): Question posts from composer into chat stream as blue bubble under You
+  const postProg = Math.max(0, Math.min(1, (progress - 0.48) / 0.16));
+  const postEase = 1 - Math.pow(1 - postProg, 3);
+  if (postedQuestion) {
+    const postY = (1 - postEase) * 20;
+    const postScale = inStage3 ? 1 + 0.03 * Math.sin(postEase * Math.PI) : 1;
+    postedQuestion.style.maxHeight = `${(postEase * 96).toFixed(1)}px`;
+    const targetPostOpacity = inStage4Focus ? postEase * 0.85 : postEase;
+    postedQuestion.style.opacity = targetPostOpacity.toFixed(3);
+    postedQuestion.style.transform = `translate3d(0, ${postY.toFixed(1)}px, 0) scale(${postScale.toFixed(3)})`;
+    postedQuestion.style.pointerEvents = postEase > 0.5 ? "auto" : "none";
+    postedQuestion.classList.toggle("is-spotlight-focus", inStage3);
+  }
+
+  // Stage 4 (0.68 -> 1.00): Scannable 3-takeaway answer card + SOURCES IN PDF slides in from below (28px -> 0)
+  const ansProg = Math.max(0, Math.min(1, (progress - 0.68) / 0.24));
+  const ansEase = 1 - Math.pow(1 - ansProg, 3);
+  if (answerBlock) {
+    const ansY = (1 - ansEase) * 28;
+    answerBlock.style.maxHeight = `${(ansEase * 520).toFixed(1)}px`;
+    answerBlock.style.opacity = ansEase.toFixed(3);
+    answerBlock.style.transform = `translate3d(0, ${ansY.toFixed(1)}px, 0)`;
+    answerBlock.style.pointerEvents = ansEase > 0.5 ? "auto" : "none";
+    answerBlock.classList.toggle("is-spotlight-focus", inStage4Focus);
+  }
+
+  // Synchronize 3-Step Story Tracker on #vault-desc-right
+  if (typeof window.updateLiveChatStorySteps === "function") {
+    window.updateLiveChatStorySteps(progress);
+  }
+}
+
+window.updateLiveChatScrollVideo = updateLiveChatScrollVideo;
+
+/* ============================================================================
+   12A-2. SYNCHRONIZED 3-STEP LIVECITE STORY TRACKER (#vault-livecite-steps)
+          - Step 1 (0.00 <= progress < 0.48): Link Multiple Papers & Ask Together
+          - Step 2 (0.48 <= progress < 0.74): Interrogate Shared Endpoints Side-by-Side
+          - Step 3 (0.74 <= progress <= 1.00): Color-Coded Takeaways & 1-Click PDF Jump
+   ============================================================================ */
+function updateLiveChatStorySteps(rawProgress) {
+  const progress = Math.max(0, Math.min(1, Number(rawProgress) || 0));
+  const step1 = document.getElementById("lc-story-step-1");
+  const step2 = document.getElementById("lc-story-step-2");
+  const step3 = document.getElementById("lc-story-step-3");
+  if (!step1 && !step2 && !step3) return;
+
+  const fill1 = document.getElementById("lc-step-fill-1");
+  const fill2 = document.getElementById("lc-step-fill-2");
+  const fill3 = document.getElementById("lc-step-fill-3");
+
+  const activeStep = progress < 0.48 ? 1 : progress < 0.74 ? 2 : 3;
+  const isFinalDwell = progress >= 0.88;
+
+  const prog1 = Math.max(0, Math.min(1, progress / 0.48));
+  const prog2 = Math.max(0, Math.min(1, (progress - 0.48) / 0.26));
+  const prog3 = Math.max(0, Math.min(1, (progress - 0.74) / 0.20));
+
+  if (fill1) fill1.style.width = `${(prog1 * 100).toFixed(1)}%`;
+  if (fill2) fill2.style.width = `${(prog2 * 100).toFixed(1)}%`;
+  if (fill3) fill3.style.width = `${(prog3 * 100).toFixed(1)}%`;
+
+  const steps = [
+    { el: step1, idx: 1 },
+    { el: step2, idx: 2 },
+    { el: step3, idx: 3 }
+  ];
+
+  steps.forEach(({ el, idx }) => {
+    if (!el) return;
+    const isActive = idx === activeStep;
+    const isComplete = idx < activeStep || isFinalDwell;
+    el.classList.toggle("is-active", isActive);
+    el.classList.toggle("is-complete", isComplete && !isActive);
+    el.classList.toggle("is-dwell-settled", isFinalDwell);
+  });
+}
+
+window.updateLiveChatStorySteps = updateLiveChatStorySteps;
+
+/* ============================================================================
+   12A-3. CONCEPT A: 3-STAGE AUTONOMOUS LIBRARIAN SCROLL CONTROLLER (ROW 2)
+          progress: 0.00 -> 1.00 while Row 2 is sticky-locked in #vault-row-2-track
+          - Stage 1 (0.00 <= progress < 0.36): Raw Cryptic PDF Spotlight
+          - Stage 2 (0.36 <= progress < 0.68): Instant Renaming & Topic Tagging Spotlight
+          - Stage 3 (0.68 <= progress <= 1.00): Autonomous Folder Routing & Counter Tick-Up
+   ============================================================================ */
+function updateVaultLibrarianStory(rawProgress) {
+  const progress = Math.max(0, Math.min(1, Number(rawProgress) || 0));
+
+  const step1 = document.getElementById("vl-story-step-1");
+  const step2 = document.getElementById("vl-story-step-2");
+  const step3 = document.getElementById("vl-story-step-3");
+  const fill1 = document.getElementById("vl-step-fill-1");
+  const fill2 = document.getElementById("vl-step-fill-2");
+  const fill3 = document.getElementById("vl-step-fill-3");
+
+  const intakeCard = document.getElementById("vl-intake-card");
+  const intakeTitle = document.getElementById("vl-intake-title");
+  const intakeStatus = document.getElementById("vl-intake-status");
+  const fluidBar = document.getElementById("vl-fluid-bar");
+  const fluidBarFill = document.getElementById("vl-fluid-bar-fill");
+  const tagPillsRow = document.getElementById("vl-tag-pills-row");
+
+  const foldersRail = document.getElementById("vl-folders-rail");
+  const sglt2Folder = document.getElementById("vl-folder-sglt2");
+  const sglt2PlusBadge = document.getElementById("vl-sglt2-plus-badge");
+  const countSglt2 = document.getElementById("vl-count-sglt2");
+  const countAll = document.getElementById("vl-count-all");
+  const peekCount = document.getElementById("vl-peek-count");
+  const existingRows = Array.from(document.querySelectorAll(".vl-existing-row"));
+
+  const isStage1 = progress < 0.36;
+  const isStage2 = progress >= 0.36 && progress < 0.68;
+  const isStage3 = progress >= 0.68;
+  const isFinalDwell = progress >= 0.88;
+
+  const activeStep = isStage1 ? 1 : isStage2 ? 2 : 3;
+
+  const prog1 = Math.max(0, Math.min(1, progress / 0.36));
+  const prog2 = Math.max(0, Math.min(1, (progress - 0.36) / 0.32));
+  const prog3 = Math.max(0, Math.min(1, (progress - 0.68) / 0.24));
+
+  if (fill1) fill1.style.width = `${(prog1 * 100).toFixed(1)}%`;
+  if (fill2) fill2.style.width = `${(prog2 * 100).toFixed(1)}%`;
+  if (fill3) fill3.style.width = `${(prog3 * 100).toFixed(1)}%`;
+
+  [
+    { el: step1, idx: 1 },
+    { el: step2, idx: 2 },
+    { el: step3, idx: 3 }
+  ].forEach(({ el, idx }) => {
+    if (!el) return;
+    const isActive = idx === activeStep;
+    const isComplete = idx < activeStep || isFinalDwell;
+    el.classList.toggle("is-active", isActive);
+    el.classList.toggle("is-complete", isComplete && !isActive);
+    el.classList.toggle("is-dwell-settled", isFinalDwell);
+  });
+
+  if (intakeCard) {
+    intakeCard.classList.toggle("is-stage-1", isStage1);
+    intakeCard.classList.toggle("is-stage-2", isStage2);
+    intakeCard.classList.toggle("is-stage-3", isStage3);
+    intakeCard.classList.toggle("is-spotlight-focus", isStage1 || isStage2);
+  }
+
+  if (isStage1) {
+    if (intakeTitle) intakeTitle.textContent = "📄 nejmoa2022190_downloaded_v2.pdf";
+    if (intakeStatus) intakeStatus.textContent = "⚡ Reading & Extracting…";
+    if (fluidBar) fluidBar.hidden = false;
+    if (fluidBarFill) fluidBarFill.style.width = `${(18 + prog1 * 82).toFixed(1)}%`;
+    if (tagPillsRow) tagPillsRow.hidden = true;
+  } else if (isStage2) {
+    if (intakeTitle) intakeTitle.textContent = "Packer, Anker et al. (2020) • NEJM";
+    if (intakeStatus) intakeStatus.textContent = "✦ Auto-Tagged";
+    if (fluidBar) fluidBar.hidden = true;
+    if (tagPillsRow) tagPillsRow.hidden = false;
+  } else {
+    if (intakeTitle) intakeTitle.textContent = "Packer, Anker et al. (2020) • NEJM";
+    if (intakeStatus) intakeStatus.textContent = "✓ Auto-Filed → SGLT2 Trials";
+    if (fluidBar) fluidBar.hidden = true;
+    if (tagPillsRow) tagPillsRow.hidden = false;
+  }
+
+  // Stage 3 folder routing spotlight & counter tick-up
+  const isFiled = progress >= 0.72;
+  if (sglt2Folder) {
+    sglt2Folder.classList.toggle("is-autofile-target", isStage3);
+    sglt2Folder.classList.toggle("is-spotlight-focus", isStage3 && !isFinalDwell);
+  }
+  if (sglt2PlusBadge) {
+    sglt2PlusBadge.hidden = !isFiled;
+  }
+  if (countSglt2) countSglt2.textContent = isFiled ? "34" : "33";
+  if (countAll) countAll.textContent = isFiled ? "148" : "147";
+  if (peekCount) peekCount.textContent = isFiled ? "34" : "33";
+
+  // Soft dimming during Stage 1/2 so eye locks onto #vl-intake-card, restoring to 1 at Stage 3 / Final Dwell
+  if (foldersRail) {
+    foldersRail.style.opacity = isStage1 || isStage2 ? "0.48" : "1";
+  }
+  existingRows.forEach((row) => {
+    row.style.opacity = isStage1 || isStage2 ? "0.38" : isFinalDwell ? "1" : "0.78";
+  });
+}
+
+window.updateVaultLibrarianStory = updateVaultLibrarianStory;
+
+/* ============================================================================
+   12B. SECTION 2B (#spatial-vault): SYNCHRONIZED SCROLL CHOREOGRAPHY
+        - Sticky Scroll-Lock Tracks (#vault-row-1-track & #vault-row-2-track)
+        - Horizontal Panel Slide-In (translateX(-56px / +56px) -> 0)
+        - Down-to-Up Editorial Text Reveal (translateY(48px) -> 0, opacity 0 -> 1)
+        - 4-Stage LiveChat & 3-Stage Autonomous Librarian Playback Hooks
    ============================================================================ */
 function initSpatialVaultStaggerScroll() {
+  const row1Track = document.getElementById("vault-row-1-track");
+  const row2Track = document.getElementById("vault-row-2-track");
+  const row1 = document.getElementById("vault-row-1") || document.querySelector(".vault-row-1");
+  const row2 = document.getElementById("vault-row-2") || document.querySelector(".vault-row-2");
   const leftPanel = document.getElementById("vault-slide-left");
   const rightPanel = document.getElementById("vault-slide-right");
-  const chatBubbles = Array.from(document.querySelectorAll(".vault-chat-bubble"));
+  const descRight = document.getElementById("vault-desc-right") || document.querySelector(".vault-desc-right");
+  const descLeft = document.getElementById("vault-desc-left") || document.querySelector(".vault-desc-left");
+
+  const row1EditorialItems = descRight
+    ? Array.from(descRight.querySelectorAll(".vault-editorial-up"))
+    : [];
+  const row2EditorialItems = descLeft
+    ? Array.from(descLeft.querySelectorAll(".vault-editorial-up"))
+    : [];
   const risingFolders = Array.from(document.querySelectorAll(".vault-rising-folder"));
+  const peekArticles = rightPanel
+    ? Array.from(rightPanel.querySelectorAll(".peek-article-row"))
+    : [];
 
   if (!leftPanel && !rightPanel) return;
 
+  // Click-to-seek on Row 1 (#vault-livecite-steps) and Row 2 (#vault-librarian-steps) Story Tracker cards
+  const row1Steps = Array.from(document.querySelectorAll("#vault-livecite-steps .ved-story-step[data-target-progress]"));
+  row1Steps.forEach((stepEl) => {
+    stepEl.addEventListener("click", () => {
+      if (!row1Track) return;
+      const targetProg = Math.max(0, Math.min(1, Number(stepEl.getAttribute("data-target-progress")) || 0));
+      const vh = window.innerHeight || document.documentElement.clientHeight || 800;
+      const pinTop = 74;
+      const totalPinnedTravel = Math.max(1, row1Track.offsetHeight - vh);
+      const trackPageTop = row1Track.getBoundingClientRect().top + window.scrollY;
+      const targetScrollY = trackPageTop - pinTop + targetProg * (totalPinnedTravel * 0.88);
+      window.scrollTo({ top: Math.max(0, targetScrollY), behavior: "smooth" });
+    });
+  });
+
+  const row2Steps = Array.from(document.querySelectorAll("#vault-librarian-steps .ved-story-step[data-target-progress]"));
+  row2Steps.forEach((stepEl) => {
+    stepEl.addEventListener("click", () => {
+      if (!row2Track) return;
+      const targetProg = Math.max(0, Math.min(1, Number(stepEl.getAttribute("data-target-progress")) || 0));
+      const vh = window.innerHeight || document.documentElement.clientHeight || 800;
+      const pinTop = 92;
+      const totalPinnedTravel = Math.max(1, row2Track.offsetHeight - vh);
+      const trackPageTop = row2Track.getBoundingClientRect().top + window.scrollY;
+      const targetScrollY = trackPageTop - pinTop + targetProg * (totalPinnedTravel * 0.88);
+      window.scrollTo({ top: Math.max(0, targetScrollY), behavior: "smooth" });
+    });
+  });
+
+  function notifyLiveChatVideo(progress) {
+    if (typeof updateLiveChatScrollVideo === "function") {
+      updateLiveChatScrollVideo(progress);
+    } else if (typeof window.updateLiveChatScrollVideo === "function") {
+      window.updateLiveChatScrollVideo(progress);
+    }
+  }
+
+  function notifyLibrarianStory(progress) {
+    if (typeof updateVaultLibrarianStory === "function") {
+      updateVaultLibrarianStory(progress);
+    } else if (typeof window.updateVaultLibrarianStory === "function") {
+      window.updateVaultLibrarianStory(progress);
+    }
+  }
+
   const reducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
-  if (reducedMotion) return;
+  if (reducedMotion) {
+    notifyLiveChatVideo(1);
+    notifyLibrarianStory(1);
+    return;
+  }
 
   let ticking = false;
 
@@ -1979,57 +2453,176 @@ function initSpatialVaultStaggerScroll() {
     return Math.max(0, Math.min(1, val));
   }
 
+  function easeOutCubic(t) {
+    return 1 - Math.pow(1 - t, 3);
+  }
+
+  function animateEditorialDownToUp(containerEl, childItems, rawProg) {
+    if (!containerEl) return;
+    const colEase = easeOutCubic(clamp01(rawProg / 0.72));
+    const colY = (1 - colEase) * 24;
+    containerEl.style.transform = `translate3d(0, ${colY.toFixed(1)}px, 0)`;
+
+    childItems.forEach((el, idx) => {
+      const staggerStart = idx * 0.11;
+      const itemWindow = Math.max(0.28, 0.86 - staggerStart);
+      const itemProg = easeOutCubic(clamp01((rawProg - staggerStart) / itemWindow));
+      const riseY = (1 - itemProg) * 48;
+      el.style.transform = `translate3d(0, ${riseY.toFixed(1)}px, 0)`;
+      el.style.opacity = itemProg.toFixed(3);
+    });
+  }
+
   function updateVaultScrollState() {
     const vh = window.innerHeight || document.documentElement.clientHeight || 800;
 
+    // ROW 1: Sticky Scroll-Lock Track (#vault-row-1-track)
     if (leftPanel) {
-      const rect1 = leftPanel.getBoundingClientRect();
-      // Progress 0 when bottom enters viewport, 1 when panel center reaches 55% of viewport
-      const prog1 = clamp01((vh - rect1.top) / (vh * 0.62));
-      const slideXLeft = (1 - prog1) * -64;
-      leftPanel.style.transform = `translate3d(${slideXLeft.toFixed(1)}px, 0, 0)`;
-      leftPanel.style.opacity = (0.25 + prog1 * 0.75).toFixed(3);
+      const trackEl = row1Track || row1 || leftPanel;
+      const trackRect = trackEl.getBoundingClientRect();
+      const pinTop = 74;
 
-      chatBubbles.forEach((bubble, idx) => {
-        const staggerStart = idx * 0.14;
-        const itemProg = clamp01((prog1 - staggerStart) / Math.max(0.25, 1 - staggerStart));
-        const riseY = (1 - itemProg) * 26;
-        bubble.style.transform = `translate3d(0, ${riseY.toFixed(1)}px, 0)`;
-        bubble.style.opacity = (0.15 + itemProg * 0.85).toFixed(3);
-      });
+      const entranceRaw1 = clamp01((vh * 0.94 - trackRect.top) / Math.max(1, vh * 0.94 - pinTop));
+      const entranceEase1 = easeOutCubic(entranceRaw1);
+      const slideXLeft = (1 - entranceEase1) * -56;
+      leftPanel.style.transform = `translate3d(${slideXLeft.toFixed(1)}px, 0, 0)`;
+      leftPanel.style.opacity = (0.22 + entranceEase1 * 0.78).toFixed(3);
+
+      animateEditorialDownToUp(descRight, row1EditorialItems, entranceRaw1);
+
+      const totalPinnedTravel = row1Track
+        ? Math.max(1, row1Track.offsetHeight - vh)
+        : Math.max(1, vh * 0.74);
+      const pinnedProg = row1Track
+        ? clamp01((pinTop - trackRect.top) / (totalPinnedTravel * 0.88))
+        : clamp01((vh * 0.90 - trackRect.top) / (vh * 0.74));
+      notifyLiveChatVideo(pinnedProg);
     }
 
+    // ROW 2: Sticky Scroll-Lock Track (#vault-row-2-track)
+    // 1. Entrance (bottom of viewport -> top <= 92px): Slide #vault-slide-right in from right (+56px -> 0)
+    //    and lift #vault-desc-left editorial items down-to-up (48px -> 0).
+    // 2. Pinned travel (top <= 92px): Lock Row 2 in place while driving all 3 stages of
+    //    updateVaultLibrarianStory(pinnedProg2) from 0.0 -> 1.0.
     if (rightPanel) {
-      const rect2 = rightPanel.getBoundingClientRect();
-      const prog2 = clamp01((vh - rect2.top) / (vh * 0.62));
-      const slideXRight = (1 - prog2) * 64;
+      const track2El = row2Track || row2 || rightPanel;
+      const rect2 = track2El.getBoundingClientRect();
+      const pinTop = 92;
+
+      const entranceRaw2 = clamp01((vh * 0.94 - rect2.top) / Math.max(1, vh * 0.94 - pinTop));
+      const entranceEase2 = easeOutCubic(entranceRaw2);
+      const slideXRight = (1 - entranceEase2) * 56;
       rightPanel.style.transform = `translate3d(${slideXRight.toFixed(1)}px, 0, 0)`;
-      rightPanel.style.opacity = (0.25 + prog2 * 0.75).toFixed(3);
+      rightPanel.style.opacity = (0.18 + entranceEase2 * 0.82).toFixed(3);
+
+      animateEditorialDownToUp(descLeft, row2EditorialItems, entranceRaw2);
 
       risingFolders.forEach((folder, idx) => {
-        const staggerStart = idx * 0.12;
-        const itemProg = clamp01((prog2 - staggerStart) / Math.max(0.25, 1 - staggerStart));
-        const riseY = (1 - itemProg) * 22;
+        const staggerStart = idx * 0.11;
+        const itemProg = easeOutCubic(
+          clamp01((entranceRaw2 - staggerStart) / Math.max(0.26, 0.88 - staggerStart))
+        );
+        const riseY = (1 - itemProg) * 26;
         folder.style.transform = `translate3d(0, ${riseY.toFixed(1)}px, 0)`;
-        folder.style.opacity = (0.15 + itemProg * 0.85).toFixed(3);
+        folder.style.opacity = (0.12 + itemProg * 0.88).toFixed(3);
       });
+
+      peekArticles.forEach((card, idx) => {
+        const staggerStart = 0.12 + idx * 0.13;
+        const cardProg = easeOutCubic(
+          clamp01((entranceRaw2 - staggerStart) / Math.max(0.26, 0.9 - staggerStart))
+        );
+        const riseY = (1 - cardProg) * 30;
+        card.style.transform = `translate3d(0, ${riseY.toFixed(1)}px, 0)`;
+      });
+
+      const totalPinnedTravel2 = row2Track
+        ? Math.max(1, row2Track.offsetHeight - vh)
+        : Math.max(1, vh * 0.72);
+      const pinnedProg2 = row2Track
+        ? clamp01((pinTop - rect2.top) / (totalPinnedTravel2 * 0.88))
+        : clamp01((vh * 0.90 - rect2.top) / (vh * 0.72));
+      notifyLibrarianStory(pinnedProg2);
     }
 
     ticking = false;
   }
 
-  window.addEventListener(
-    "scroll",
-    () => {
-      if (!ticking) {
-        ticking = true;
-        window.requestAnimationFrame(updateVaultScrollState);
-      }
-    },
-    { passive: true }
-  );
+  function requestVaultTick() {
+    if (!ticking) {
+      ticking = true;
+      window.requestAnimationFrame(updateVaultScrollState);
+    }
+  }
+
+  window.addEventListener("scroll", requestVaultTick, { passive: true });
+  window.addEventListener("resize", requestVaultTick, { passive: true });
 
   updateVaultScrollState();
+}
+
+/* ============================================================================
+   12C. SECTION 3 (#compare): HARMONIOUS SYNCHRONIZED RISING TABLE ROWS
+   ============================================================================ */
+function initCompareTableRowRise() {
+  const compareSection = document.getElementById("compare");
+  if (!compareSection) return;
+
+  const table = compareSection.querySelector(".semantic-compare-table");
+  if (!table) return;
+
+  const rows = Array.from(table.querySelectorAll("thead tr, tbody tr"));
+  if (!rows.length) return;
+
+  const reducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+  if (reducedMotion) {
+    rows.forEach((row) => {
+      row.style.opacity = "1";
+      row.style.transform = "none";
+    });
+    return;
+  }
+
+  let ticking = false;
+
+  function clamp01(val) {
+    return Math.max(0, Math.min(1, val));
+  }
+
+  function easeOutCubic(t) {
+    return 1 - Math.pow(1 - t, 3);
+  }
+
+  function updateCompareRows() {
+    const vh = window.innerHeight || document.documentElement.clientHeight || 800;
+    const rect = table.getBoundingClientRect();
+
+    // Overall section entrance progress: 0 when table top enters 92% of viewport -> 1 when it reaches 36% of viewport
+    const rawProg = clamp01((vh * 0.92 - rect.top) / Math.max(1, vh * 0.56));
+
+    rows.forEach((row, idx) => {
+      const staggerStart = idx * 0.075;
+      const itemWindow = Math.max(0.26, 0.88 - staggerStart);
+      const itemProg = easeOutCubic(clamp01((rawProg - staggerStart) / itemWindow));
+      const riseY = (1 - itemProg) * 28;
+      row.style.transform = `translate3d(0, ${riseY.toFixed(1)}px, 0)`;
+      row.style.opacity = itemProg.toFixed(3);
+    });
+
+    ticking = false;
+  }
+
+  function requestCompareTick() {
+    if (!ticking) {
+      ticking = true;
+      window.requestAnimationFrame(updateCompareRows);
+    }
+  }
+
+  window.addEventListener("scroll", requestCompareTick, { passive: true });
+  window.addEventListener("resize", requestCompareTick, { passive: true });
+
+  updateCompareRows();
 }
 
 /* ============================================================================
@@ -2126,6 +2719,7 @@ document.addEventListener("DOMContentLoaded", () => {
   initOrbShowcase2A();
   initSpatialVault2B();
   initSpatialVaultStaggerScroll();
+  initCompareTableRowRise();
   initPricingCalculator();
   initSmoothMatrixAccordion();
   initTelemetryScrollCountdown();
