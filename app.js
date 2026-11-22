@@ -30,10 +30,51 @@ const COMPANION_TASK_VIDEO_URLS = {
 const KYODO_WORKER_BASE_URL = "https://kyodo-trial-proxy.gunjit-glen.workers.dev";
 
 /* ============================================================================
+   0. LIGHTWEIGHT PRIVACY-SAFE WEB & DOWNLOAD FUNNEL ANALYTICS BEACON
+   ============================================================================ */
+function getOrCreateKyodoVisitorId() {
+  try {
+    let vid = localStorage.getItem("kyodo_visitor_id_v1");
+    if (!vid) {
+      vid = "kv_" + Date.now().toString(36) + "_" + Math.random().toString(36).slice(2, 10);
+      localStorage.setItem("kyodo_visitor_id_v1", vid);
+    }
+    return vid;
+  } catch {
+    return "kv_ephemeral_" + Math.random().toString(36).slice(2, 10);
+  }
+}
+
+function trackKyodoAnalyticsEvent(eventName, extra = {}) {
+  try {
+    if (window.location.hostname === "127.0.0.1" || window.location.hostname === "localhost") {
+      return;
+    }
+    const payload = {
+      event: eventName,
+      visitor_id: getOrCreateKyodoVisitorId(),
+      referrer: document.referrer || "",
+      path: window.location.pathname + window.location.search,
+      ...extra
+    };
+    fetch(`${KYODO_WORKER_BASE_URL}/v1/analytics/event`, {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(payload),
+      keepalive: true
+    }).catch(() => {});
+  } catch (_) {}
+}
+
+// Fire initial page_visit once per page load
+trackKyodoAnalyticsEvent("page_visit");
+
+/* ============================================================================
    1. BIND PLACEHOLDER URLS TO DOM LINKS & DIRECT DMG DOWNLOAD HELPER
    ============================================================================ */
-function startDirectDmgDownload() {
+function startDirectDmgDownload(source = "direct_button") {
   if (!DMG_DOWNLOAD_URL || DMG_DOWNLOAD_URL.startsWith("#")) return;
+  trackKyodoAnalyticsEvent("dmg_download", { source });
   try {
     let dlFrame = document.getElementById("kyodo-dmg-download-iframe");
     if (!dlFrame) {
@@ -55,8 +96,9 @@ function startDirectDmgDownload() {
   }
 }
 
-function startDirectExtensionZipDownload() {
+function startDirectExtensionZipDownload(source = "direct_ext") {
   if (!EXTENSION_ZIP_DOWNLOAD_URL || EXTENSION_ZIP_DOWNLOAD_URL.startsWith("#")) return;
+  trackKyodoAnalyticsEvent("extension_download", { source });
   try {
     let dlFrame = document.getElementById("kyodo-ext-zip-download-iframe");
     if (!dlFrame) {
@@ -82,18 +124,33 @@ function initPlaceholderLinks() {
   const dmgLink = document.getElementById("direct-dmg-link");
   if (dmgLink && DMG_DOWNLOAD_URL) {
     dmgLink.setAttribute("href", DMG_DOWNLOAD_URL);
+    dmgLink.addEventListener("click", () => {
+      trackKyodoAnalyticsEvent("dmg_download", { source: "modal_direct_link" });
+    });
   }
 
   document.querySelectorAll("[data-dmg-download-link]").forEach((el) => {
     if (DMG_DOWNLOAD_URL) {
       el.setAttribute("href", DMG_DOWNLOAD_URL);
+      if (el.id !== "direct-dmg-link") {
+        el.addEventListener("click", () => {
+          trackKyodoAnalyticsEvent("dmg_download", { source: "data_dmg_link" });
+        });
+      }
     }
   });
 
   // Automatically start downloading Kyodo.dmg whenever any "Download .dmg" trigger opens #download-modal
   document.querySelectorAll('button[commandfor="download-modal"][command="show-modal"]').forEach((btn) => {
     btn.addEventListener("click", () => {
-      startDirectDmgDownload();
+      startDirectDmgDownload("direct_modal_button");
+    });
+  });
+
+  // Track when user opens the Founding Scholar Beta modal (#beta-modal)
+  document.querySelectorAll('button[commandfor="beta-modal"][command="show-modal"]').forEach((btn) => {
+    btn.addEventListener("click", () => {
+      trackKyodoAnalyticsEvent("beta_modal_open");
     });
   });
 
@@ -106,6 +163,9 @@ function initPlaceholderLinks() {
   document.querySelectorAll("[data-ext-zip-download-link]").forEach((el) => {
     if (EXTENSION_ZIP_DOWNLOAD_URL) {
       el.setAttribute("href", EXTENSION_ZIP_DOWNLOAD_URL);
+      el.addEventListener("click", () => {
+        trackKyodoAnalyticsEvent("extension_download", { source: "ext_zip_link" });
+      });
     }
   });
 
@@ -1539,7 +1599,7 @@ function initFormsAndModals() {
       }
     }
 
-    startDirectDmgDownload();
+    startDirectDmgDownload("beta_verified");
   }
 
   function startBetaEmailLinkStatusPoller(emailNorm) {
@@ -1583,7 +1643,7 @@ function initFormsAndModals() {
           downloadModal.setAttribute("open", "");
         }
       }
-      startDirectDmgDownload();
+      startDirectDmgDownload("skip_cohort");
     });
   }
 
