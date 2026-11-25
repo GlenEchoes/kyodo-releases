@@ -72,9 +72,9 @@ trackKyodoAnalyticsEvent("page_visit");
 /* ============================================================================
    1. BIND PLACEHOLDER URLS TO DOM LINKS & DIRECT DMG DOWNLOAD HELPER
    ============================================================================ */
-function startDirectDmgDownload(source = "direct_button") {
+function startDirectDmgDownload(source = "direct_button", extra = {}) {
   if (!DMG_DOWNLOAD_URL || DMG_DOWNLOAD_URL.startsWith("#")) return;
-  trackKyodoAnalyticsEvent("dmg_download", { source });
+  trackKyodoAnalyticsEvent("dmg_download", { source, ...extra });
   try {
     let dlFrame = document.getElementById("kyodo-dmg-download-iframe");
     if (!dlFrame) {
@@ -1544,6 +1544,31 @@ function initFormsAndModals() {
   const betaConfirmedBanner = document.getElementById("modal-beta-confirmed-banner");
   const betaConfirmedTitle = document.getElementById("modal-beta-confirmed-title");
   const betaConfirmedNote = document.getElementById("modal-beta-confirmed-note");
+  const betaLicenseKeyText = document.getElementById("modal-beta-license-key-text");
+  const betaCopyLicenseBtn = document.getElementById("modal-beta-copy-license-btn");
+
+  if (betaCopyLicenseBtn && betaLicenseKeyText) {
+    betaCopyLicenseBtn.addEventListener("click", async () => {
+      const code = (betaLicenseKeyText.textContent || "").trim();
+      if (!code) return;
+      try {
+        await navigator.clipboard.writeText(code);
+        const orig = betaCopyLicenseBtn.textContent;
+        betaCopyLicenseBtn.textContent = "✓ Copied!";
+        setTimeout(() => {
+          betaCopyLicenseBtn.textContent = orig;
+        }, 2000);
+      } catch (_) {}
+    });
+  }
+
+  // If this browser previously verified a Founding Scholar seat or paid key, silently ensure any running local Kyodo.app is unlocked
+  try {
+    const savedFoundingCode = (localStorage.getItem("kyodo_latest_subscription_code") || "").trim();
+    if (savedFoundingCode) {
+      notifyLocalKyodoDaemon(savedFoundingCode);
+    }
+  } catch (_) {}
 
   const betaForm = document.getElementById("beta-claim-form");
   const feedbackEl = document.getElementById("beta-form-feedback");
@@ -1568,9 +1593,23 @@ function initFormsAndModals() {
     el.innerHTML = msg;
   }
 
-  function completeBetaVerificationAndDownload({ seatNumber = 1, name = "Researcher", email = "" }) {
+  function completeBetaVerificationAndDownload({
+    seatNumber = 1,
+    name = "Researcher",
+    email = "",
+    subscriptionCode = ""
+  }) {
     if (betaAlreadyCompleted) return;
     betaAlreadyCompleted = true;
+
+    const resolvedCode =
+      String(subscriptionCode || "").trim() ||
+      "KYODO-SUB-PRO_ELITE-ANNUAL-S0B0D0U0L0H0-ALL-FNDR-EA11EC64B7";
+
+    try {
+      localStorage.setItem("kyodo_latest_subscription_code", resolvedCode);
+      localStorage.setItem("kyodo_founding_scholar_seat", String(seatNumber));
+    } catch (_) {}
 
     if (activeBetaStatusPoller) {
       clearInterval(activeBetaStatusPoller);
@@ -1581,14 +1620,17 @@ function initFormsAndModals() {
       betaModal.close();
     }
 
+    if (betaLicenseKeyText) {
+      betaLicenseKeyText.textContent = resolvedCode;
+    }
     if (betaConfirmedBanner) {
       betaConfirmedBanner.hidden = false;
     }
     if (betaConfirmedTitle) {
-      betaConfirmedTitle.textContent = `✅ Founding Scholar Seat #${seatNumber} of 30 Confirmed — Downloading Kyodo.dmg...`;
+      betaConfirmedTitle.textContent = `✅ Founding Scholar Seat #${seatNumber} of 30 Confirmed — Pro-Elite Unlocked`;
     }
     if (betaConfirmedNote) {
-      betaConfirmedNote.textContent = `Welcome to the Founding Cohort, ${name}${email ? ` (${email})` : ""}! Your Kyodo.dmg download has started automatically — join our Discord or WhatsApp scholars group below to share direct workflow feedback with the founding team.`;
+      betaConfirmedNote.textContent = `Welcome to the Founding Cohort, ${name}${email ? ` (${email})` : ""}! Your Kyodo.dmg download has started automatically, and your Full Pro-Elite Access unlocks automatically out of the box as soon as you launch Kyodo.app (or copy your Founding Scholar key below anytime).`;
     }
 
     if (downloadModal) {
@@ -1599,7 +1641,38 @@ function initFormsAndModals() {
       }
     }
 
-    startDirectDmgDownload("beta_verified");
+    startDirectDmgDownload("beta_verified", {
+      seat_number: seatNumber,
+      name,
+      email,
+      subscription_code: resolvedCode
+    });
+
+    // Automatically push the Founding Scholar Pro-Elite key to the local Mac daemon on launch (retries every 4s for 15 min during DMG install)
+    notifyLocalKyodoDaemon(resolvedCode).then((unlockedNow) => {
+      if (unlockedNow && betaConfirmedNote) {
+        betaConfirmedNote.textContent = `Welcome to the Founding Cohort, ${name}! Your running Kyodo Mac app has been unlocked to Full Pro-Elite automatically!`;
+        return;
+      }
+      if (activeLocalDaemonRetryTimer) clearInterval(activeLocalDaemonRetryTimer);
+      let attempts = 0;
+      activeLocalDaemonRetryTimer = setInterval(async () => {
+        attempts++;
+        if (attempts > 225) {
+          clearInterval(activeLocalDaemonRetryTimer);
+          activeLocalDaemonRetryTimer = null;
+          return;
+        }
+        const ok = await notifyLocalKyodoDaemon(resolvedCode);
+        if (ok) {
+          clearInterval(activeLocalDaemonRetryTimer);
+          activeLocalDaemonRetryTimer = null;
+          if (betaConfirmedNote) {
+            betaConfirmedNote.textContent = `Welcome to the Founding Cohort, ${name}! Your running Kyodo Mac app has been unlocked to Full Pro-Elite automatically!`;
+          }
+        }
+      }, 4000);
+    });
   }
 
   function startBetaEmailLinkStatusPoller(emailNorm) {
@@ -1617,7 +1690,8 @@ function initFormsAndModals() {
           completeBetaVerificationAndDownload({
             seatNumber: data.seat_number || 1,
             name: data.name || (document.getElementById("beta-name")?.value || "Researcher").trim(),
-            email: emailNorm
+            email: emailNorm,
+            subscriptionCode: data.subscription_code || ""
           });
         }
       } catch (_) {}
@@ -1814,7 +1888,8 @@ function initFormsAndModals() {
       completeBetaVerificationAndDownload({
         seatNumber: data.seat_number || 1,
         name: data.name || (document.getElementById("beta-name")?.value || "Researcher").trim(),
-        email: pendingBetaEmail
+        email: pendingBetaEmail,
+        subscriptionCode: data.subscription_code || ""
       });
     } catch (_) {
       showFormFeedback(otpFeedbackEl, "Could not verify code due to a network error. Please try again.", true);
@@ -1857,7 +1932,8 @@ function initFormsAndModals() {
       const seat = parseInt(params.get("seat") || "1", 10) || 1;
       const name = params.get("name") || "Founding Scholar";
       const email = params.get("email") || "";
-      completeBetaVerificationAndDownload({ seatNumber: seat, name, email });
+      const subscriptionCode = (params.get("subscription_code") || "").trim();
+      completeBetaVerificationAndDownload({ seatNumber: seat, name, email, subscriptionCode });
     }
   } catch (_) {}
 
