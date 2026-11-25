@@ -7629,47 +7629,71 @@ html[data-theme="light"] .hybrid-pillar-list li {
 
 .hero-release-notes-pill {
   display: inline-flex;
-  align-items: safe center;
-  flex-wrap: wrap;
-  gap: 8px;
-  padding: 6px 12px 6px 8px;
-  margin-block: 4px 12px;
-  border-radius: 999px;
-  background: rgba(56, 189, 248, 0.09);
-  border: 1px solid rgba(56, 189, 248, 0.30);
+  align-items: center;
+  gap: 9px;
+  width: fit-content;
+  max-width: 100%;
+  padding: 5px 13px 5px 6px;
+  margin-block: 2px 16px;
+  border-radius: 10px;
+  background: rgba(255, 255, 255, 0.04);
+  border: 1px solid var(--border-subtle);
   text-decoration: none;
   color: var(--text-primary);
-  font-size: 0.79rem;
-  line-height: 1.35;
+  font-size: 0.78rem;
+  line-height: 1.25;
   transition: background 0.18s ease, border-color 0.18s ease, transform 0.18s ease;
 }
 
 .hero-release-notes-pill:hover {
-  background: rgba(56, 189, 248, 0.15);
-  border-color: rgba(56, 189, 248, 0.52);
+  background: rgba(56, 189, 248, 0.10);
+  border-color: rgba(56, 189, 248, 0.38);
   transform: translateY(-1px);
 }
 
 .hero-release-notes-pill .hrn-tag {
   display: inline-flex;
   align-items: center;
-  padding: 2px 8px;
-  border-radius: 999px;
-  background: rgba(16, 185, 129, 0.20);
-  border: 1px solid rgba(16, 185, 129, 0.42);
+  flex-shrink: 0;
+  padding: 3px 8px;
+  border-radius: 6px;
+  background: rgba(16, 185, 129, 0.16);
+  border: 1px solid rgba(16, 185, 129, 0.36);
   color: var(--accent-emerald-text);
-  font-size: 0.68rem;
+  font-size: 0.67rem;
   font-weight: 800;
-  letter-spacing: 0.04em;
+  letter-spacing: 0.05em;
+  white-space: nowrap;
 }
 
 .hero-release-notes-pill .hrn-text {
   color: var(--text-secondary);
   font-weight: 600;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.hero-release-notes-pill .hrn-arrow {
+  flex-shrink: 0;
+  color: var(--accent-sapphire-text);
+  font-weight: 700;
+  font-size: 0.82rem;
+  transition: transform 0.18s ease;
 }
 
 .hero-release-notes-pill:hover .hrn-text {
   color: var(--text-primary);
+}
+
+.hero-release-notes-pill:hover .hrn-arrow {
+  transform: translate(1px, -1px);
+}
+
+:root:has(> head > meta[name="color-scheme"][content="light"]) .hero-release-notes-pill,
+html[data-theme="light"] .hero-release-notes-pill {
+  background: rgba(15, 23, 41, 0.035);
+  border-color: rgba(15, 23, 41, 0.12);
 }
 
 .modal-footer-links-left {
