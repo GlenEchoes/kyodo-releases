@@ -7433,3 +7433,192 @@ dialog::backdrop {
     padding: 22px;
   }
 }
+
+/* ==========================================================================
+   SECTION 3 & 5: GLASS BOX HYBRID ARCHITECTURE 2-PILLAR BREAKDOWN & MATRIX
+   ========================================================================== */
+
+/* Competitor Matrix two-line cell sub-explanation */
+.semantic-compare-table td small {
+  display: block;
+  margin-block-start: 4px;
+  font-size: 0.77rem;
+  font-weight: 500;
+  line-height: 1.42;
+  color: var(--text-secondary);
+}
+
+.semantic-compare-table td.col-kyodo small {
+  color: var(--text-primary);
+  opacity: 0.88;
+}
+
+/* 2-Pillar "Glass Box Hybrid Architecture" Grid (modern-web-guidance: css-layout) */
+.hybrid-architecture-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(340px, 1fr));
+  gap: 24px;
+  margin-block: 6px 40px;
+}
+
+.hybrid-pillar {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+  padding: 26px 28px;
+  border-radius: 22px;
+  background: var(--bg-drawer-glass);
+  border: 1px solid var(--border-subtle);
+  box-shadow: var(--shadow-card);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  transition: transform 0.22s cubic-bezier(0.22, 1, 0.36, 1), border-color 0.22s ease;
+}
+
+.hybrid-pillar-local {
+  border: 1px solid rgba(16, 185, 129, 0.28);
+  background:
+    radial-gradient(120% 80% at 0% 0%, rgba(16, 185, 129, 0.09) 0%, transparent 65%),
+    var(--bg-drawer-glass);
+  box-shadow:
+    0 1px 0 rgba(16, 185, 129, 0.24) inset,
+    var(--shadow-card);
+}
+
+.hybrid-pillar-cloud {
+  border: 1px solid rgba(56, 189, 248, 0.28);
+  background:
+    radial-gradient(120% 80% at 100% 0%, rgba(56, 189, 248, 0.09) 0%, transparent 65%),
+    var(--bg-drawer-glass);
+  box-shadow:
+    0 1px 0 rgba(56, 189, 248, 0.24) inset,
+    var(--shadow-card);
+}
+
+.hybrid-pillar-header {
+  display: flex;
+  align-items: safe center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 10px;
+}
+
+.hybrid-pillar-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 5px 12px;
+  border-radius: 999px;
+  font-size: 0.78rem;
+  font-weight: 700;
+  letter-spacing: 0.02em;
+}
+
+.badge-local-emerald {
+  background: rgba(16, 185, 129, 0.14);
+  border: 1px solid rgba(16, 185, 129, 0.34);
+  color: var(--accent-emerald-text);
+}
+
+.badge-cloud-sapphire {
+  background: rgba(56, 189, 248, 0.14);
+  border: 1px solid rgba(56, 189, 248, 0.34);
+  color: var(--accent-sapphire-text);
+}
+
+.hybrid-pillar-meta {
+  font-family: var(--font-mono, ui-monospace, SFMono-Regular, Menlo, monospace);
+  font-size: 0.76rem;
+  font-weight: 600;
+  color: var(--text-secondary);
+  padding: 3px 9px;
+  border-radius: 6px;
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid var(--border-subtle);
+}
+
+.hybrid-pillar-title {
+  font-size: clamp(1.18rem, 1.5vw, 1.38rem);
+  font-weight: 800;
+  letter-spacing: -0.02em;
+  color: var(--text-primary);
+  margin: 0;
+}
+
+.hybrid-pillar-lead {
+  font-size: 0.93rem;
+  line-height: 1.55;
+  color: var(--text-secondary);
+  margin: 0;
+}
+
+.hybrid-pillar-list {
+  list-style: none;
+  padding: 0;
+  margin: 4px 0 0;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.hybrid-pillar-list li {
+  padding: 12px 14px;
+  border-radius: 12px;
+  background: rgba(255, 255, 255, 0.03);
+  border: 1px solid var(--border-subtle);
+  font-size: 0.88rem;
+  line-height: 1.5;
+  color: var(--text-secondary);
+}
+
+.hybrid-pillar-list li strong {
+  display: block;
+  margin-bottom: 2px;
+  font-weight: 700;
+  color: var(--text-primary);
+}
+
+/* Frosted Alabaster & Ink Light-Theme Overrides */
+:root:has(> head > meta[name="color-scheme"][content="light"]) .hybrid-pillar-local,
+html[data-theme="light"] .hybrid-pillar-local {
+  border-color: rgba(16, 185, 129, 0.36);
+  background:
+    radial-gradient(120% 80% at 0% 0%, rgba(16, 185, 129, 0.08) 0%, transparent 65%),
+    var(--bg-drawer-glass);
+  box-shadow:
+    0 1px 0 rgba(255, 255, 255, 0.85) inset,
+    var(--shadow-card);
+}
+
+:root:has(> head > meta[name="color-scheme"][content="light"]) .hybrid-pillar-cloud,
+html[data-theme="light"] .hybrid-pillar-cloud {
+  border-color: rgba(46, 166, 250, 0.36);
+  background:
+    radial-gradient(120% 80% at 100% 0%, rgba(46, 166, 250, 0.08) 0%, transparent 65%),
+    var(--bg-drawer-glass);
+  box-shadow:
+    0 1px 0 rgba(255, 255, 255, 0.85) inset,
+    var(--shadow-card);
+}
+
+:root:has(> head > meta[name="color-scheme"][content="light"]) .hybrid-pillar-meta,
+html[data-theme="light"] .hybrid-pillar-meta {
+  background: rgba(15, 23, 41, 0.05);
+}
+
+:root:has(> head > meta[name="color-scheme"][content="light"]) .hybrid-pillar-list li,
+html[data-theme="light"] .hybrid-pillar-list li {
+  background: rgba(255, 255, 255, 0.72);
+  border-color: rgba(15, 23, 41, 0.10);
+}
+
+@media (max-width: 680px) {
+  .hybrid-architecture-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .hybrid-pillar {
+    padding: 20px 18px;
+  }
+}
