@@ -13,7 +13,7 @@
   <meta name="description" content="Live epistemic claim and citation verification across Word, Mellel, Scrivener, Google Docs, Pages, Notes, LaTeX, and PDFs for macOS. Zero-Copy Zotero &amp; Bookends sync. Zero AI ghostwriting. Built by Medical Doctors.">
   <meta name="theme-color" content="#060911">
   <link rel="icon" href="assets/kyodo-app-icon.jpg">
-  <link rel="stylesheet" href="styles.css?v=20261125v1">
+  <link rel="stylesheet" href="styles.css?v=20261125v2">
   <script type="module">
     if (!('commandForElement' in HTMLButtonElement.prototype)) {
       import('https://esm.run/invokers-polyfill').catch(() => {});
@@ -38,7 +38,7 @@
         <img src="assets/kyodo-app-icon.jpg" alt="Kyodo" class="brand-app-icon" width="32" height="32" fetchpriority="high">
         <span class="brand-wordmark">Kyodo</span>
         <span class="nav-orb-badge">
-          <span class="nav-version-tag">macOS Native</span>
+          <span class="nav-version-tag">macOS Native • v1.1.0</span>
         </span>
       </a>
 
@@ -97,13 +97,18 @@
 
           <p class="hero-lead">Live, ambient claim and citation verification</p>
 
+          <a href="https://github.com/GlenEchoes/kyodo-releases/releases/tag/v1.1.0" target="_blank" rel="noopener noreferrer" class="hero-release-notes-pill">
+            <span class="hrn-tag">NEW IN v1.1.0</span>
+            <span class="hrn-text">Zero-Copy Zotero &amp; Bookends, Mellel 6 &amp; Glass Box Inspector — Release Notes ↗</span>
+          </a>
+
           <div class="hero-cta-stack">
             <button type="button" class="btn-hero-dmg" commandfor="download-modal" command="show-modal">
               <span class="btn-hero-main">
                 <span class="apple-glyph" aria-hidden="true"></span>
                 Download for macOS (Apple Silicon)
               </span>
-              <span class="btn-hero-sub">Notarized Universal .dmg • macOS 14+</span>
+              <span class="btn-hero-sub">v1.1.0 Live • Notarized Universal .dmg • macOS 14+</span>
             </button>
 
             <button type="button" class="btn-hero-beta" commandfor="beta-modal" command="show-modal">
@@ -1973,6 +1978,7 @@
         <a href="#compare">Competitor Matrix</a>
         <a href="#pricing">Pricing (₹ INR / $ USD)</a>
         <a href="#security-founders">Security &amp; Founders</a>
+        <a href="https://github.com/GlenEchoes/kyodo-releases/releases/tag/v1.1.0" target="_blank" rel="noopener noreferrer">v1.1.0 Release Notes ↗</a>
         <a href="#kyodo-web-extension-placeholder" data-extension-download-link>Download Web Extension</a>
         <a href="https://www.linkedin.com/in/gunjit-glen-1605781b1/" target="_blank" rel="noopener noreferrer" data-founder-linkedin="gunjit">Founder LinkedIn</a>
         <button type="button" class="footer-link-btn" commandfor="privacy-modal" command="show-modal">Privacy Policy</button>
@@ -1980,7 +1986,7 @@
 
       <div class="footer-legal">
         <span>© 2026 Kyodo Epistemic Labs. All rights reserved.</span>
-        <span>✓ Apple Notarized macOS Binary • macOS 14+ (Sonoma / Sequoia) • Apple Silicon Native</span>
+        <span>✓ v1.1.0 (Build 3) • Apple Notarized macOS Binary • macOS 14+ (Sonoma / Sequoia) • Apple Silicon Native</span>
       </div>
     </div>
   </footer>
@@ -1990,7 +1996,7 @@
     <div class="modal-inner">
       <div class="modal-header">
         <div class="modal-title-group">
-          <span class="modal-badge badge-sapphire">✓ Apple Notarized macOS Binary &amp; Web Companion</span>
+          <span class="modal-badge badge-sapphire">✓ v1.1.0 (Build 3) • Apple Notarized macOS Binary &amp; Web Companion</span>
           <h2 id="download-modal-title">Download Kyodo for macOS</h2>
         </div>
         <button type="button" class="modal-close-btn" commandfor="download-modal" command="close" aria-label="Close download modal">
@@ -2032,7 +2038,7 @@
 
       <div class="modal-download-box">
         <a href="https://github.com/GlenEchoes/kyodo-releases/releases/latest/download/Kyodo.dmg" id="direct-dmg-link" data-dmg-download-link rel="noopener" class="btn-emerald-primary modal-main-dl-btn">
-          <span> Download Kyodo.dmg</span>
+          <span> Download Kyodo.dmg (v1.1.0 • Build 3)</span>
           <small>✓ Apple Notarized macOS Binary • Apple Silicon (M1–M4) • Automatic Download</small>
         </a>
       </div>
@@ -2095,9 +2101,14 @@
       </div>
 
       <div class="modal-footer">
-        <button type="button" class="footer-link-btn" commandfor="privacy-modal" command="show-modal">
-          🛡️ View Privacy Policy
-        </button>
+        <div class="modal-footer-links-left">
+          <a href="https://github.com/GlenEchoes/kyodo-releases/releases/tag/v1.1.0" target="_blank" rel="noopener noreferrer" class="footer-link-btn">
+            📖 What's New in v1.1.0 (Release Notes) ↗
+          </a>
+          <button type="button" class="footer-link-btn" commandfor="privacy-modal" command="show-modal">
+            🛡️ View Privacy Policy
+          </button>
+        </div>
         <button type="button" class="btn-glass-secondary" commandfor="download-modal" command="close">
           Done
         </button>
