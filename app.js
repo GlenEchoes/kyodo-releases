@@ -155,8 +155,29 @@ function initPlaceholderLinks() {
   });
 
   document.querySelectorAll("[data-extension-download-link]").forEach((el) => {
-    if (WEB_EXTENSION_DOWNLOAD_URL) {
+    const hasLiveStoreUrl = WEB_EXTENSION_DOWNLOAD_URL && !WEB_EXTENSION_DOWNLOAD_URL.startsWith("#");
+    if (hasLiveStoreUrl) {
       el.setAttribute("href", WEB_EXTENSION_DOWNLOAD_URL);
+      el.addEventListener("click", () => {
+        trackKyodoAnalyticsEvent("extension_download", { source: "primary_ext_button" });
+      });
+    } else if (EXTENSION_ZIP_DOWNLOAD_URL) {
+      el.setAttribute("href", EXTENSION_ZIP_DOWNLOAD_URL);
+      el.addEventListener("click", (e) => {
+        e.preventDefault();
+        startDirectExtensionZipDownload("primary_ext_button");
+        const extModal = document.getElementById("extension-install-modal");
+        const dlModal = document.getElementById("download-modal");
+        if (dlModal && dlModal.open && el.closest("#download-modal")) {
+          try { dlModal.close(); } catch (_) {}
+        }
+        if (extModal && typeof extModal.showModal === "function" && !extModal.open) {
+          extModal.showModal();
+        }
+        if (typeof window.restartExtensionSimWalkthrough === "function") {
+          window.restartExtensionSimWalkthrough();
+        }
+      });
     }
   });
 
@@ -172,8 +193,10 @@ function initPlaceholderLinks() {
   // Automatically start downloading kyodo-extension.zip whenever any manual extension trigger opens #extension-install-modal
   document.querySelectorAll("[data-manual-ext-trigger]").forEach((btn) => {
     btn.addEventListener("click", () => {
-      if (window.location.hostname !== "127.0.0.1" && window.location.hostname !== "localhost") {
-        startDirectExtensionZipDownload();
+      startDirectExtensionZipDownload("manual_ext_trigger");
+      const dlModal = document.getElementById("download-modal");
+      if (dlModal && dlModal.open && btn.closest("#download-modal")) {
+        try { dlModal.close(); } catch (_) {}
       }
       if (typeof window.restartExtensionSimWalkthrough === "function") {
         window.restartExtensionSimWalkthrough();
